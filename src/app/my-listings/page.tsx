@@ -13,6 +13,7 @@ export default function MyListingsPage() {
   const [listings, setListings] = useState<Listing[]>([])
   const [loading, setLoading] = useState(true)
   const [deletingId, setDeletingId] = useState<string | null>(null)
+  const [featuringId, setFeaturingId] = useState<string | null>(null)
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
@@ -31,6 +32,18 @@ export default function MyListingsPage() {
         })
     })
   }, [router])
+
+  async function handleFeature(listingId: string, plan: "week" | "month") {
+    setFeaturingId(listingId)
+    const res = await fetch("/api/checkout/featured", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ listingId, plan }),
+    })
+    const { url } = await res.json()
+    if (url) window.location.href = url
+    else setFeaturingId(null)
+  }
 
   async function handleDelete(id: string) {
     if (!confirm("确定要删除这条房源吗？")) return
@@ -85,11 +98,14 @@ export default function MyListingsPage() {
 
               {/* 信息 */}
               <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-1">
+                <div className="flex items-center gap-2 mb-1 flex-wrap">
                   <h3 className="font-semibold text-gray-900 truncate">{listing.title}</h3>
                   <Badge variant={listing.type === "rent" ? "default" : "secondary"} className="shrink-0">
                     {listing.type === "rent" ? "租房" : "买房"}
                   </Badge>
+                  {listing.featured && (
+                    <Badge className="shrink-0 bg-[#FF6B35] text-white">⭐ 精选</Badge>
+                  )}
                   {!listing.is_available && (
                     <Badge variant="outline" className="shrink-0 text-gray-400">已下架</Badge>
                   )}
@@ -111,6 +127,26 @@ export default function MyListingsPage() {
                 <Link href={`/my-listings/${listing.id}/edit`}>
                   <Button variant="outline" size="sm" className="w-full">编辑</Button>
                 </Link>
+                {!listing.featured && (
+                  <div className="flex gap-1">
+                    <Button
+                      size="sm"
+                      className="flex-1 bg-[#FF6B35] hover:bg-[#e85a24] text-white text-xs px-2"
+                      disabled={featuringId === listing.id}
+                      onClick={() => handleFeature(listing.id, "week")}
+                    >
+                      置顶7天 $29
+                    </Button>
+                    <Button
+                      size="sm"
+                      className="flex-1 bg-[#FF6B35] hover:bg-[#e85a24] text-white text-xs px-2"
+                      disabled={featuringId === listing.id}
+                      onClick={() => handleFeature(listing.id, "month")}
+                    >
+                      30天 $99
+                    </Button>
+                  </div>
+                )}
                 <Button
                   variant="outline"
                   size="sm"
