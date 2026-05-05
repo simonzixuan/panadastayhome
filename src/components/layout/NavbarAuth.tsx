@@ -46,6 +46,9 @@ export default function NavbarAuth() {
         <Link href="/my-listings" className="text-sm text-gray-500 hover:text-[#222222]">
           我的房源
         </Link>
+        <Link href="/messages" className="text-sm text-gray-500 hover:text-[#222222]">
+          消息
+        </Link>
         <span className="text-sm text-gray-500">你好，{name}</span>
         <Button
           variant="outline"

@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge"
 import { Listing } from "@/types"
 import { PROPERTY_TYPE_LABELS } from "@/lib/constants"
 import ContactSection from "@/components/listings/ContactSection"
+import MessageForm from "@/components/listings/MessageForm"
 import ImageGallery from "@/components/listings/ImageGallery"
 import type { Metadata } from "next"
 
@@ -165,6 +166,8 @@ export default async function ListingDetailPage({
 
       {/* 联系方式（登录后可见） */}
       <ContactSection listingId={l.id} />
+      {/* 发消息给房东 */}
+      {l.user_id && <MessageForm listingId={l.id} ownerUserId={l.user_id} />}
     </div>
     </>
   )
