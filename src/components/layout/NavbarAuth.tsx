@@ -31,23 +31,30 @@ export default function NavbarAuth() {
     router.refresh()
   }
 
-  if (loading) return <div className="w-32 h-8" />
+  if (loading) return <div className="w-32 h-9" />
 
   if (user) {
     const name = user.user_metadata?.name || user.email?.split("@")[0]
     const isAdmin = user.app_metadata?.role === "admin"
     return (
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-4">
         {isAdmin && (
-          <Link href="/admin" className="text-sm font-medium text-blue-600 hover:text-blue-800">
+          <Link href="/admin" className="text-sm font-medium text-[#FF6B35] hover:text-[#e85a24]">
             后台管理
           </Link>
         )}
-        <Link href="/my-listings" className="text-sm text-gray-600 hover:text-gray-900">
+        <Link href="/my-listings" className="text-sm text-gray-500 hover:text-[#222222]">
           我的房源
         </Link>
-        <span className="text-sm text-gray-600">你好，{name}</span>
-        <Button variant="outline" size="sm" onClick={handleLogout}>退出</Button>
+        <span className="text-sm text-gray-500">你好，{name}</span>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={handleLogout}
+          className="rounded-xl border-gray-200 text-gray-600 hover:text-[#222222] hover:border-gray-400"
+        >
+          退出
+        </Button>
       </div>
     )
   }
@@ -55,10 +62,14 @@ export default function NavbarAuth() {
   return (
     <div className="flex items-center gap-3">
       <Link href="/auth/login">
-        <Button variant="outline" size="sm">登录</Button>
+        <Button variant="outline" size="sm" className="rounded-xl border-gray-200 text-gray-600 hover:border-gray-400">
+          登录
+        </Button>
       </Link>
       <Link href="/auth/register">
-        <Button size="sm">注册</Button>
+        <Button size="sm" className="rounded-xl bg-[#FF6B35] hover:bg-[#e85a24] text-white">
+          注册
+        </Button>
       </Link>
     </div>
   )

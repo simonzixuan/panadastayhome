@@ -18,24 +18,29 @@ export default function SearchBar() {
   }
 
   return (
-    <div className="flex gap-3 w-full max-w-2xl">
+    <div className="flex gap-2 w-full">
       <Input
         placeholder="输入城市或地区..."
         value={city}
         onChange={(e) => setCity(e.target.value)}
-        className="flex-1 bg-white text-gray-900 placeholder:text-gray-400"
         onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+        className="flex-1 h-12 rounded-xl border-gray-200 text-[#222222] placeholder:text-gray-400 text-sm focus-visible:ring-[#FF6B35]"
       />
       <select
         value={type}
         onChange={(e) => setType(e.target.value)}
-        className="w-32 h-10 rounded-md border border-input bg-white text-gray-900 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+        className="w-28 h-12 rounded-xl border border-gray-200 bg-white text-gray-600 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6B35]"
       >
         <option value="">类型</option>
         <option value="rent">租房</option>
         <option value="sale">买房</option>
       </select>
-      <Button onClick={handleSearch}>搜索</Button>
+      <Button
+        onClick={handleSearch}
+        className="h-12 px-8 bg-[#FF6B35] hover:bg-[#e85a24] text-white rounded-xl font-medium"
+      >
+        搜索
+      </Button>
     </div>
   )
 }
