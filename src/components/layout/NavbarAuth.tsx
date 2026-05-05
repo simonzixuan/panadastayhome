@@ -28,12 +28,24 @@ export default function NavbarAuth() {
 
   useEffect(() => {
     if (!user) return
-    supabase
-      .from("messages")
-      .select("id", { count: "exact" })
-      .eq("receiver_id", user.id)
-      .eq("read", false)
-      .then(({ count }) => setUnreadCount(count ?? 0))
+
+    const fetchUnread = () => {
+      supabase
+        .from("messages")
+        .select("id", { count: "exact" })
+        .eq("receiver_id", user.id)
+        .eq("read", false)
+        .then(({ count }) => setUnreadCount(count ?? 0))
+    }
+
+    fetchUnread()
+
+    const channel = supabase
+      .channel("unread-messages")
+      .on("postgres_changes", { event: "*", schema: "public", table: "messages", filter: `receiver_id=eq.${user.id}` }, fetchUnread)
+      .subscribe()
+
+    return () => { supabase.removeChannel(channel) }
   }, [user])
 
   async function handleLogout() {
