@@ -8,11 +8,13 @@ import { Button } from "@/components/ui/button"
 export default function SearchBar() {
   const router = useRouter()
   const [city, setCity] = useState("")
+  const [zip, setZip] = useState("")
   const [type, setType] = useState("")
 
   function handleSearch() {
     const params = new URLSearchParams()
     if (city) params.set("city", city)
+    if (zip) params.set("zip", zip)
     if (type) params.set("type", type)
     router.push(`/listings?${params.toString()}`)
   }
@@ -20,11 +22,18 @@ export default function SearchBar() {
   return (
     <div className="flex gap-2 w-full">
       <Input
-        placeholder="输入城市或地区..."
+        placeholder="城市..."
         value={city}
         onChange={(e) => setCity(e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && handleSearch()}
         className="flex-1 h-12 rounded-xl border-gray-200 text-[#222222] placeholder:text-gray-400 text-sm focus-visible:ring-[#FF6B35]"
+      />
+      <Input
+        placeholder="Zip Code"
+        value={zip}
+        onChange={(e) => setZip(e.target.value)}
+        onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+        className="w-32 h-12 rounded-xl border-gray-200 text-[#222222] placeholder:text-gray-400 text-sm focus-visible:ring-[#FF6B35]"
       />
       <select
         value={type}

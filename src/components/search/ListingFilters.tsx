@@ -13,6 +13,7 @@ export default function ListingFilters() {
   const searchParams = useSearchParams()
 
   const [city, setCity] = useState(searchParams.get("city") ?? "")
+  const [zip, setZip] = useState(searchParams.get("zip") ?? "")
   const [country, setCountry] = useState(searchParams.get("country") ?? "")
   const [state, setState] = useState(searchParams.get("state") ?? "")
   const [type, setType] = useState(searchParams.get("type") ?? "")
@@ -33,6 +34,7 @@ export default function ListingFilters() {
   const handleSearch = useCallback(() => {
     const params = new URLSearchParams()
     if (city) params.set("city", city)
+    if (zip) params.set("zip", zip)
     if (country) params.set("country", country)
     if (state) params.set("state", state)
     if (type) params.set("type", type)
@@ -42,15 +44,15 @@ export default function ListingFilters() {
     if (bedrooms) params.set("bedrooms", bedrooms)
     if (bathrooms) params.set("bathrooms", bathrooms)
     router.push(`/listings?${params.toString()}`)
-  }, [city, country, state, type, propertyType, minPrice, maxPrice, bedrooms, router])
+  }, [city, zip, country, state, type, propertyType, minPrice, maxPrice, bedrooms, bathrooms, router])
 
   const handleReset = useCallback(() => {
-    setCity(""); setCountry(""); setState(""); setType("")
+    setCity(""); setZip(""); setCountry(""); setState(""); setType("")
     setPropertyType(""); setMinPrice(""); setMaxPrice(""); setBedrooms(""); setBathrooms("")
     router.push("/listings")
   }, [router])
 
-  const hasFilters = city || country || state || type || propertyType || minPrice || maxPrice || bedrooms || bathrooms
+  const hasFilters = city || zip || country || state || type || propertyType || minPrice || maxPrice || bedrooms || bathrooms
 
   return (
     <div className="bg-white border rounded-xl p-4 mb-6">
@@ -63,6 +65,17 @@ export default function ListingFilters() {
             placeholder="Los Angeles"
             value={city}
             onChange={(e) => setCity(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+          />
+        </div>
+
+        {/* Zip Code */}
+        <div className="space-y-1">
+          <label className="text-xs font-medium text-gray-500">Zip Code</label>
+          <Input
+            placeholder="90001"
+            value={zip}
+            onChange={(e) => setZip(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSearch()}
           />
         </div>
