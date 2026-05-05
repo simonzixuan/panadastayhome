@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge"
 import { Listing } from "@/types"
 import { PROPERTY_TYPE_LABELS } from "@/lib/constants"
 import ContactSection from "@/components/listings/ContactSection"
+import ImageGallery from "@/components/listings/ImageGallery"
 import type { Metadata } from "next"
 
 export async function generateMetadata({
@@ -101,20 +102,7 @@ export default async function ListingDetailPage({
     <div className="max-w-4xl mx-auto px-4 py-8">
       {/* 图片画廊 */}
       {l.images?.length > 0 ? (
-        <div className="grid grid-cols-1 gap-2 mb-6">
-          <div className="aspect-video rounded-xl overflow-hidden bg-gray-100">
-            <img src={l.images[0]} alt={l.title} className="w-full h-full object-cover" />
-          </div>
-          {l.images.length > 1 && (
-            <div className="grid grid-cols-4 gap-2">
-              {l.images.slice(1, 5).map((url, i) => (
-                <div key={i} className="aspect-video rounded-lg overflow-hidden bg-gray-100">
-                  <img src={url} alt="" className="w-full h-full object-cover" />
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+        <ImageGallery images={l.images} title={l.title} />
       ) : (
         <div className="aspect-video bg-gray-100 rounded-xl flex items-center justify-center text-gray-400 mb-6">
           暂无图片
