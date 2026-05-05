@@ -41,12 +41,14 @@ export default function MessagesPage() {
       setMessages((data as Message[]) ?? [])
       setLoading(false)
 
-      const unreadIds = (data ?? []).filter((m: Message) => !m.read).map((m: Message) => m.id)
-      if (unreadIds.length > 0) {
-        await supabase.from("messages").update({ read: true }).in("id", unreadIds)
-      }
     })
   }, [router])
+
+  async function handleMarkRead(msg: Message) {
+    if (msg.read) return
+    await supabase.from("messages").update({ read: true }).eq("id", msg.id)
+    setMessages((prev) => prev.map((m) => m.id === msg.id ? { ...m, read: true } : m))
+  }
 
   async function handleReply(msg: Message) {
     if (!replyContent.trim() || !currentUserId) return
@@ -80,7 +82,7 @@ export default function MessagesPage() {
       ) : (
         <div className="space-y-3">
           {messages.map((msg) => (
-            <div key={msg.id} className={`bg-white border rounded-xl p-4 ${!msg.read ? "border-[#FF6B35]" : "border-gray-100"}`}>
+            <div key={msg.id} className={`bg-white border rounded-xl p-4 cursor-pointer ${!msg.read ? "border-[#FF6B35]" : "border-gray-100"}`} onClick={() => handleMarkRead(msg)}>
               <div className="flex items-start justify-between gap-4 mb-2">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1 flex-wrap">
