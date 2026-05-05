@@ -12,6 +12,7 @@ interface Message {
   read: boolean
   created_at: string
   sender_id: string
+  receiver_id: string
   sender_name: string | null
   sender_email: string | null
   listing_id: string
@@ -20,30 +21,29 @@ interface Message {
 
 interface Conversation {
   key: string
-  sender_id: string
-  sender_name: string | null
-  sender_email: string | null
+  other_user_id: string
+  other_name: string | null
+  other_email: string | null
   listing_id: string
   listing_title: string | null
-  listing_link: string
   messages: Message[]
   unread: number
   latest_at: string
 }
 
-function groupConversations(messages: Message[]): Conversation[] {
+function groupConversations(messages: Message[], currentUserId: string): Conversation[] {
   const map = new Map<string, Conversation>()
   for (const msg of messages) {
-    const key = `${msg.sender_id}__${msg.listing_id}`
+    const otherId = msg.sender_id === currentUserId ? msg.receiver_id : msg.sender_id
+    const key = `${otherId}__${msg.listing_id}`
     if (!map.has(key)) {
       map.set(key, {
         key,
-        sender_id: msg.sender_id,
-        sender_name: msg.sender_name,
-        sender_email: msg.sender_email,
+        other_user_id: otherId,
+        other_name: msg.sender_id !== currentUserId ? msg.sender_name : null,
+        other_email: msg.sender_id !== currentUserId ? msg.sender_email : null,
         listing_id: msg.listing_id,
         listing_title: msg.listings?.title ?? null,
-        listing_link: `/listings/${msg.listing_id}`,
         messages: [],
         unread: 0,
         latest_at: msg.created_at,
@@ -51,8 +51,15 @@ function groupConversations(messages: Message[]): Conversation[] {
     }
     const conv = map.get(key)!
     conv.messages.push(msg)
-    if (!msg.read) conv.unread++
+    if (!msg.read && msg.receiver_id === currentUserId) conv.unread++
     if (msg.created_at > conv.latest_at) conv.latest_at = msg.created_at
+    if (msg.sender_id !== currentUserId && !conv.other_name) {
+      conv.other_name = msg.sender_name
+      conv.other_email = msg.sender_email
+    }
+  }
+  for (const conv of map.values()) {
+    conv.messages.sort((a, b) => a.created_at.localeCompare(b.created_at))
   }
   return Array.from(map.values()).sort((a, b) => b.latest_at.localeCompare(a.latest_at))
 }
@@ -74,25 +81,31 @@ export default function MessagesPage() {
       const { data } = await supabase
         .from("messages")
         .select("*, listings(id, title)")
-        .eq("receiver_id", user.id)
+        .or(`receiver_id.eq.${user.id},sender_id.eq.${user.id}`)
         .order("created_at", { ascending: true })
-      setConversations(groupConversations((data as Message[]) ?? []))
+      setConversations(groupConversations((data as Message[]) ?? [], user.id))
       setLoading(false)
     })
   }, [router])
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+  }, [openKey, conversations])
 
   async function handleOpen(conv: Conversation) {
     if (openKey === conv.key) { setOpenKey(null); return }
     setOpenKey(conv.key)
     setReplyContent("")
     if (conv.unread === 0) return
-    const unreadIds = conv.messages.filter((m) => !m.read).map((m) => m.id)
-    await supabase.from("messages").update({ read: true }).in("id", unreadIds)
-    setConversations((prev) => prev.map((c) =>
-      c.key === conv.key
-        ? { ...c, unread: 0, messages: c.messages.map((m) => ({ ...m, read: true })) }
-        : c
-    ))
+    const unreadIds = conv.messages.filter((m) => !m.read && m.receiver_id === currentUserId).map((m) => m.id)
+    if (unreadIds.length > 0) {
+      await supabase.from("messages").update({ read: true }).in("id", unreadIds)
+      setConversations((prev) => prev.map((c) =>
+        c.key === conv.key
+          ? { ...c, unread: 0, messages: c.messages.map((m) => ({ ...m, read: true })) }
+          : c
+      ))
+    }
   }
 
   async function handleReply(conv: Conversation) {
@@ -102,7 +115,7 @@ export default function MessagesPage() {
     const { data: newMsg } = await supabase.from("messages").insert({
       listing_id: conv.listing_id,
       sender_id: currentUserId,
-      receiver_id: conv.sender_id,
+      receiver_id: conv.other_user_id,
       content: replyContent.trim(),
       sender_name: user?.user_metadata?.name || user?.email?.split("@")[0],
       sender_email: user?.email,
@@ -110,7 +123,9 @@ export default function MessagesPage() {
     }).select("*, listings(id, title)").single()
     if (newMsg) {
       setConversations((prev) => prev.map((c) =>
-        c.key === conv.key ? { ...c, messages: [...c.messages, newMsg as Message] } : c
+        c.key === conv.key
+          ? { ...c, messages: [...c.messages, newMsg as Message], latest_at: (newMsg as Message).created_at }
+          : c
       ))
     }
     setReplyContent("")
@@ -131,19 +146,18 @@ export default function MessagesPage() {
         <div className="space-y-3">
           {conversations.map((conv) => (
             <div key={conv.key} className={`bg-white border rounded-xl overflow-hidden ${conv.unread > 0 ? "border-[#FF6B35]" : "border-gray-100"}`}>
-              {/* 会话头部 */}
               <div className="p-4 flex items-center justify-between cursor-pointer hover:bg-gray-50" onClick={() => handleOpen(conv)}>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
                     <span className="font-semibold text-gray-900 text-sm">
-                      {conv.sender_name || conv.sender_email || "匿名用户"}
+                      {conv.other_name || conv.other_email || "匿名用户"}
                     </span>
                     {conv.unread > 0 && (
                       <span className="text-xs bg-[#FF6B35] text-white px-2 py-0.5 rounded-full">{conv.unread} 条新消息</span>
                     )}
                   </div>
                   {conv.listing_title && (
-                    <Link href={conv.listing_link} className="text-xs text-blue-500 hover:underline truncate block mt-0.5" onClick={(e) => e.stopPropagation()}>
+                    <Link href={`/listings/${conv.listing_id}`} className="text-xs text-blue-500 hover:underline truncate block mt-0.5" onClick={(e) => e.stopPropagation()}>
                       房源：{conv.listing_title}
                     </Link>
                   )}
@@ -159,10 +173,9 @@ export default function MessagesPage() {
                 </div>
               </div>
 
-              {/* 展开的消息记录 */}
               {openKey === conv.key && (
                 <div className="border-t border-gray-100 px-4 pt-3 pb-4">
-                  <div className="space-y-3 mb-4 max-h-64 overflow-y-auto" ref={(el) => { if (el) { el.scrollTop = el.scrollHeight } }}>
+                  <div className="space-y-3 mb-4 max-h-64 overflow-y-auto">
                     {conv.messages.map((msg) => (
                       <div key={msg.id} className={`flex ${msg.sender_id === currentUserId ? "justify-end" : "justify-start"}`}>
                         <div className={`max-w-[80%] rounded-xl px-3 py-2 text-sm ${msg.sender_id === currentUserId ? "bg-[#FF6B35] text-white" : "bg-gray-100 text-gray-800"}`}>
