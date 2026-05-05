@@ -5,16 +5,24 @@ import { useRouter } from "next/navigation"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 
+function isZipCode(value: string) {
+  return /^\d{5}(-\d{4})?$/.test(value.trim()) || /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/.test(value.trim())
+}
+
 export default function SearchBar() {
   const router = useRouter()
-  const [city, setCity] = useState("")
-  const [zip, setZip] = useState("")
+  const [query, setQuery] = useState("")
   const [type, setType] = useState("")
 
   function handleSearch() {
     const params = new URLSearchParams()
-    if (city) params.set("city", city)
-    if (zip) params.set("zip", zip)
+    if (query) {
+      if (isZipCode(query)) {
+        params.set("zip", query.trim())
+      } else {
+        params.set("city", query.trim())
+      }
+    }
     if (type) params.set("type", type)
     router.push(`/listings?${params.toString()}`)
   }
@@ -22,18 +30,11 @@ export default function SearchBar() {
   return (
     <div className="flex gap-2 w-full">
       <Input
-        placeholder="城市..."
-        value={city}
-        onChange={(e) => setCity(e.target.value)}
+        placeholder="城市或 Zip Code..."
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && handleSearch()}
         className="flex-1 h-12 rounded-xl border-gray-200 text-[#222222] placeholder:text-gray-400 text-sm focus-visible:ring-[#FF6B35]"
-      />
-      <Input
-        placeholder="Zip Code"
-        value={zip}
-        onChange={(e) => setZip(e.target.value)}
-        onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-        className="w-32 h-12 rounded-xl border-gray-200 text-[#222222] placeholder:text-gray-400 text-sm focus-visible:ring-[#FF6B35]"
       />
       <select
         value={type}

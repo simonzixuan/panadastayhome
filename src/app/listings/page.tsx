@@ -16,6 +16,7 @@ import { Listing } from "@/types"
 interface SearchParams {
   type?: string
   city?: string
+  zip?: string
   country?: string
   state?: string
   property_type?: string
@@ -41,6 +42,7 @@ export default async function ListingsPage({
     .order("created_at", { ascending: false })
 
   if (params.type) query = query.eq("type", params.type)
+  if (params.zip) query = query.ilike("zip_code", `%${params.zip}%`)
   if (params.city) query = query.ilike("city", `%${params.city}%`)
   if (params.country) query = query.eq("country", params.country)
   if (params.state) query = query.eq("state", params.state)

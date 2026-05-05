@@ -58,24 +58,17 @@ export default function ListingFilters() {
     <div className="bg-white border rounded-xl p-4 mb-6">
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
 
-        {/* 城市 */}
+        {/* 城市 / Zip Code */}
         <div className="space-y-1">
-          <label className="text-xs font-medium text-gray-500">城市</label>
+          <label className="text-xs font-medium text-gray-500">城市 / Zip Code</label>
           <Input
-            placeholder="Los Angeles"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-          />
-        </div>
-
-        {/* Zip Code */}
-        <div className="space-y-1">
-          <label className="text-xs font-medium text-gray-500">Zip Code</label>
-          <Input
-            placeholder="90001"
-            value={zip}
-            onChange={(e) => setZip(e.target.value)}
+            placeholder="Los Angeles 或 90001"
+            value={city || zip}
+            onChange={(e) => {
+              const val = e.target.value
+              if (/^\d/.test(val)) { setZip(val); setCity("") }
+              else { setCity(val); setZip("") }
+            }}
             onKeyDown={(e) => e.key === "Enter" && handleSearch()}
           />
         </div>
