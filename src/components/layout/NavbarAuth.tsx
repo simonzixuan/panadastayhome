@@ -11,6 +11,7 @@ export default function NavbarAuth() {
   const router = useRouter()
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
+  const [unreadCount, setUnreadCount] = useState(0)
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -24,6 +25,16 @@ export default function NavbarAuth() {
 
     return () => subscription.unsubscribe()
   }, [])
+
+  useEffect(() => {
+    if (!user) return
+    supabase
+      .from("messages")
+      .select("id", { count: "exact" })
+      .eq("receiver_id", user.id)
+      .eq("read", false)
+      .then(({ count }) => setUnreadCount(count ?? 0))
+  }, [user])
 
   async function handleLogout() {
     await supabase.auth.signOut()
@@ -46,8 +57,13 @@ export default function NavbarAuth() {
         <Link href="/my-listings" className="text-sm text-gray-500 hover:text-[#222222]">
           我的房源
         </Link>
-        <Link href="/messages" className="text-sm text-gray-500 hover:text-[#222222]">
+        <Link href="/messages" className="relative text-sm text-gray-500 hover:text-[#222222]">
           消息
+          {unreadCount > 0 && (
+            <span className="absolute -top-2 -right-4 bg-[#FF6B35] text-white text-xs rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1">
+              {unreadCount}
+            </span>
+          )}
         </Link>
         <span className="text-sm text-gray-500">你好，{name}</span>
         <Button
