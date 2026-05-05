@@ -135,7 +135,7 @@ export default function MyListingsPage() {
                       disabled={featuringId === listing.id}
                       onClick={() => handleFeature(listing.id, "week")}
                     >
-                      置顶7天 $29
+                      置顶7天 $9
                     </Button>
                     <Button
                       size="sm"
@@ -143,7 +143,7 @@ export default function MyListingsPage() {
                       disabled={featuringId === listing.id}
                       onClick={() => handleFeature(listing.id, "month")}
                     >
-                      30天 $99
+                      30天 $29
                     </Button>
                   </div>
                 )}

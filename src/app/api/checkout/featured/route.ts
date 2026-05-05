@@ -23,8 +23,8 @@ export async function POST(req: NextRequest) {
   }
 
   const plans: Record<string, { amount: number; days: number; label: string }> = {
-    week:  { amount: 2900, days: 7,  label: "精选置顶 7 天" },
-    month: { amount: 9900, days: 30, label: "精选置顶 30 天" },
+    week:  { amount: 900,  days: 7,  label: "精选置顶 7 天" },
+    month: { amount: 2900, days: 30, label: "精选置顶 30 天" },
   }
 
   const selected = plans[plan]
