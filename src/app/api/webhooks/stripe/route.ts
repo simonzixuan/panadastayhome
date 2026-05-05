@@ -1,8 +1,15 @@
 import { NextRequest, NextResponse } from "next/server"
 import Stripe from "stripe"
-import { createServerClient } from "@/lib/supabase/server"
+import { createClient } from "@supabase/supabase-js"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
+
+function createAdminClient() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  )
+}
 
 export async function POST(req: NextRequest) {
   const body = await req.text()
@@ -24,7 +31,7 @@ export async function POST(req: NextRequest) {
     const featuredUntil = new Date()
     featuredUntil.setDate(featuredUntil.getDate() + Number(days))
 
-    const supabase = createServerClient()
+    const supabase = createAdminClient()
     await supabase
       .from("listings")
       .update({ featured: true, featured_until: featuredUntil.toISOString() })
