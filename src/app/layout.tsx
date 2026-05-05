@@ -18,12 +18,13 @@ export const metadata: Metadata = {
     apple: "/export.png",
   },
   title: {
-    default: "Panda House | 北美华人租房买房平台",
-    template: "%s | Panda House 北美找房",
+    default: "熊猫之家 | 北美华人租房买房平台",
+    template: "%s | 熊猫之家",
   },
   description:
-    "Panda House 北美华人专属找房平台。覆盖美国、加拿大主要城市，提供公寓、独栋、联排等真实房源。按城市、Zip Code、价格、户型一键筛选，快速找到心仪住所。",
+    "熊猫之家 - 北美华人专属找房平台。覆盖美国、加拿大主要城市，提供公寓、独栋、联排等真实房源。按城市、Zip Code、价格、户型一键筛选，快速找到心仪住所。",
   keywords: [
+    "熊猫之家",
     "北美华人租房",
     "美国租房",
     "加拿大租房",
@@ -41,7 +42,8 @@ export const metadata: Metadata = {
     "北美公寓出租",
     "华人房东",
     "中文找房",
-    "Panda House",
+    "熊猫租房",
+    "Panda Stay Home",
     "North America Chinese rental",
     "Chinese apartment rental USA Canada",
   ],
@@ -52,14 +54,14 @@ export const metadata: Metadata = {
     type: "website",
     locale: "zh_CN",
     url: siteUrl,
-    siteName: "Panda House",
-    title: "Panda House | 北美华人租房买房平台",
+    siteName: "熊猫之家",
+    title: "熊猫之家 | 北美华人租房买房平台",
     description:
       "北美华人专属找房平台，覆盖美国、加拿大主要城市，真实房源，按城市、Zip Code、价格筛选。",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Panda House | 北美华人租房买房平台",
+    title: "熊猫之家 | 北美华人租房买房平台",
     description:
       "北美华人专属找房平台，覆盖美国、加拿大主要城市，真实房源，按城市、Zip Code、价格筛选。",
   },
@@ -87,7 +89,7 @@ export default function RootLayout({
         "@type": "WebSite",
         "@id": `${siteUrl}/#website`,
         "url": siteUrl,
-        "name": "Panda House",
+        "name": "熊猫之家",
         "description": "北美华人租房买房平台",
         "inLanguage": "zh-CN",
         "potentialAction": {
@@ -99,7 +101,7 @@ export default function RootLayout({
       {
         "@type": "Organization",
         "@id": `${siteUrl}/#organization`,
-        "name": "Panda House",
+        "name": "熊猫之家",
         "url": siteUrl,
         "logo": { "@type": "ImageObject", "url": `${siteUrl}/LOGO2.png` },
         "description": "北美华人专属找房平台，提供美国、加拿大真实房源",
