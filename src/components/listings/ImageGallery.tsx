@@ -34,7 +34,7 @@ export default function ImageGallery({ images, title }: { images: string[]; titl
         {thumbnails.length > 0 && (
           <div className="grid grid-cols-4 gap-2">
             {thumbnails.map((url, i) => {
-              const isLast = i === 3 && remaining > 0
+              const isLast = i === thumbnails.length - 1 && remaining > 0
               return (
                 <div
                   key={i}
