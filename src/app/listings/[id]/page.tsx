@@ -34,10 +34,19 @@ export async function generateMetadata({
   return {
     title,
     description,
+    keywords: [
+      l.city, l.state,
+      l.type === "rent" ? "租房" : "买房",
+      l.type === "rent" ? "出租" : "出售",
+      "北美华人租房", "华人找房", "Panda House",
+      ...(l.zip_code ? [l.zip_code] : []),
+    ].filter(Boolean) as string[],
+    alternates: { canonical: `/listings/${id}` },
     openGraph: {
       title,
       description,
-      ...(image ? { images: [{ url: image, width: 1200, height: 630 }] } : {}),
+      type: "article",
+      ...(image ? { images: [{ url: image, width: 1200, height: 630, alt: title }] } : {}),
     },
     twitter: {
       card: "summary_large_image",
@@ -66,7 +75,29 @@ export default async function ListingDetailPage({
 
   const l = listing as Listing
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://panadastayhome.com"
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": l.type === "rent" ? "ApartmentComplex" : "SingleFamilyResidence",
+    "name": l.title,
+    "description": l.description,
+    "url": `${siteUrl}/listings/${l.id}`,
+    "numberOfRooms": l.bedrooms,
+    "floorSize": { "@type": "QuantitativeValue", "value": l.area, "unitCode": "FTK" },
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": l.address,
+      "addressLocality": l.city,
+      "addressRegion": l.state,
+      "postalCode": l.zip_code,
+      "addressCountry": l.country,
+    },
+    ...(l.images?.[0] ? { "image": l.images[0] } : {}),
+  }
+
   return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
     <div className="max-w-4xl mx-auto px-4 py-8">
       {/* 图片画廊 */}
       {l.images?.length > 0 ? (
@@ -145,5 +176,6 @@ export default async function ListingDetailPage({
       {/* 联系方式（登录后可见） */}
       <ContactSection listingId={l.id} />
     </div>
+    </>
   )
 }
