@@ -66,7 +66,8 @@ export default function ListingFilters() {
             value={city || zip}
             onChange={(e) => {
               const val = e.target.value
-              if (/^\d/.test(val)) { setZip(val); setCity("") }
+              const isZip = /^\d{5}(-\d{4})?$/.test(val.trim()) || /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/.test(val.trim())
+              if (isZip) { setZip(val); setCity("") }
               else { setCity(val); setZip("") }
             }}
             onKeyDown={(e) => e.key === "Enter" && handleSearch()}
