@@ -58,7 +58,7 @@ export default function PublishPage() {
         price: Number(form.get("price")),
         type: form.get("type"),
         property_type: form.get("property_type"),
-        area: Number(form.get("area")),
+        area: form.get("area") ? Number(form.get("area")) : null,
         bedrooms: Number(form.get("bedrooms")),
         bathrooms: Number(form.get("bathrooms")),
         country,
@@ -132,8 +132,8 @@ export default function PublishPage() {
             <Field label="价格（USD $）*">
               <Input name="price" type="number" min={0} placeholder="2500" required />
             </Field>
-            <Field label="面积（sq ft）*">
-              <Input name="area" type="number" min={1} placeholder="900" required />
+            <Field label="面积（sq ft）">
+              <Input name="area" type="number" min={1} placeholder="900（选填）" />
             </Field>
           </div>
           <div className="grid grid-cols-2 gap-4">
