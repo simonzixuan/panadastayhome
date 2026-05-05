@@ -7,7 +7,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
           <img src="/LOGO2.png" alt="Panda House" className="h-16 w-auto object-contain" />
-          <span className="text-[#222222] font-semibold text-lg">Panda House</span>
+          <span className="text-[#222222] font-semibold text-lg">Panda Stay House</span>
         </Link>
         <div className="flex items-center gap-6">
           <Link href="/listings" className="text-sm text-gray-500 hover:text-[#222222] transition-colors">
