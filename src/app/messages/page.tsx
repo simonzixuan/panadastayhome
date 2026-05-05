@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { supabase } from "@/lib/supabase/client"
@@ -65,6 +65,7 @@ export default function MessagesPage() {
   const [openKey, setOpenKey] = useState<string | null>(null)
   const [replyContent, setReplyContent] = useState("")
   const [sending, setSending] = useState(false)
+  const messagesEndRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     supabase.auth.getUser().then(async ({ data: { user } }) => {
@@ -161,7 +162,7 @@ export default function MessagesPage() {
               {/* 展开的消息记录 */}
               {openKey === conv.key && (
                 <div className="border-t border-gray-100 px-4 pt-3 pb-4">
-                  <div className="space-y-3 mb-4 max-h-64 overflow-y-auto">
+                  <div className="space-y-3 mb-4 max-h-64 overflow-y-auto" ref={(el) => { if (el) { el.scrollTop = el.scrollHeight } }}>
                     {conv.messages.map((msg) => (
                       <div key={msg.id} className={`flex ${msg.sender_id === currentUserId ? "justify-end" : "justify-start"}`}>
                         <div className={`max-w-[80%] rounded-xl px-3 py-2 text-sm ${msg.sender_id === currentUserId ? "bg-[#FF6B35] text-white" : "bg-gray-100 text-gray-800"}`}>
@@ -172,6 +173,7 @@ export default function MessagesPage() {
                         </div>
                       </div>
                     ))}
+                    <div ref={messagesEndRef} />
                   </div>
                   <textarea
                     className="w-full border border-gray-200 rounded-xl p-3 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-[#FF6B35]"
