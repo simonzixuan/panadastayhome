@@ -1,5 +1,4 @@
 import Link from "next/link"
-import Image from "next/image"
 import NavbarAuth from "./NavbarAuth"
 
 export default function Navbar() {
@@ -7,7 +6,7 @@ export default function Navbar() {
     <nav className="bg-white border-b border-gray-100 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
-          <Image src="/export.png" alt="Panda House" width={80} height={80} className="object-contain invert mix-blend-multiply" />
+          <img src="/LOGO2.png" alt="Panda House" className="h-16 w-auto object-contain" />
           <span className="text-[#222222] font-semibold text-lg">Panda House</span>
         </Link>
         <div className="flex items-center gap-6">
