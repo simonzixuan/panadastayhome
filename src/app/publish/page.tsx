@@ -58,7 +58,7 @@ export default function PublishPage() {
         price: Number(form.get("price")),
         type: form.get("type"),
         property_type: form.get("property_type"),
-        area: form.get("area") ? Number(form.get("area")) : null,
+        area: form.get("area") ? Number(form.get("area")) : 0,
         bedrooms: Number(form.get("bedrooms")),
         bathrooms: Number(form.get("bathrooms")),
         country,
