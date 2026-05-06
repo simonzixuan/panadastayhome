@@ -13,6 +13,8 @@ export default function MyListingsPage() {
   const [listings, setListings] = useState<Listing[]>([])
   const [loading, setLoading] = useState(true)
   const [deletingId, setDeletingId] = useState<string | null>(null)
+  const [page, setPage] = useState(1)
+  const PAGE_SIZE = 9
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
@@ -82,8 +84,9 @@ export default function MyListingsPage() {
           </Link>
         </div>
       ) : (
+        <>
         <div className="space-y-4">
-          {listings.map((listing) => (
+          {listings.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE).map((listing) => (
             <div key={listing.id} className="bg-white border rounded-xl p-4 flex gap-4">
               {/* 图片 */}
               <div className="w-32 h-24 rounded-lg overflow-hidden bg-gray-100 shrink-0">
@@ -146,6 +149,24 @@ export default function MyListingsPage() {
             </div>
           ))}
         </div>
+        {Math.ceil(listings.length / PAGE_SIZE) > 1 && (
+          <div className="flex justify-center items-center gap-2 mt-6">
+            {page > 1 && (
+              <button onClick={() => setPage(p => p - 1)} className="px-4 py-2 rounded-lg border text-sm hover:bg-gray-50">上一页</button>
+            )}
+            {Array.from({ length: Math.ceil(listings.length / PAGE_SIZE) }, (_, i) => i + 1).map((p) => (
+              <button
+                key={p}
+                onClick={() => setPage(p)}
+                className={`px-4 py-2 rounded-lg border text-sm ${p === page ? "bg-[#FF6B35] text-white border-[#FF6B35]" : "hover:bg-gray-50"}`}
+              >{p}</button>
+            ))}
+            {page < Math.ceil(listings.length / PAGE_SIZE) && (
+              <button onClick={() => setPage(p => p + 1)} className="px-4 py-2 rounded-lg border text-sm hover:bg-gray-50">下一页</button>
+            )}
+          </div>
+        )}
+        </>
       )}
     </div>
   )
