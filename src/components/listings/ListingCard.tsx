@@ -89,7 +89,7 @@ export default function ListingCard({ listing, isFavorited = false }: Props) {
             {listing.city}{listing.state ? `, ${listing.state}` : ""}
           </p>
           <div className="flex flex-wrap gap-2 text-sm text-gray-500 mb-3">
-            {listing.area > 0 && <span>{listing.area.toLocaleString()} sq ft</span>}
+            {listing.area != null && listing.area > 0 && <span>{listing.area.toLocaleString()} sq ft</span>}
             <span>{listing.bedrooms} bd</span>
             <span>{listing.bathrooms} ba</span>
             <span>{PROPERTY_TYPE_LABELS[listing.property_type] ?? listing.property_type}</span>
