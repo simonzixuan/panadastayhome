@@ -48,7 +48,6 @@ export default async function ListingsPage({
     .eq("is_available", true)
     .order("featured", { ascending: false })
     .order("created_at", { ascending: false })
-    .range(from, to)
 
   if (params.type) query = query.eq("type", params.type)
   if (params.zip) query = query.ilike("zip_code", `%${params.zip}%`)
@@ -65,7 +64,7 @@ export default async function ListingsPage({
   if (params.bedrooms && !isNaN(bedrooms)) query = query.gte("bedrooms", bedrooms)
   if (params.bathrooms && !isNaN(bathrooms)) query = query.gte("bathrooms", bathrooms)
 
-  const { data: listings, error, count } = await query
+  const { data: listings, error, count } = await query.range(from, to)
 
   const totalPages = Math.ceil((count ?? 0) / PAGE_SIZE)
   const hasFilter = Object.entries(params).filter(([k]) => k !== "page").some(([, v]) => Boolean(v))
