@@ -2,11 +2,11 @@ import { adminSupabase } from "@/lib/supabase/admin"
 import { verifyAdmin } from "@/lib/admin-auth"
 import { NextRequest } from "next/server"
 
-export async function PATCH(req: NextRequest, ctx: RouteContext<'/api/admin/users/[id]'>) {
+export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const admin = await verifyAdmin(req)
   if (!admin) return Response.json({ error: "Unauthorized" }, { status: 403 })
 
-  const { id } = await ctx.params
+  const { id } = await params
   const { ban } = await req.json()
   const { error } = await adminSupabase.auth.admin.updateUserById(id, {
     ban_duration: ban ? "87600h" : "none",

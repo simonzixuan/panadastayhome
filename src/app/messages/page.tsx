@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { supabase } from "@/lib/supabase/client"
 import { Button } from "@/components/ui/button"
+import { Switch } from "@/components/ui/switch"
+import ReviewDialog from "@/components/listings/ReviewDialog"
 
 interface Message {
   id: string
@@ -16,7 +18,7 @@ interface Message {
   sender_name: string | null
   sender_email: string | null
   listing_id: string
-  listings: { id: string; title: string } | null
+  listings: { id: string; title: string; user_id: string } | null
 }
 
 interface Conversation {
@@ -26,6 +28,7 @@ interface Conversation {
   other_email: string | null
   listing_id: string
   listing_title: string | null
+  listing_owner_id: string | null
   messages: Message[]
   unread: number
   latest_at: string
@@ -44,6 +47,7 @@ function groupConversations(messages: Message[], currentUserId: string): Convers
         other_email: msg.sender_id !== currentUserId ? msg.sender_email : null,
         listing_id: msg.listing_id,
         listing_title: msg.listings?.title ?? null,
+        listing_owner_id: msg.listings?.user_id ?? null,
         messages: [],
         unread: 0,
         latest_at: msg.created_at,
@@ -72,15 +76,20 @@ export default function MessagesPage() {
   const [openKey, setOpenKey] = useState<string | null>(null)
   const [replyContent, setReplyContent] = useState("")
   const [sending, setSending] = useState(false)
+  const [replyError, setReplyError] = useState("")
+  const [emailNotifications, setEmailNotifications] = useState(true)
+  const [reviewTarget, setReviewTarget] = useState<Conversation | null>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     supabase.auth.getUser().then(async ({ data: { user } }) => {
       if (!user) { router.push("/auth/login"); return }
       setCurrentUserId(user.id)
+      const meta = user.user_metadata ?? {}
+      setEmailNotifications(meta.email_notifications !== false)
       const { data } = await supabase
         .from("messages")
-        .select("*, listings(id, title)")
+        .select("*, listings(id, title, user_id)")
         .or(`receiver_id.eq.${user.id},sender_id.eq.${user.id}`)
         .order("created_at", { ascending: true })
       setConversations(groupConversations((data as Message[]) ?? [], user.id))
@@ -91,6 +100,11 @@ export default function MessagesPage() {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [openKey, conversations])
+
+  async function handleToggleNotification(checked: boolean) {
+    setEmailNotifications(checked)
+    await supabase.auth.updateUser({ data: { email_notifications: checked } })
+  }
 
   async function handleOpen(conv: Conversation) {
     if (openKey === conv.key) { setOpenKey(null); return }
@@ -111,23 +125,35 @@ export default function MessagesPage() {
   async function handleReply(conv: Conversation) {
     if (!replyContent.trim() || !currentUserId) return
     setSending(true)
-    const { data: { user } } = await supabase.auth.getUser()
-    const { data: newMsg } = await supabase.from("messages").insert({
-      listing_id: conv.listing_id,
-      sender_id: currentUserId,
-      receiver_id: conv.other_user_id,
-      content: replyContent.trim(),
-      sender_name: user?.user_metadata?.name || user?.email?.split("@")[0],
-      sender_email: user?.email,
-      read: false,
-    }).select("*, listings(id, title)").single()
-    if (newMsg) {
-      setConversations((prev) => prev.map((c) =>
-        c.key === conv.key
-          ? { ...c, messages: [...c.messages, newMsg as Message], latest_at: (newMsg as Message).created_at }
-          : c
-      ))
+    setReplyError("")
+    const { data: { session } } = await supabase.auth.getSession()
+    const token = session?.access_token ?? ""
+    const res = await fetch("/api/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+      body: JSON.stringify({
+        listing_id: conv.listing_id,
+        receiver_id: conv.other_user_id,
+        content: replyContent.trim(),
+      }),
+    })
+    if (!res.ok) {
+      setReplyError("发送失败，请重试")
+      setSending(false)
+      return
     }
+    const newMsg = await res.json() as Message
+    const enriched: Message = {
+      ...newMsg,
+      sender_name: newMsg.sender_name ?? null,
+      sender_email: newMsg.sender_email ?? null,
+      listings: newMsg.listings ?? (conv.messages[0]?.listings ?? null),
+    }
+    setConversations((prev) => prev.map((c) =>
+      c.key === conv.key
+        ? { ...c, messages: [...c.messages, enriched], latest_at: enriched.created_at }
+        : c
+    ))
     setReplyContent("")
     setSending(false)
   }
@@ -136,7 +162,13 @@ export default function MessagesPage() {
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">消息收件箱</h1>
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-2xl font-bold text-gray-900">消息收件箱</h1>
+        <div className="flex items-center gap-2">
+          <span className="text-sm text-gray-500">邮件通知</span>
+          <Switch checked={emailNotifications} onCheckedChange={handleToggleNotification} />
+        </div>
+      </div>
 
       {conversations.length === 0 ? (
         <div className="bg-white border rounded-xl p-16 text-center">
@@ -146,7 +178,7 @@ export default function MessagesPage() {
         <div className="space-y-3">
           {conversations.map((conv) => (
             <div key={conv.key} className={`bg-white border rounded-xl overflow-hidden ${conv.unread > 0 ? "border-[#FF6B35]" : "border-gray-100"}`}>
-              <div className="p-4 flex items-center justify-between cursor-pointer hover:bg-gray-50" onClick={() => handleOpen(conv)}>
+              <div className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 cursor-pointer hover:bg-gray-50" onClick={() => handleOpen(conv)}>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
                     <span className="font-semibold text-gray-900 text-sm">
@@ -195,19 +227,42 @@ export default function MessagesPage() {
                     value={replyContent}
                     onChange={(e) => setReplyContent(e.target.value)}
                   />
-                  <Button
-                    size="sm"
-                    className="mt-2 bg-[#FF6B35] hover:bg-[#e85a24] text-white"
-                    disabled={!replyContent.trim() || sending}
-                    onClick={() => handleReply(conv)}
-                  >
-                    {sending ? "发送中..." : "发送回复"}
-                  </Button>
+                  {replyError && (
+                    <p className="text-sm text-red-500 mt-2">{replyError}</p>
+                  )}
+                  <div className="flex items-center gap-2 mt-2">
+                    <Button
+                      size="sm"
+                      className="bg-[#FF6B35] hover:bg-[#e85a24] text-white"
+                      disabled={!replyContent.trim() || sending}
+                      onClick={() => handleReply(conv)}
+                    >
+                      {sending ? "发送中..." : "发送回复"}
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => setReviewTarget(conv)}
+                    >
+                      评价对方
+                    </Button>
+                  </div>
                 </div>
               )}
             </div>
           ))}
         </div>
+      )}
+
+      {reviewTarget && currentUserId && (
+        <ReviewDialog
+          open={!!reviewTarget}
+          onOpenChange={(open) => { if (!open) setReviewTarget(null) }}
+          revieweeId={reviewTarget.other_user_id}
+          listingId={reviewTarget.listing_id}
+          reviewerRole={reviewTarget.listing_owner_id === currentUserId ? "landlord" : "tenant"}
+          revieweeName={reviewTarget.other_name || reviewTarget.other_email || "对方"}
+        />
       )}
     </div>
   )

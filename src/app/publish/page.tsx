@@ -46,19 +46,45 @@ export default function PublishPage() {
     setError("")
 
     const form = new FormData(e.currentTarget)
-    const images = await imageUploadRef.current?.uploadAll() ?? []
-    const { data: { user } } = await supabase.auth.getUser()
+
+    const price = Number(form.get("price"))
+    const area = form.get("area") ? Number(form.get("area")) : null
+    if (price < 0) {
+      setError("价格不能为负数")
+      setSubmitting(false)
+      return
+    }
+    if (area !== null && area < 0) {
+      setError("面积不能为负数")
+      setSubmitting(false)
+      return
+    }
+
+    const { data: { user }, error: authError } = await supabase.auth.getUser()
+    if (authError || !user) {
+      router.push("/auth/login?redirect=/publish")
+      return
+    }
+
+    let images: string[] = []
+    try {
+      images = await imageUploadRef.current?.uploadAll() ?? []
+    } catch {
+      setError("图片上传失败，请重试")
+      setSubmitting(false)
+      return
+    }
 
     const { data: listing, error: insertError } = await supabase
       .from("listings")
       .insert({
-        user_id: user?.id ?? null,
+        user_id: user.id,
         title: form.get("title"),
         description: form.get("description"),
-        price: Number(form.get("price")),
+        price,
         type: form.get("type"),
         property_type: form.get("property_type"),
-        area: form.get("area") ? Number(form.get("area")) : 0,
+        area,
         bedrooms: Number(form.get("bedrooms")),
         bathrooms: Number(form.get("bathrooms")),
         country,

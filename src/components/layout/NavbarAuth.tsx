@@ -69,6 +69,9 @@ export default function NavbarAuth() {
         <Link href="/my-listings" className="text-sm text-gray-500 hover:text-[#222222]">
           我的房源
         </Link>
+        <Link href="/favorites" className="text-sm text-gray-500 hover:text-[#222222]">
+          我的收藏
+        </Link>
         <Link href="/messages" className="relative text-sm text-gray-500 hover:text-[#222222]">
           消息
           {unreadCount > 0 && (

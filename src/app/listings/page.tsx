@@ -9,9 +9,9 @@ export const metadata: Metadata = {
     "浏览北美华人租房、买房房源，按城市、价格、户型筛选，快速找到理想住所。覆盖美国、加拿大各大城市。",
 }
 import { Suspense } from "react"
-import ListingCard from "@/components/listings/ListingCard"
+import ListingsGrid from "@/components/listings/ListingsGrid"
 import ListingFilters from "@/components/search/ListingFilters"
-import { Listing } from "@/types"
+import type { Listing } from "@/types"
 
 interface SearchParams {
   type?: string
@@ -47,10 +47,14 @@ export default async function ListingsPage({
   if (params.country) query = query.eq("country", params.country)
   if (params.state) query = query.eq("state", params.state)
   if (params.property_type) query = query.eq("property_type", params.property_type)
-  if (params.min_price) query = query.gte("price", Number(params.min_price))
-  if (params.max_price) query = query.lte("price", Number(params.max_price))
-  if (params.bedrooms) query = query.gte("bedrooms", Number(params.bedrooms))
-  if (params.bathrooms) query = query.gte("bathrooms", Number(params.bathrooms))
+  const minPrice = Number(params.min_price)
+  const maxPrice = Number(params.max_price)
+  const bedrooms = Number(params.bedrooms)
+  const bathrooms = Number(params.bathrooms)
+  if (params.min_price && !isNaN(minPrice)) query = query.gte("price", minPrice)
+  if (params.max_price && !isNaN(maxPrice)) query = query.lte("price", maxPrice)
+  if (params.bedrooms && !isNaN(bedrooms)) query = query.gte("bedrooms", bedrooms)
+  if (params.bathrooms && !isNaN(bathrooms)) query = query.gte("bathrooms", bathrooms)
 
   const { data: listings, error } = await query
 
@@ -83,11 +87,7 @@ export default async function ListingsPage({
           )}
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {(listings as Listing[]).map((listing) => (
-            <ListingCard key={listing.id} listing={listing} />
-          ))}
-        </div>
+        <ListingsGrid listings={listings as Listing[]} />
       )}
     </div>
   )

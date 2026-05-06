@@ -2,11 +2,11 @@ import { adminSupabase } from "@/lib/supabase/admin"
 import { verifyAdmin } from "@/lib/admin-auth"
 import { NextRequest } from "next/server"
 
-export async function PATCH(req: NextRequest, ctx: RouteContext<'/api/admin/listings/[id]'>) {
+export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const admin = await verifyAdmin(req)
   if (!admin) return Response.json({ error: "Unauthorized" }, { status: 403 })
 
-  const { id } = await ctx.params
+  const { id } = await params
 
   const body = await req.json()
   const update: Record<string, unknown> = {}
@@ -22,11 +22,11 @@ export async function PATCH(req: NextRequest, ctx: RouteContext<'/api/admin/list
   return Response.json({ success: true })
 }
 
-export async function DELETE(req: NextRequest, ctx: RouteContext<'/api/admin/listings/[id]'>) {
+export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const admin = await verifyAdmin(req)
   if (!admin) return Response.json({ error: "Unauthorized" }, { status: 403 })
 
-  const { id } = await ctx.params
+  const { id } = await params
 
   const { error } = await adminSupabase
     .from("listings")

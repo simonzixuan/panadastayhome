@@ -14,11 +14,13 @@ interface Props {
 const ImageUpload = forwardRef<ImageUploadHandle, Props>(({ maxFiles = 10 }, ref) => {
   const [previews, setPreviews] = useState<string[]>([])
   const [files, setFiles] = useState<File[]>([])
+  const [uploadError, setUploadError] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
   useImperativeHandle(ref, () => ({
     async uploadAll() {
       const urls: string[] = []
+      let hasError = false
       for (const file of files) {
         const ext = file.name.split(".").pop()
         const path = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
@@ -26,8 +28,12 @@ const ImageUpload = forwardRef<ImageUploadHandle, Props>(({ maxFiles = 10 }, ref
         if (!error) {
           const { data } = supabase.storage.from("listing-images").getPublicUrl(path)
           urls.push(data.publicUrl)
+        } else {
+          console.error("图片上传失败:", file.name, error)
+          hasError = true
         }
       }
+      setUploadError(hasError)
       return urls
     },
   }))
@@ -55,6 +61,9 @@ const ImageUpload = forwardRef<ImageUploadHandle, Props>(({ maxFiles = 10 }, ref
 
   return (
     <div className="space-y-3">
+      {uploadError && (
+        <p className="text-sm text-red-500">部分图片上传失败，请重试</p>
+      )}
       {files.length < maxFiles && (
         <div
           className="border-2 border-dashed border-gray-200 rounded-lg p-8 text-center cursor-pointer hover:border-blue-400 transition-colors"

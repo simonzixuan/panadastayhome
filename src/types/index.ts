@@ -8,15 +8,15 @@ export interface Listing {
   price: number
   type: ListingType
   property_type: PropertyType
-  area: number
+  area: number | null
   bedrooms: number
   bathrooms: number
-  address: string
-  city: string
-  district: string
+  address: string | null
+  city: string | null
+  district: string | null
   country: string
-  state: string
-  zip_code: string
+  state: string | null
+  zip_code: string | null
   latitude?: number
   longitude?: number
   images: string[]

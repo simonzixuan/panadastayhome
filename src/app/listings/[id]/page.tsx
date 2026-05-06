@@ -5,7 +5,10 @@ import { Listing } from "@/types"
 import { PROPERTY_TYPE_LABELS } from "@/lib/constants"
 import ContactSection from "@/components/listings/ContactSection"
 import MessageForm from "@/components/listings/MessageForm"
+import LandlordReviews from "@/components/listings/LandlordReviews"
 import ImageGallery from "@/components/listings/ImageGallery"
+import FavoriteButton from "@/components/listings/FavoriteButton"
+import ListingMap from "@/components/listings/ListingMap"
 import type { Metadata } from "next"
 
 export async function generateMetadata({
@@ -77,6 +80,7 @@ export default async function ListingDetailPage({
 
   const l = listing as Listing
 
+
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://panadastayhome.com"
   const jsonLd = {
     "@context": "https://schema.org",
@@ -112,13 +116,16 @@ export default async function ListingDetailPage({
 
       <div className="flex items-start justify-between gap-4 mb-4">
         <h1 className="text-2xl font-bold text-gray-900">{l.title}</h1>
-        <Badge variant={l.type === "rent" ? "default" : "secondary"} className="shrink-0">
-          {l.type === "rent" ? "租房 For Rent" : "买房 For Sale"}
-        </Badge>
+        <div className="flex items-center gap-2 shrink-0">
+          <FavoriteButton listingId={l.id} />
+          <Badge variant={l.type === "rent" ? "default" : "secondary"}>
+            {l.type === "rent" ? "租房 For Rent" : "买房 For Sale"}
+          </Badge>
+        </div>
       </div>
 
       <p className="text-3xl font-bold text-blue-600 mb-6">
-        ${l.price.toLocaleString()}
+        {l.price != null ? `$${l.price.toLocaleString()}` : "价格待定"}
         {l.type === "rent" && <span className="text-base font-normal text-gray-500">/mo</span>}
       </p>
 
@@ -148,13 +155,17 @@ export default async function ListingDetailPage({
       <div className="mb-6">
         <h2 className="text-lg font-semibold mb-2">地址</h2>
         <p className="text-gray-600">
-          {l.address}
-          {l.district ? `, ${l.district}` : ""}
-          {`, ${l.city}`}
-          {l.state ? `, ${l.state}` : ""}
-          {l.zip_code ? ` ${l.zip_code}` : ""}
+          {[l.address, l.district, l.city, l.state, l.zip_code].filter(Boolean).join(", ")}
         </p>
       </div>
+
+      {/* 地图 */}
+      <ListingMap
+        address={l.address}
+        city={l.city}
+        state={l.state}
+        zipCode={l.zip_code}
+      />
 
       {/* 描述 */}
       {l.description && (
@@ -163,6 +174,9 @@ export default async function ListingDetailPage({
           <p className="text-gray-600 whitespace-pre-wrap">{l.description}</p>
         </div>
       )}
+
+      {/* 房东评价 */}
+      {l.user_id && <LandlordReviews userId={l.user_id} />}
 
       {/* 联系方式（登录后可见） */}
       <ContactSection listingId={l.id} />

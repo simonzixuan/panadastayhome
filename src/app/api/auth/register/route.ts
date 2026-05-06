@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
   })
 
   if (error) {
-    const message = error.message.includes("already been registered")
+    const message = error.status === 422
       ? "该邮箱已注册，请直接登录"
       : "注册失败，请稍后重试"
     return NextResponse.json({ error: message }, { status: 400 })

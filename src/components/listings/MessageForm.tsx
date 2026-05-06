@@ -14,6 +14,7 @@ export default function MessageForm({ listingId, ownerUserId }: Props) {
   const [status, setStatus] = useState<"loading" | "guest" | "owner" | "idle" | "sending" | "sent">("loading")
   const [content, setContent] = useState("")
   const [currentUserId, setCurrentUserId] = useState<string | null>(null)
+  const [sendError, setSendError] = useState("")
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
@@ -27,15 +28,19 @@ export default function MessageForm({ listingId, ownerUserId }: Props) {
   async function handleSend() {
     if (!content.trim() || !currentUserId) return
     setStatus("sending")
-    const { data: { user } } = await supabase.auth.getUser()
-    await supabase.from("messages").insert({
-      listing_id: listingId,
-      sender_id: currentUserId,
-      receiver_id: ownerUserId,
-      content: content.trim(),
-      sender_name: user?.user_metadata?.name || user?.email?.split("@")[0],
-      sender_email: user?.email,
+    setSendError("")
+    const { data: { session } } = await supabase.auth.getSession()
+    const token = session?.access_token ?? ""
+    const res = await fetch("/api/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+      body: JSON.stringify({ listing_id: listingId, receiver_id: ownerUserId, content }),
     })
+    if (!res.ok) {
+      setSendError("发送失败，请重试")
+      setStatus("idle")
+      return
+    }
     setContent("")
     setStatus("sent")
   }
@@ -59,6 +64,9 @@ export default function MessageForm({ listingId, ownerUserId }: Props) {
   if (status === "sent") return (
     <div className="bg-green-50 rounded-xl p-6 text-center mt-6">
       <p className="text-green-700 font-medium">消息已发送！房东会尽快回复您。</p>
+      <Button variant="outline" size="sm" className="mt-3" onClick={() => setStatus("idle")}>
+        继续发送
+      </Button>
     </div>
   )
 
@@ -72,6 +80,9 @@ export default function MessageForm({ listingId, ownerUserId }: Props) {
         value={content}
         onChange={(e) => setContent(e.target.value)}
       />
+      {sendError && (
+        <p className="mt-2 text-sm text-red-500">{sendError}</p>
+      )}
       <Button
         className="mt-2 bg-[#FF6B35] hover:bg-[#e85a24] text-white"
         disabled={!content.trim() || status === "sending"}

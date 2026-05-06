@@ -63,6 +63,12 @@ export default function RegisterPage() {
     const confirm = form.get("confirm") as string
     const name = form.get("name") as string
 
+    if (password.length < 6) {
+      setError("密码至少6位")
+      setLoading(false)
+      return
+    }
+
     if (password !== confirm) {
       setError("两次输入的密码不一致")
       setLoading(false)
@@ -79,7 +85,7 @@ export default function RegisterPage() {
     const data = await res.json()
 
     if (!res.ok) {
-      setError(data.error)
+      setError(data.error ?? "注册失败，请稍后重试")
       setLoading(false)
       return
     }
@@ -93,7 +99,7 @@ export default function RegisterPage() {
     setLoading(false)
 
     if (signInError) {
-      setError("注册成功，请前往登录")
+      router.push("/auth/login")
       return
     }
 

@@ -1,25 +1,39 @@
 import { NextRequest, NextResponse } from "next/server"
 import Stripe from "stripe"
-import { createServerClient } from "@/lib/supabase/server"
+import { createClient } from "@supabase/supabase-js"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 
 export async function POST(req: NextRequest) {
+  const token = req.headers.get("Authorization")?.replace("Bearer ", "") ?? null
+  if (!token) return NextResponse.json({ error: "未登录" }, { status: 401 })
+
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
+    { global: { headers: { Authorization: `Bearer ${token}` } } }
+  )
+
   const { listingId, plan } = await req.json()
 
   if (!listingId || !plan) {
     return NextResponse.json({ error: "缺少参数" }, { status: 400 })
   }
 
-  const supabase = createServerClient()
+  const { data: { user }, error: authError } = await supabase.auth.getUser()
+  if (authError || !user) {
+    return NextResponse.json({ error: "未登录" }, { status: 401 })
+  }
+
   const { data: listing } = await supabase
     .from("listings")
     .select("id, title")
     .eq("id", listingId)
+    .eq("user_id", user.id)
     .single()
 
   if (!listing) {
-    return NextResponse.json({ error: "房源不存在" }, { status: 404 })
+    return NextResponse.json({ error: "房源不存在或无权操作" }, { status: 404 })
   }
 
   const plans: Record<string, { amount: number; days: number; label: string }> = {
@@ -30,7 +44,7 @@ export async function POST(req: NextRequest) {
   const selected = plans[plan]
   if (!selected) return NextResponse.json({ error: "无效套餐" }, { status: 400 })
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://panadastayhome.com"
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://pandastayhome.com"
 
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],

@@ -13,7 +13,6 @@ export default function MyListingsPage() {
   const [listings, setListings] = useState<Listing[]>([])
   const [loading, setLoading] = useState(true)
   const [deletingId, setDeletingId] = useState<string | null>(null)
-  const [featuringId, setFeaturingId] = useState<string | null>(null)
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
@@ -33,34 +32,33 @@ export default function MyListingsPage() {
     })
   }, [router])
 
-  async function handleFeature(listingId: string, plan: "week" | "month") {
-    setFeaturingId(listingId)
-    const res = await fetch("/api/checkout/featured", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ listingId, plan }),
-    })
-    const { url } = await res.json()
-    if (url) window.location.href = url
-    else setFeaturingId(null)
-  }
-
   async function handleDelete(id: string) {
     if (!confirm("确定要删除这条房源吗？")) return
     setDeletingId(id)
-    await supabase.from("listings").delete().eq("id", id)
-    setListings((prev) => prev.filter((l) => l.id !== id))
+    const { error } = await supabase.from("listings").delete().eq("id", id)
+    if (error) {
+      alert("删除失败，请稍后重试")
+    } else {
+      setListings((prev) => prev.filter((l) => l.id !== id))
+    }
     setDeletingId(null)
   }
 
   async function handleToggle(listing: Listing) {
-    await supabase
-      .from("listings")
-      .update({ is_available: !listing.is_available })
-      .eq("id", listing.id)
+    const newValue = !listing.is_available
     setListings((prev) =>
-      prev.map((l) => l.id === listing.id ? { ...l, is_available: !l.is_available } : l)
+      prev.map((l) => l.id === listing.id ? { ...l, is_available: newValue } : l)
     )
+    const { error } = await supabase
+      .from("listings")
+      .update({ is_available: newValue })
+      .eq("id", listing.id)
+    if (error) {
+      setListings((prev) =>
+        prev.map((l) => l.id === listing.id ? { ...l, is_available: listing.is_available } : l)
+      )
+      alert("更新失败，请稍后重试")
+    }
   }
 
   if (loading) {
@@ -111,11 +109,11 @@ export default function MyListingsPage() {
                   )}
                 </div>
                 <p className="text-blue-600 font-bold">
-                  ${listing.price.toLocaleString()}
+                  {listing.price != null ? `$${listing.price.toLocaleString()}` : "价格待定"}
                   {listing.type === "rent" && <span className="text-sm font-normal text-gray-400">/mo</span>}
                 </p>
                 <p className="text-sm text-gray-400 mt-1">
-                  {listing.city}{listing.state ? `, ${listing.state}` : ""} · {listing.area.toLocaleString()} sq ft
+                  {listing.city}{listing.state ? `, ${listing.state}` : ""}{listing.area != null && listing.area > 0 ? ` · ${listing.area.toLocaleString()} sq ft` : ""}
                 </p>
               </div>
 
@@ -127,26 +125,6 @@ export default function MyListingsPage() {
                 <Link href={`/my-listings/${listing.id}/edit`}>
                   <Button variant="outline" size="sm" className="w-full">编辑</Button>
                 </Link>
-                {!listing.featured && (
-                  <div className="flex gap-1">
-                    <Button
-                      size="sm"
-                      className="flex-1 bg-[#FF6B35] hover:bg-[#e85a24] text-white text-xs px-2"
-                      disabled={featuringId === listing.id}
-                      onClick={() => handleFeature(listing.id, "week")}
-                    >
-                      置顶7天 $9
-                    </Button>
-                    <Button
-                      size="sm"
-                      className="flex-1 bg-[#FF6B35] hover:bg-[#e85a24] text-white text-xs px-2"
-                      disabled={featuringId === listing.id}
-                      onClick={() => handleFeature(listing.id, "month")}
-                    >
-                      30天 $29
-                    </Button>
-                  </div>
-                )}
                 <Button
                   variant="outline"
                   size="sm"

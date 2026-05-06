@@ -11,17 +11,15 @@ export default function AdminPage() {
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
-      if (user?.app_metadata?.role === "admin") {
-        setReady(true)
-      } else {
+      if (!user || user.app_metadata?.role !== "admin") {
         router.replace("/")
+      } else {
+        setReady(true)
       }
     })
   }, [router])
 
-  if (!ready) {
-    return <div className="max-w-7xl mx-auto px-4 py-16 text-center text-gray-400">加载中...</div>
-  }
+  if (!ready) return null
 
   return <AdminDashboard />
 }
