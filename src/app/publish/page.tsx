@@ -104,7 +104,7 @@ export default function PublishPage() {
     setSubmitting(false)
 
     if (insertError) {
-      setError("发布失败，请稍后重试")
+      setError(insertError.message)
       return
     }
 
