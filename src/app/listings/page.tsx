@@ -9,9 +9,12 @@ export const metadata: Metadata = {
     "浏览北美华人租房、买房房源，按城市、价格、户型筛选，快速找到理想住所。覆盖美国、加拿大各大城市。",
 }
 import { Suspense } from "react"
+import Link from "next/link"
 import ListingsGrid from "@/components/listings/ListingsGrid"
 import ListingFilters from "@/components/search/ListingFilters"
 import type { Listing } from "@/types"
+
+const PAGE_SIZE = 12
 
 interface SearchParams {
   type?: string
@@ -24,6 +27,7 @@ interface SearchParams {
   max_price?: string
   bedrooms?: string
   bathrooms?: string
+  page?: string
 }
 
 export default async function ListingsPage({
@@ -34,12 +38,17 @@ export default async function ListingsPage({
   const params = await searchParams
   const supabase = createServerClient()
 
+  const page = Math.max(1, Number(params.page) || 1)
+  const from = (page - 1) * PAGE_SIZE
+  const to = from + PAGE_SIZE - 1
+
   let query = supabase
     .from("listings")
-    .select("*")
+    .select("*", { count: "exact" })
     .eq("is_available", true)
     .order("featured", { ascending: false })
     .order("created_at", { ascending: false })
+    .range(from, to)
 
   if (params.type) query = query.eq("type", params.type)
   if (params.zip) query = query.ilike("zip_code", `%${params.zip}%`)
@@ -56,18 +65,27 @@ export default async function ListingsPage({
   if (params.bedrooms && !isNaN(bedrooms)) query = query.gte("bedrooms", bedrooms)
   if (params.bathrooms && !isNaN(bathrooms)) query = query.gte("bathrooms", bathrooms)
 
-  const { data: listings, error } = await query
+  const { data: listings, error, count } = await query
 
-  const hasFilter = Object.values(params).some(Boolean)
+  const totalPages = Math.ceil((count ?? 0) / PAGE_SIZE)
+  const hasFilter = Object.entries(params).filter(([k]) => k !== "page").some(([, v]) => Boolean(v))
+
+  function pageUrl(p: number) {
+    const sp = new URLSearchParams()
+    Object.entries(params).forEach(([k, v]) => { if (v && k !== "page") sp.set(k, v) })
+    if (p > 1) sp.set("page", String(p))
+    const qs = sp.toString()
+    return `/listings${qs ? `?${qs}` : ""}`
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-2xl font-bold text-gray-900">
           找房源
-          {listings && (
+          {count != null && (
             <span className="text-base font-normal text-gray-400 ml-2">
-              共 {listings.length} 套
+              共 {count} 套
             </span>
           )}
         </h1>
@@ -87,7 +105,37 @@ export default async function ListingsPage({
           )}
         </div>
       ) : (
-        <ListingsGrid listings={listings as Listing[]} />
+        <>
+          <ListingsGrid listings={listings as Listing[]} />
+
+          {totalPages > 1 && (
+            <div className="flex justify-center items-center gap-2 mt-10">
+              {page > 1 && (
+                <Link href={pageUrl(page - 1)} className="px-4 py-2 rounded-lg border text-sm hover:bg-gray-50">
+                  上一页
+                </Link>
+              )}
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+                <Link
+                  key={p}
+                  href={pageUrl(p)}
+                  className={`px-4 py-2 rounded-lg border text-sm ${
+                    p === page
+                      ? "bg-[#FF6B35] text-white border-[#FF6B35]"
+                      : "hover:bg-gray-50"
+                  }`}
+                >
+                  {p}
+                </Link>
+              ))}
+              {page < totalPages && (
+                <Link href={pageUrl(page + 1)} className="px-4 py-2 rounded-lg border text-sm hover:bg-gray-50">
+                  下一页
+                </Link>
+              )}
+            </div>
+          )}
+        </>
       )}
     </div>
   )
