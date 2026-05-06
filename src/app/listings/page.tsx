@@ -14,7 +14,7 @@ import ListingsGrid from "@/components/listings/ListingsGrid"
 import ListingFilters from "@/components/search/ListingFilters"
 import type { Listing } from "@/types"
 
-const PAGE_SIZE = 12
+const PAGE_SIZE = 9
 
 interface SearchParams {
   type?: string
