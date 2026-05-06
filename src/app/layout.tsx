@@ -14,8 +14,8 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://example.com"
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   icons: {
-    icon: "/export.png",
-    apple: "/export.png",
+    icon: "/icon.png",
+    apple: "/icon.png",
   },
   title: {
     default: "熊猫之家 | 北美华人租房买房平台",
