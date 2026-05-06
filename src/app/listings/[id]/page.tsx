@@ -131,7 +131,7 @@ export default async function ListingDetailPage({
 
       {/* 详细参数 */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 bg-gray-50 rounded-xl p-4 mb-6">
-        {l.area > 0 && (
+        {l.area != null && l.area > 0 && (
           <div className="text-center">
             <p className="text-sm text-gray-500">面积</p>
             <p className="font-semibold">{l.area.toLocaleString()} sq ft</p>

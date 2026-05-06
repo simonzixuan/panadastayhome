@@ -1,8 +1,8 @@
 "use client"
 
 interface Props {
-  address: string
-  city: string
+  address?: string | null
+  city?: string | null
   state?: string | null
   zipCode?: string | null
 }
