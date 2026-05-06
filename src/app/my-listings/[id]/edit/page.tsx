@@ -1,10 +1,12 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useRouter, useParams } from "next/navigation"
 import { supabase } from "@/lib/supabase/client"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import ImageUpload from "@/components/listings/ImageUpload"
+import type { ImageUploadHandle } from "@/components/listings/ImageUpload"
 import { US_STATES, CA_PROVINCES, COUNTRIES, PROPERTY_TYPE_LABELS } from "@/lib/constants"
 import type { Listing } from "@/types"
 
@@ -13,6 +15,7 @@ export default function EditListingPage() {
   const { id } = useParams<{ id: string }>()
   const [listing, setListing] = useState<Listing | null>(null)
   const [submitting, setSubmitting] = useState(false)
+  const imageUploadRef = useRef<ImageUploadHandle>(null)
   const [error, setError] = useState("")
   const [country, setCountry] = useState("US")
 
@@ -37,6 +40,8 @@ export default function EditListingPage() {
 
     const form = new FormData(e.currentTarget)
 
+    const images = await imageUploadRef.current?.uploadAll() ?? listing!.images ?? []
+
     const { error: updateError } = await supabase
       .from("listings")
       .update({
@@ -57,6 +62,7 @@ export default function EditListingPage() {
         contact_name: form.get("contact_name"),
         contact_phone: form.get("contact_phone"),
         contact_email: form.get("contact_email") || null,
+        images,
         updated_at: new Date().toISOString(),
       })
       .eq("id", id)
@@ -137,6 +143,10 @@ export default function EditListingPage() {
               className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-ring"
             />
           </Field>
+        </Section>
+
+        <Section title="房源图片">
+          <ImageUpload ref={imageUploadRef} maxFiles={10} initialImages={listing.images ?? []} />
         </Section>
 
         <Section title="地址信息（选填）">
