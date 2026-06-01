@@ -2,6 +2,7 @@ import { notFound } from "next/navigation"
 import { createServerClient } from "@/lib/supabase/server"
 import LandingListingPage from "@/components/landing/LandingListingPage"
 import { cityPages } from "@/lib/landing-pages"
+import { buildListingCityFilter } from "@/lib/landing-query"
 import type { Listing } from "@/types"
 import type { Metadata } from "next"
 
@@ -35,11 +36,13 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
   if (!page) notFound()
 
   const supabase = createServerClient()
+  const cityFilter = buildListingCityFilter(page.nearbyCities ?? [page.city])
+
   const { data } = await supabase
     .from("listings")
     .select("*")
     .eq("is_available", true)
-    .ilike("city", `%${page.city}%`)
+    .or(cityFilter)
     .order("featured", { ascending: false })
     .order("created_at", { ascending: false })
     .limit(12)
