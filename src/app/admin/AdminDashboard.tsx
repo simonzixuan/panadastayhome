@@ -45,7 +45,7 @@ type Lead = {
 type Tab = "listings" | "leads" | "users"
 
 export default function AdminDashboard() {
-  const [tab, setTab] = useState<Tab>("listings")
+  const [tab, setTab] = useState<Tab>("leads")
   const [listings, setListings] = useState<Listing[]>([])
   const [leads, setLeads] = useState<Lead[]>([])
   const [users, setUsers] = useState<UserRow[]>([])
@@ -54,6 +54,10 @@ export default function AdminDashboard() {
   const [loadingUsers, setLoadingUsers] = useState(false)
   const [token, setToken] = useState("")
   const [actionId, setActionId] = useState<string | null>(null)
+  const [listingSearch, setListingSearch] = useState("")
+  const [listingStatus, setListingStatus] = useState("all")
+  const [listingPage, setListingPage] = useState(1)
+  const LISTING_PAGE_SIZE = 20
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -170,6 +174,28 @@ export default function AdminDashboard() {
     setActionId(null)
   }
 
+  const filteredListings = listings.filter((listing) => {
+    const keyword = listingSearch.trim().toLowerCase()
+    const matchesSearch =
+      !keyword ||
+      listing.title.toLowerCase().includes(keyword) ||
+      (listing.city ?? "").toLowerCase().includes(keyword) ||
+      (listing.state ?? "").toLowerCase().includes(keyword)
+
+    const matchesStatus =
+      listingStatus === "all" ||
+      (listingStatus === "available" && listing.is_available) ||
+      (listingStatus === "unavailable" && !listing.is_available) ||
+      (listingStatus === "featured" && listing.featured)
+
+    return matchesSearch && matchesStatus
+  })
+  const listingTotalPages = Math.max(1, Math.ceil(filteredListings.length / LISTING_PAGE_SIZE))
+  const visibleListings = filteredListings.slice(
+    (listingPage - 1) * LISTING_PAGE_SIZE,
+    listingPage * LISTING_PAGE_SIZE
+  )
+
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       <h1 className="text-2xl font-bold text-gray-900 mb-6">管理员后台</h1>
@@ -196,6 +222,33 @@ export default function AdminDashboard() {
         loadingListings ? (
           <div className="text-gray-400 py-12 text-center">加载中...</div>
         ) : (
+          <>
+          <div className="bg-white border rounded-xl p-4 mb-4 flex flex-col md:flex-row gap-3 md:items-center md:justify-between">
+            <div>
+              <p className="font-semibold text-gray-900">房源管理</p>
+              <p className="text-sm text-gray-400 mt-1">
+                共 {listings.length} 套，当前显示 {filteredListings.length} 套
+              </p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-2">
+              <input
+                value={listingSearch}
+                onChange={(e) => { setListingSearch(e.target.value); setListingPage(1) }}
+                placeholder="搜索标题/城市/州"
+                className="h-10 rounded-lg border px-3 text-sm"
+              />
+              <select
+                value={listingStatus}
+                onChange={(e) => { setListingStatus(e.target.value); setListingPage(1) }}
+                className="h-10 rounded-lg border px-3 text-sm"
+              >
+                <option value="all">全部状态</option>
+                <option value="available">已上架</option>
+                <option value="unavailable">已下架</option>
+                <option value="featured">已置顶</option>
+              </select>
+            </div>
+          </div>
           <div className="bg-white rounded-xl border overflow-x-auto">
             <table className="w-full text-sm">
               <thead className="bg-gray-50 border-b">
@@ -211,7 +264,7 @@ export default function AdminDashboard() {
                 </tr>
               </thead>
               <tbody className="divide-y">
-                {listings.map((l) => (
+                {visibleListings.map((l) => (
                   <tr key={l.id} className={`hover:bg-gray-50 ${l.featured ? "bg-amber-50" : ""}`}>
                     <td className="px-4 py-3 max-w-[180px]">
                       <div className="flex items-center gap-1.5">
@@ -269,10 +322,34 @@ export default function AdminDashboard() {
                 ))}
               </tbody>
             </table>
-            {listings.length === 0 && (
+            {filteredListings.length === 0 && (
               <div className="text-center py-12 text-gray-400">暂无房源</div>
             )}
           </div>
+          {listingTotalPages > 1 && (
+            <div className="flex justify-center items-center gap-2 mt-4">
+              <Button
+                size="sm"
+                variant="outline"
+                disabled={listingPage === 1}
+                onClick={() => setListingPage((p) => Math.max(1, p - 1))}
+              >
+                上一页
+              </Button>
+              <span className="text-sm text-gray-500">
+                第 {listingPage} / {listingTotalPages} 页
+              </span>
+              <Button
+                size="sm"
+                variant="outline"
+                disabled={listingPage === listingTotalPages}
+                onClick={() => setListingPage((p) => Math.min(listingTotalPages, p + 1))}
+              >
+                下一页
+              </Button>
+            </div>
+          )}
+          </>
         )
       ) : tab === "leads" ? (
         loadingLeads ? (
