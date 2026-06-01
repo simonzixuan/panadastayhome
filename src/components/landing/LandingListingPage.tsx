@@ -69,7 +69,7 @@ export default function LandingListingPage({ title, description, searchIntent, l
             <div className="rounded-xl bg-gray-50 p-5">
               <h2 className="text-lg font-semibold mb-2">找不到合适的？</h2>
               <p className="text-sm text-gray-500 mb-4">告诉我们需求，我们帮你匹配。</p>
-              <InlineLeadForm source={source} />
+              <InlineLeadForm source={source} compact />
             </div>
           </div>
         </section>

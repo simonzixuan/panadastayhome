@@ -47,10 +47,10 @@ const cities = [
 export default function HomePage() {
   return (
     <div className="bg-[#F7F7F7] text-[#222222]">
-      <section className="relative overflow-hidden bg-white px-4 pt-14 pb-16">
+      <section className="relative overflow-hidden bg-white px-4 pt-10 pb-14 md:pt-12 md:pb-16">
         <div className="absolute inset-x-0 bottom-0 h-28 bg-[#F7F7F7]" />
-        <div className="relative max-w-6xl mx-auto grid lg:grid-cols-[1.05fr_0.95fr] gap-10 items-center">
-          <div className="py-6">
+        <div className="relative max-w-6xl mx-auto grid xl:grid-cols-[minmax(0,1fr)_520px] gap-10 xl:gap-12 items-center">
+          <div className="py-4 md:py-6 max-w-2xl">
             <div className="inline-flex items-center gap-2 rounded-full bg-[#FFF1EA] px-3 py-1.5 text-sm font-medium text-[#FF6B35] mb-5">
               <MessageCircle className="size-4" />
               华人找房助手
@@ -73,7 +73,7 @@ export default function HomePage() {
                 </Button>
               </Link>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-2xl text-sm">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-xl text-sm">
               {[
                 ["中文沟通", "适合留学生、新移民、华人家庭"],
                 ["人工确认", "减少过期房源和无效沟通"],
@@ -90,10 +90,10 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="relative">
-            <div className="absolute -right-8 -top-8 hidden h-36 w-36 rounded-full bg-[#FF6B35]/10 lg:block" />
-            <div className="absolute -left-10 bottom-8 hidden h-28 w-28 rounded-full bg-blue-100 lg:block" />
-            <div id="find-help" className="relative bg-white border rounded-2xl shadow-[0_18px_60px_rgba(0,0,0,0.12)] p-6">
+          <div className="relative w-full max-w-xl justify-self-center xl:max-w-none">
+            <div className="pointer-events-none absolute -right-7 -top-7 z-0 hidden h-32 w-32 rounded-full bg-[#FF6B35]/10 xl:block" />
+            <div className="pointer-events-none absolute -left-6 bottom-10 z-0 hidden h-24 w-24 rounded-full bg-blue-100 xl:block" />
+            <div id="find-help" className="relative z-10 bg-white border rounded-2xl shadow-[0_18px_60px_rgba(0,0,0,0.12)] p-6">
               <div className="mb-5 overflow-hidden rounded-xl border bg-gray-50">
                 <div className="h-32 bg-[linear-gradient(135deg,#fff7f3_0%,#f5fbff_50%,#ffffff_100%)] p-4">
                   <div className="grid h-full grid-cols-[1.2fr_0.8fr] gap-3">

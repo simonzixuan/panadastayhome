@@ -10,6 +10,7 @@ export async function GET(req: NextRequest) {
     .from("leads")
     .select("id, listing_id, name, contact, budget, move_in_date, message, source, referrer, transferred, status, notes, created_at, listings(id, title, city, state)")
     .order("created_at", { ascending: false })
+    .limit(500)
 
   if (error) return Response.json({ error: error.message }, { status: 500 })
   return Response.json({ leads: data ?? [] })

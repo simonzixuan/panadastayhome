@@ -2,8 +2,11 @@ import { notFound } from "next/navigation"
 import { createServerClient } from "@/lib/supabase/server"
 import LandingListingPage from "@/components/landing/LandingListingPage"
 import { schoolPages } from "@/lib/landing-pages"
+import { buildListingKeywordFilter } from "@/lib/landing-query"
 import type { Listing } from "@/types"
 import type { Metadata } from "next"
+
+export const revalidate = 600
 
 export async function generateStaticParams() {
   return Object.keys(schoolPages).map((slug) => ({ slug }))
@@ -33,7 +36,7 @@ export default async function SchoolPage({ params }: { params: Promise<{ slug: s
   if (!page) notFound()
 
   const supabase = createServerClient()
-  const { data } = await supabase
+  let query = supabase
     .from("listings")
     .select("*")
     .eq("is_available", true)
@@ -41,6 +44,11 @@ export default async function SchoolPage({ params }: { params: Promise<{ slug: s
     .order("featured", { ascending: false })
     .order("created_at", { ascending: false })
     .limit(12)
+
+  const keywordFilter = buildListingKeywordFilter(page.listingKeywords)
+  if (keywordFilter) query = query.or(keywordFilter)
+
+  const { data } = await query
 
   return (
     <LandingListingPage

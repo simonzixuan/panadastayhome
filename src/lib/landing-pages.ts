@@ -40,6 +40,7 @@ export const schoolPages = {
   ubc: {
     title: "UBC 附近租房",
     city: "Vancouver",
+    listingKeywords: ["UBC", "University of British Columbia", "Point Grey", "Kitsilano"],
     metaTitle: "UBC 附近租房｜温哥华留学生中文找房",
     description: "帮 UBC 留学生和家长筛选温哥华校区附近合适房源。",
     searchIntent: "UBC 租房、UBC 附近公寓、温哥华留学生租房、UBC 中文找房",

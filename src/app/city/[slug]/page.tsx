@@ -5,6 +5,8 @@ import { cityPages } from "@/lib/landing-pages"
 import type { Listing } from "@/types"
 import type { Metadata } from "next"
 
+export const revalidate = 600
+
 export async function generateStaticParams() {
   return Object.keys(cityPages).map((slug) => ({ slug }))
 }

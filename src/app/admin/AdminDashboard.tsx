@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react"
 import { supabase } from "@/lib/supabase/client"
 import { Button } from "@/components/ui/button"
+import { filterAndPaginateLeads } from "@/lib/admin-view"
 
 type Listing = {
   id: string
@@ -57,7 +58,11 @@ export default function AdminDashboard() {
   const [listingSearch, setListingSearch] = useState("")
   const [listingStatus, setListingStatus] = useState("all")
   const [listingPage, setListingPage] = useState(1)
+  const [leadSearch, setLeadSearch] = useState("")
+  const [leadStatus, setLeadStatus] = useState("all")
+  const [leadPage, setLeadPage] = useState(1)
   const LISTING_PAGE_SIZE = 20
+  const LEAD_PAGE_SIZE = 20
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -195,6 +200,13 @@ export default function AdminDashboard() {
     (listingPage - 1) * LISTING_PAGE_SIZE,
     listingPage * LISTING_PAGE_SIZE
   )
+  const filteredLeadResult = filterAndPaginateLeads(leads, {
+    status: leadStatus,
+    search: leadSearch,
+    page: leadPage,
+    pageSize: LEAD_PAGE_SIZE,
+  })
+  const visibleLeads = filteredLeadResult.items as Lead[]
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
@@ -369,6 +381,33 @@ export default function AdminDashboard() {
               </div>
             ))}
           </div>
+          <div className="bg-white border rounded-xl p-4 mb-4 flex flex-col md:flex-row gap-3 md:items-center md:justify-between">
+            <div>
+              <p className="font-semibold text-gray-900">线索管理</p>
+              <p className="text-sm text-gray-400 mt-1">
+                共 {leads.length} 条，当前显示 {filteredLeadResult.total} 条
+              </p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-2">
+              <input
+                value={leadSearch}
+                onChange={(e) => { setLeadSearch(e.target.value); setLeadPage(1) }}
+                placeholder="搜索姓名/联系方式/来源/房源"
+                className="h-10 rounded-lg border px-3 text-sm"
+              />
+              <select
+                value={leadStatus}
+                onChange={(e) => { setLeadStatus(e.target.value); setLeadPage(1) }}
+                className="h-10 rounded-lg border px-3 text-sm"
+              >
+                <option value="all">全部状态</option>
+                <option value="new">新线索</option>
+                <option value="contacted">已联系</option>
+                <option value="transferred">已转交</option>
+                <option value="invalid">无效</option>
+              </select>
+            </div>
+          </div>
           <div className="bg-white rounded-xl border overflow-x-auto">
             <table className="w-full text-sm">
               <thead className="bg-gray-50 border-b">
@@ -384,7 +423,7 @@ export default function AdminDashboard() {
                 </tr>
               </thead>
               <tbody className="divide-y">
-                {leads.map((lead) => (
+                {visibleLeads.map((lead) => (
                   <tr key={lead.id} className="hover:bg-gray-50 align-top">
                     <td className="px-4 py-3">
                       <div className="font-medium text-gray-900">{lead.name}</div>
@@ -449,10 +488,33 @@ export default function AdminDashboard() {
                 ))}
               </tbody>
             </table>
-            {leads.length === 0 && (
+            {filteredLeadResult.total === 0 && (
               <div className="text-center py-12 text-gray-400">暂无线索</div>
             )}
           </div>
+          {filteredLeadResult.totalPages > 1 && (
+            <div className="flex justify-center items-center gap-2 mt-4">
+              <Button
+                size="sm"
+                variant="outline"
+                disabled={filteredLeadResult.page === 1}
+                onClick={() => setLeadPage((p) => Math.max(1, p - 1))}
+              >
+                上一页
+              </Button>
+              <span className="text-sm text-gray-500">
+                第 {filteredLeadResult.page} / {filteredLeadResult.totalPages} 页
+              </span>
+              <Button
+                size="sm"
+                variant="outline"
+                disabled={filteredLeadResult.page === filteredLeadResult.totalPages}
+                onClick={() => setLeadPage((p) => Math.min(filteredLeadResult.totalPages, p + 1))}
+              >
+                下一页
+              </Button>
+            </div>
+          )}
           </>
         )
       ) : (

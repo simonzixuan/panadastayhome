@@ -5,7 +5,7 @@ import { Send } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
-export default function InlineLeadForm({ source = "listings" }: { source?: string }) {
+export default function InlineLeadForm({ source = "listings", compact = false }: { source?: string; compact?: boolean }) {
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState("")
   const [sent, setSent] = useState(false)
@@ -50,17 +50,20 @@ export default function InlineLeadForm({ source = "listings" }: { source?: strin
   }
 
   return (
-    <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_1fr_auto] gap-3">
+    <form
+      onSubmit={handleSubmit}
+      className={compact ? "grid grid-cols-1 gap-3" : "grid grid-cols-1 gap-3 min-[1100px]:grid-cols-[1fr_1fr_1fr_1fr_1fr_auto]"}
+    >
       <Input name="name" placeholder="称呼 *" required />
       <Input name="contact" placeholder="微信或电话 *" required />
       <Input name="budget" placeholder="预算" />
+      <Input name="move_in_date" placeholder="入住时间" />
       <Input name="message" placeholder="城市/学校/房型" />
-      <input type="hidden" name="move_in_date" value="" />
       <Button type="submit" disabled={submitting} className="h-10 bg-[#FF6B35] hover:bg-[#e85a24] text-white">
         {!submitting && <Send className="size-4" />}
         {submitting ? "提交中" : "帮我找"}
       </Button>
-      {error && <p className="md:col-span-5 text-sm text-red-500">{error}</p>}
+      {error && <p className={compact ? "text-sm text-red-500" : "min-[1100px]:col-span-6 text-sm text-red-500"}>{error}</p>}
     </form>
   )
 }
