@@ -2,9 +2,12 @@ import { NextRequest, NextResponse } from "next/server"
 import Stripe from "stripe"
 import { createClient } from "@supabase/supabase-js"
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
-
 export async function POST(req: NextRequest) {
+  if (!process.env.STRIPE_SECRET_KEY) {
+    return NextResponse.json({ error: "置顶付费暂未开放" }, { status: 503 })
+  }
+
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
   const token = req.headers.get("Authorization")?.replace("Bearer ", "") ?? null
   if (!token) return NextResponse.json({ error: "未登录" }, { status: 401 })
 

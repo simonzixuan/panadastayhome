@@ -1,7 +1,7 @@
 "use client"
 
 import { useRouter, useSearchParams } from "next/navigation"
-import { useCallback, useState } from "react"
+import { useState } from "react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { US_STATES, CA_PROVINCES, COUNTRIES, PROPERTY_TYPE_LABELS } from "@/lib/constants"
@@ -31,7 +31,7 @@ export default function ListingFilters() {
     setState("")
   }
 
-  const handleSearch = useCallback(() => {
+  function handleSearch() {
     const params = new URLSearchParams()
     if (city) params.set("city", city)
     if (zip) params.set("zip", zip)
@@ -44,13 +44,13 @@ export default function ListingFilters() {
     if (bedrooms) params.set("bedrooms", bedrooms)
     if (bathrooms) params.set("bathrooms", bathrooms)
     router.push(`/listings?${params.toString()}`)
-  }, [city, zip, country, state, type, propertyType, minPrice, maxPrice, bedrooms, bathrooms, router])
+  }
 
-  const handleReset = useCallback(() => {
+  function handleReset() {
     setCity(""); setZip(""); setCountry(""); setState(""); setType("")
     setPropertyType(""); setMinPrice(""); setMaxPrice(""); setBedrooms(""); setBathrooms("")
     router.push("/listings")
-  }, [router])
+  }
 
   const hasFilters = city || zip || country || state || type || propertyType || minPrice || maxPrice || bedrooms || bathrooms
 

@@ -25,13 +25,30 @@ type UserRow = {
   banned_until: string | null
 }
 
-type Tab = "listings" | "users"
+type Lead = {
+  id: string
+  listing_id: string | null
+  name: string
+  contact: string
+  budget: string | null
+  move_in_date: string | null
+  message: string | null
+  source: string | null
+  referrer: string | null
+  transferred: boolean
+  created_at: string
+  listings: { id: string; title: string; city: string | null; state: string | null } | null
+}
+
+type Tab = "listings" | "leads" | "users"
 
 export default function AdminDashboard() {
   const [tab, setTab] = useState<Tab>("listings")
   const [listings, setListings] = useState<Listing[]>([])
+  const [leads, setLeads] = useState<Lead[]>([])
   const [users, setUsers] = useState<UserRow[]>([])
   const [loadingListings, setLoadingListings] = useState(true)
+  const [loadingLeads, setLoadingLeads] = useState(false)
   const [loadingUsers, setLoadingUsers] = useState(false)
   const [token, setToken] = useState("")
   const [actionId, setActionId] = useState<string | null>(null)
@@ -68,13 +85,33 @@ export default function AdminDashboard() {
     setLoadingUsers(false)
   }, [token])
 
+  const fetchLeads = useCallback(async () => {
+    if (!token) return
+    setLoadingLeads(true)
+    const res = await fetch("/api/admin/leads", {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    if (res.ok) {
+      const data = await res.json()
+      setLeads(data.leads)
+    }
+    setLoadingLeads(false)
+  }, [token])
+
   useEffect(() => {
-    if (token) fetchListings()
+    if (!token) return
+    void Promise.resolve().then(fetchListings)
   }, [token, fetchListings])
 
   useEffect(() => {
-    if (tab === "users" && token && users.length === 0) fetchUsers()
+    if (tab !== "users" || !token || users.length > 0) return
+    void Promise.resolve().then(fetchUsers)
   }, [tab, token, users.length, fetchUsers])
+
+  useEffect(() => {
+    if (tab !== "leads" || !token || leads.length > 0) return
+    void Promise.resolve().then(fetchLeads)
+  }, [tab, token, leads.length, fetchLeads])
 
   async function patchListing(id: string, patch: Record<string, unknown>) {
     setActionId(id)
@@ -98,6 +135,17 @@ export default function AdminDashboard() {
     setActionId(null)
   }
 
+  async function toggleLeadTransferred(id: string, transferred: boolean) {
+    setActionId(id)
+    await fetch(`/api/admin/leads/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+      body: JSON.stringify({ transferred: !transferred }),
+    })
+    await fetchLeads()
+    setActionId(null)
+  }
+
   async function toggleBan(id: string, isBanned: boolean) {
     setActionId(id)
     await fetch(`/api/admin/users/${id}`, {
@@ -114,7 +162,7 @@ export default function AdminDashboard() {
       <h1 className="text-2xl font-bold text-gray-900 mb-6">管理员后台</h1>
 
       <div className="flex gap-1 bg-gray-100 rounded-xl p-1 mb-6 w-fit">
-        {(["listings", "users"] as Tab[]).map((t) => (
+        {(["listings", "leads", "users"] as Tab[]).map((t) => (
           <button
             key={t}
             onClick={() => setTab(t)}
@@ -122,7 +170,11 @@ export default function AdminDashboard() {
               tab === t ? "bg-white text-gray-900 shadow-sm" : "text-gray-500 hover:text-gray-700"
             }`}
           >
-            {t === "listings" ? `房源管理 (${listings.length})` : `用户管理 (${users.length})`}
+            {t === "listings"
+              ? `房源管理 (${listings.length})`
+              : t === "leads"
+                ? `线索管理 (${leads.length})`
+                : `用户管理 (${users.length})`}
           </button>
         ))}
       </div>
@@ -206,6 +258,74 @@ export default function AdminDashboard() {
             </table>
             {listings.length === 0 && (
               <div className="text-center py-12 text-gray-400">暂无房源</div>
+            )}
+          </div>
+        )
+      ) : tab === "leads" ? (
+        loadingLeads ? (
+          <div className="text-gray-400 py-12 text-center">加载中...</div>
+        ) : (
+          <div className="bg-white rounded-xl border overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead className="bg-gray-50 border-b">
+                <tr>
+                  <th className="text-left px-4 py-3 font-medium text-gray-700">咨询人</th>
+                  <th className="text-left px-4 py-3 font-medium text-gray-700">联系方式</th>
+                  <th className="text-left px-4 py-3 font-medium text-gray-700">房源</th>
+                  <th className="text-left px-4 py-3 font-medium text-gray-700">预算/时间</th>
+                  <th className="text-left px-4 py-3 font-medium text-gray-700">来源</th>
+                  <th className="text-left px-4 py-3 font-medium text-gray-700">状态</th>
+                  <th className="text-left px-4 py-3 font-medium text-gray-700">操作</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y">
+                {leads.map((lead) => (
+                  <tr key={lead.id} className="hover:bg-gray-50 align-top">
+                    <td className="px-4 py-3">
+                      <div className="font-medium text-gray-900">{lead.name}</div>
+                      <div className="text-xs text-gray-400">
+                        {new Date(lead.created_at).toLocaleDateString("zh-CN", { month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit" })}
+                      </div>
+                    </td>
+                    <td className="px-4 py-3 text-gray-600">{lead.contact}</td>
+                    <td className="px-4 py-3 max-w-[220px]">
+                      <div className="font-medium truncate">{lead.listings?.title ?? "未知房源"}</div>
+                      <div className="text-xs text-gray-400">
+                        {[lead.listings?.city, lead.listings?.state].filter(Boolean).join(", ")}
+                      </div>
+                    </td>
+                    <td className="px-4 py-3 text-gray-500">
+                      <div>{lead.budget || "—"}</div>
+                      <div className="text-xs">{lead.move_in_date || "—"}</div>
+                      {lead.message && <div className="text-xs mt-1 max-w-[220px] whitespace-pre-wrap">{lead.message}</div>}
+                    </td>
+                    <td className="px-4 py-3 text-gray-500 max-w-[180px]">
+                      <div>{lead.source || "直接访问"}</div>
+                      {lead.referrer && <div className="text-xs truncate">{lead.referrer}</div>}
+                    </td>
+                    <td className="px-4 py-3">
+                      <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium ${
+                        lead.transferred ? "bg-green-100 text-green-700" : "bg-amber-100 text-amber-700"
+                      }`}>
+                        {lead.transferred ? "已转交" : "待转交"}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3">
+                      <Button
+                        size="sm"
+                        variant={lead.transferred ? "outline" : "secondary"}
+                        disabled={actionId === lead.id}
+                        onClick={() => toggleLeadTransferred(lead.id, lead.transferred)}
+                      >
+                        {lead.transferred ? "标为待转交" : "标为已转交"}
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            {leads.length === 0 && (
+              <div className="text-center py-12 text-gray-400">暂无线索</div>
             )}
           </div>
         )

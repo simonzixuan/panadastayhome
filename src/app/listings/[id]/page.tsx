@@ -9,6 +9,7 @@ import LandlordReviews from "@/components/listings/LandlordReviews"
 import ImageGallery from "@/components/listings/ImageGallery"
 import FavoriteButton from "@/components/listings/FavoriteButton"
 import ListingMap from "@/components/listings/ListingMap"
+import LeadForm from "@/components/listings/LeadForm"
 import type { Metadata } from "next"
 
 export async function generateMetadata({
@@ -178,6 +179,7 @@ export default async function ListingDetailPage({
       {/* 房东评价 */}
       {l.user_id && <LandlordReviews userId={l.user_id} />}
 
+      <LeadForm listingId={l.id} />
       {/* 联系方式（登录后可见） */}
       <ContactSection listingId={l.id} />
       {/* 发消息给房东 */}
