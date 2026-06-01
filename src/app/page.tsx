@@ -2,6 +2,7 @@ import SearchBar from "@/components/search/SearchBar"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import HomeLeadForm from "@/components/leads/HomeLeadForm"
+import HomeActivityCard from "@/components/home/HomeActivityCard"
 import { CheckCircle2, ClipboardList, Home, MapPin, MessageCircle, Search, ShieldCheck, Sparkles, UserRoundCheck } from "lucide-react"
 
 const features = [
@@ -93,23 +94,7 @@ export default function HomePage() {
           <div className="relative w-full max-w-xl justify-self-center xl:max-w-none">
             <div className="pointer-events-none absolute -right-7 -top-7 z-0 hidden h-28 w-28 rounded-full bg-[#FF6B35]/10 xl:block" />
             <div id="find-help" className="relative z-10 bg-white border rounded-2xl shadow-[0_18px_60px_rgba(0,0,0,0.12)] p-6">
-              <div className="mb-5 overflow-hidden rounded-xl border bg-gray-50">
-                <div className="h-32 bg-[linear-gradient(135deg,#fff7f3_0%,#f5fbff_50%,#ffffff_100%)] p-4">
-                  <div className="grid h-full grid-cols-[1.2fr_0.8fr] gap-3">
-                    <div className="rounded-lg bg-white p-3 shadow-sm">
-                      <p className="text-xs font-medium text-gray-400">找房需求</p>
-                      <p className="mt-2 text-sm font-semibold">多伦多 2B，7月入住</p>
-                      <p className="mt-1 text-xs text-gray-400">预算 $2500-3000/月</p>
-                      <div className="mt-3 h-2 w-24 rounded-full bg-[#FF6B35]/20" />
-                    </div>
-                    <div className="rounded-lg bg-[#222222] p-3 text-white shadow-sm">
-                      <p className="text-xs text-white/60">已确认</p>
-                      <p className="mt-2 text-2xl font-bold">3</p>
-                      <p className="text-xs text-white/60">套可约看房</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <HomeActivityCard />
               <h2 className="text-xl font-bold mb-2">先告诉我们你想找什么房</h2>
               <p className="text-sm text-gray-500 mb-5">我们会把合适房源和看房方式发给你。</p>
               <HomeLeadForm />
