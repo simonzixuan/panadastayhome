@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import ImageUpload from "@/components/listings/ImageUpload"
 import type { ImageUploadHandle } from "@/components/listings/ImageUpload"
 import { US_STATES, CA_PROVINCES, COUNTRIES, PROPERTY_TYPE_LABELS } from "@/lib/constants"
+import { CheckCircle2, Megaphone, MessageCircle, Sparkles } from "lucide-react"
 
 const selectClass = "w-full h-10 rounded-md border border-input bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
 
@@ -112,10 +113,41 @@ export default function PublishPage() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold text-gray-900 mb-8">发布房源</h1>
+    <div className="bg-[#F7F7F7]">
+    <div className="max-w-5xl mx-auto px-4 py-8">
+      <section className="bg-white border rounded-2xl p-6 md:p-8 mb-8 shadow-sm">
+        <div className="grid lg:grid-cols-[1fr_340px] gap-8 items-center">
+          <div>
+            <div className="inline-flex items-center gap-2 rounded-full bg-[#FFF1EA] px-3 py-1.5 text-sm font-medium text-[#FF6B35] mb-4">
+              <Megaphone className="size-4" />
+              免费发布房源
+            </div>
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 leading-tight">
+              发布房源，我们帮你触达北美华人租客/买家
+            </h1>
+            <p className="mt-4 text-gray-500 leading-7">
+              适合房东、二房东和房产经纪人。填写基础信息后，你会得到一个中文房源页，可用于微信群、小红书、Telegram 和 Google 搜索承接。
+            </p>
+          </div>
+          <div className="rounded-xl bg-gray-50 p-5">
+            {[
+              ["中文包装", "把房源亮点讲给华人用户"],
+              ["线索收集", "租客可直接留下微信或电话"],
+              ["人工协助", "冷启动阶段先免费帮你分发"],
+            ].map(([title, desc]) => (
+              <div key={title} className="flex gap-3 py-3 first:pt-0 last:pb-0">
+                <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-[#FF6B35]" />
+                <div>
+                  <p className="font-semibold text-gray-900">{title}</p>
+                  <p className="text-sm text-gray-500 mt-1">{desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-6 max-w-2xl mx-auto">
         {error && (
           <div className="bg-red-50 text-red-600 text-sm px-4 py-3 rounded-lg">{error}</div>
         )}
@@ -249,10 +281,16 @@ export default function PublishPage() {
           </Field>
         </Section>
 
-        <Button type="submit" disabled={submitting} className="w-full" size="lg">
+        <Button type="submit" disabled={submitting} className="w-full bg-[#FF6B35] hover:bg-[#e85a24] text-white" size="lg">
+          {!submitting && <Sparkles className="size-4" />}
           {submitting ? "发布中，请稍候..." : "发布房源"}
         </Button>
+        <p className="flex items-center justify-center gap-1.5 text-xs text-gray-400">
+          <MessageCircle className="size-3.5" />
+          发布后可把房源链接发给我们，用于后续中文推广
+        </p>
       </form>
+    </div>
     </div>
   )
 }
