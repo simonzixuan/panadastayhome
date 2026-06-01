@@ -58,6 +58,8 @@ export default async function SchoolPage({ params }: { params: Promise<{ slug: s
       listings={(data as Listing[]) ?? []}
       source={`school_${slug}`}
       canonicalPath={`/schools/${slug}`}
+      areas={page.areas}
+      faqs={page.faqs}
     />
   )
 }

@@ -130,6 +130,23 @@ export default function HomePage() {
         </div>
       </section>
 
+      <section className="bg-[#F7F7F7] px-4 py-10">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-[1fr_1fr] gap-5">
+          <div className="bg-white border rounded-xl p-6">
+            <h2 className="text-xl font-bold text-gray-900">为什么可以放心留下需求？</h2>
+            <p className="mt-3 text-sm leading-6 text-gray-500">
+              你的联系方式不会公开展示。我们只用它来确认预算、入住时间和看房方式，再把合适房源发给你。
+            </p>
+          </div>
+          <div className="bg-white border rounded-xl p-6">
+            <h2 className="text-xl font-bold text-gray-900">房源会先经过人工审核</h2>
+            <p className="mt-3 text-sm leading-6 text-gray-500">
+              房东和经纪人提交的房源默认不会直接公开。我们会先检查基础信息，再决定是否上架和推广。
+            </p>
+          </div>
+        </div>
+      </section>
+
       <section className="max-w-6xl mx-auto px-4 pt-14 pb-6">
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>

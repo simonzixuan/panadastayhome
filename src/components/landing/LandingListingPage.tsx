@@ -10,9 +10,11 @@ interface Props {
   listings: Listing[]
   source: string
   canonicalPath: string
+  areas?: readonly string[]
+  faqs?: readonly (readonly [string, string])[]
 }
 
-export default function LandingListingPage({ title, description, searchIntent, listings, source, canonicalPath }: Props) {
+export default function LandingListingPage({ title, description, searchIntent, listings, source, canonicalPath, areas = [], faqs = [] }: Props) {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.panadastayhome.com"
   const canonicalUrl = `${siteUrl}${canonicalPath}`
   const jsonLd = {
@@ -99,6 +101,36 @@ export default function LandingListingPage({ title, description, searchIntent, l
             </div>
           ))}
         </section>
+
+        {(areas.length > 0 || faqs.length > 0) && (
+          <section className="mt-8 grid lg:grid-cols-[360px_1fr] gap-4">
+            {areas.length > 0 && (
+              <div className="bg-white border rounded-xl p-5">
+                <h2 className="font-semibold text-gray-900">热门区域</h2>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {areas.map((area) => (
+                    <span key={area} className="rounded-full border bg-gray-50 px-3 py-1.5 text-sm text-gray-600">
+                      {area}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+            {faqs.length > 0 && (
+              <div className="bg-white border rounded-xl p-5">
+                <h2 className="font-semibold text-gray-900">常见问题</h2>
+                <div className="mt-4 grid md:grid-cols-2 gap-4">
+                  {faqs.map(([question, answer]) => (
+                    <div key={question} className="rounded-xl bg-gray-50 p-4">
+                      <h3 className="font-medium text-gray-900">{question}</h3>
+                      <p className="mt-2 text-sm leading-6 text-gray-500">{answer}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </section>
+        )}
       </div>
     </div>
   )

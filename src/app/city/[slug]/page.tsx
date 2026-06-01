@@ -55,6 +55,8 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
       listings={(data as Listing[]) ?? []}
       source={`city_${slug}`}
       canonicalPath={`/city/${slug}`}
+      areas={page.areas}
+      faqs={page.faqs}
     />
   )
 }

@@ -17,6 +17,7 @@ export function validateLeadInput(input) {
       message: String(input?.message ?? "").trim() || null,
       source: String(input?.source ?? "").trim() || null,
       referrer: String(input?.referrer ?? "").trim() || null,
+      current_path: String(input?.current_path ?? "").trim() || null,
     },
   }
 }

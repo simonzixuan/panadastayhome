@@ -15,6 +15,9 @@ type Listing = {
   contact_name: string
   is_available: boolean
   featured: boolean
+  publisher_type: string | null
+  listing_source: string | null
+  review_notes: string | null
   created_at: string
 }
 
@@ -36,14 +39,24 @@ type Lead = {
   message: string | null
   source: string | null
   referrer: string | null
+  current_path: string | null
   transferred: boolean
   status: string
   notes: string | null
+  assigned_to: string | null
+  next_follow_up_at: string | null
   created_at: string
   listings: { id: string; title: string; city: string | null; state: string | null } | null
 }
 
 type Tab = "listings" | "leads" | "users"
+
+const publisherTypeLabels: Record<string, string> = {
+  landlord: "房东",
+  sublessor: "二房东/转租",
+  agent: "经纪人",
+  property_manager: "公寓/物业",
+}
 
 export default function AdminDashboard() {
   const [tab, setTab] = useState<Tab>("leads")
@@ -270,8 +283,10 @@ export default function AdminDashboard() {
                   <th className="text-left px-4 py-3 font-medium text-gray-700">类型</th>
                   <th className="text-left px-4 py-3 font-medium text-gray-700">价格</th>
                   <th className="text-left px-4 py-3 font-medium text-gray-700">联系人</th>
+                  <th className="text-left px-4 py-3 font-medium text-gray-700">发布者</th>
                   <th className="text-left px-4 py-3 font-medium text-gray-700">发布时间</th>
                   <th className="text-left px-4 py-3 font-medium text-gray-700">状态</th>
+                  <th className="text-left px-4 py-3 font-medium text-gray-700">审核备注</th>
                   <th className="text-left px-4 py-3 font-medium text-gray-700">操作</th>
                 </tr>
               </thead>
@@ -293,6 +308,10 @@ export default function AdminDashboard() {
                     <td className="px-4 py-3 text-gray-500">${l.price.toLocaleString()}</td>
                     <td className="px-4 py-3 text-gray-500">{l.contact_name}</td>
                     <td className="px-4 py-3 text-gray-500">
+                      <div>{l.publisher_type ? publisherTypeLabels[l.publisher_type] ?? l.publisher_type : "—"}</div>
+                      {l.listing_source && <div className="text-xs text-gray-400">{l.listing_source}</div>}
+                    </td>
+                    <td className="px-4 py-3 text-gray-500">
                       {new Date(l.created_at).toLocaleDateString("zh-CN")}
                     </td>
                     <td className="px-4 py-3">
@@ -301,6 +320,18 @@ export default function AdminDashboard() {
                       }`}>
                         {l.is_available ? "已上架" : "待审核"}
                       </span>
+                    </td>
+                    <td className="px-4 py-3 min-w-[180px]">
+                      <input
+                        defaultValue={l.review_notes ?? ""}
+                        placeholder="审核备注"
+                        onBlur={(e) => {
+                          if (e.target.value !== (l.review_notes ?? "")) {
+                            patchListing(l.id, { review_notes: e.target.value })
+                          }
+                        }}
+                        className="h-9 w-full rounded-lg border px-2 text-sm"
+                      />
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex gap-2">
@@ -418,6 +449,7 @@ export default function AdminDashboard() {
                   <th className="text-left px-4 py-3 font-medium text-gray-700">预算/时间</th>
                   <th className="text-left px-4 py-3 font-medium text-gray-700">来源</th>
                   <th className="text-left px-4 py-3 font-medium text-gray-700">状态</th>
+                  <th className="text-left px-4 py-3 font-medium text-gray-700">跟进</th>
                   <th className="text-left px-4 py-3 font-medium text-gray-700">备注</th>
                   <th className="text-left px-4 py-3 font-medium text-gray-700">操作</th>
                 </tr>
@@ -445,6 +477,7 @@ export default function AdminDashboard() {
                     </td>
                     <td className="px-4 py-3 text-gray-500 max-w-[180px]">
                       <div>{lead.source || "直接访问"}</div>
+                      {lead.current_path && <div className="text-xs truncate">{lead.current_path}</div>}
                       {lead.referrer && <div className="text-xs truncate">{lead.referrer}</div>}
                     </td>
                     <td className="px-4 py-3">
@@ -461,6 +494,28 @@ export default function AdminDashboard() {
                         <option value="transferred">已转交</option>
                         <option value="invalid">无效</option>
                       </select>
+                    </td>
+                    <td className="px-4 py-3 min-w-[180px]">
+                      <input
+                        defaultValue={lead.assigned_to ?? ""}
+                        placeholder="负责人"
+                        onBlur={(e) => {
+                          if (e.target.value !== (lead.assigned_to ?? "")) {
+                            patchLead(lead.id, { assigned_to: e.target.value })
+                          }
+                        }}
+                        className="mb-2 h-9 w-full rounded-lg border px-2 text-sm"
+                      />
+                      <input
+                        type="date"
+                        defaultValue={lead.next_follow_up_at ?? ""}
+                        onBlur={(e) => {
+                          if (e.target.value !== (lead.next_follow_up_at ?? "")) {
+                            patchLead(lead.id, { next_follow_up_at: e.target.value || null })
+                          }
+                        }}
+                        className="h-9 w-full rounded-lg border px-2 text-sm"
+                      />
                     </td>
                     <td className="px-4 py-3 min-w-[180px]">
                       <input

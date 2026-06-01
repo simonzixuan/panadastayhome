@@ -29,6 +29,7 @@ export default function LeadForm({ listingId }: { listingId: string }) {
         message: form.get("message"),
         source: params.get("utm_source") || params.get("source") || "",
         referrer: document.referrer || "",
+        current_path: `${window.location.pathname}${window.location.search}`,
       }),
     })
 

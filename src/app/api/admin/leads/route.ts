@@ -8,7 +8,7 @@ export async function GET(req: NextRequest) {
 
   const { data, error } = await adminSupabase
     .from("leads")
-    .select("id, listing_id, name, contact, budget, move_in_date, message, source, referrer, transferred, status, notes, created_at, listings(id, title, city, state)")
+    .select("id, listing_id, name, contact, budget, move_in_date, message, source, referrer, current_path, transferred, status, notes, assigned_to, next_follow_up_at, created_at, listings(id, title, city, state)")
     .order("created_at", { ascending: false })
     .limit(500)
 

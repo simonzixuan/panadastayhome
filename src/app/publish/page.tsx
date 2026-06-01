@@ -100,6 +100,8 @@ export default function PublishPage() {
         contact_email: form.get("contact_email") || null,
         images,
         is_available: false,
+        publisher_type: form.get("publisher_type"),
+        listing_source: "publish_form",
       })
       .select("id")
       .single()
@@ -298,6 +300,15 @@ export default function PublishPage() {
 
         {/* 联系方式 */}
         <Section title="联系方式">
+          <Field label="发布者类型 *">
+            <select name="publisher_type" required defaultValue="" className={selectClass}>
+              <option value="">请选择</option>
+              <option value="landlord">房东</option>
+              <option value="sublessor">二房东/转租</option>
+              <option value="agent">房产经纪人</option>
+              <option value="property_manager">公寓/物业管理</option>
+            </select>
+          </Field>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Field label="联系人 *">
               <Input name="contact_name" placeholder="John Smith" required />

@@ -25,6 +25,9 @@ export interface Listing {
   contact_email?: string
   is_available: boolean
   featured: boolean
+  publisher_type?: string | null
+  listing_source?: string | null
+  review_notes?: string | null
   created_at: string
   updated_at: string
   user_id?: string

@@ -12,6 +12,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   const update: Record<string, unknown> = {}
   if ("is_available" in body) update.is_available = body.is_available
   if ("featured" in body) update.featured = body.featured
+  if ("review_notes" in body) update.review_notes = String(body.review_notes || "")
 
   const { error } = await adminSupabase
     .from("listings")

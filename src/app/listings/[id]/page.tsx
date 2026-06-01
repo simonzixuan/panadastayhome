@@ -81,6 +81,11 @@ export default async function ListingDetailPage({
   if (!listing) notFound()
 
   const l = listing as Listing
+  const qualityBadges = [
+    l.images?.length >= 3 ? "图片较完整" : null,
+    l.contact_phone || l.contact_email ? "可联系确认" : null,
+    l.featured ? "人工精选" : null,
+  ].filter(Boolean) as string[]
 
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://panadastayhome.com"
@@ -129,6 +134,11 @@ export default async function ListingDetailPage({
                       <ShieldCheck className="size-3.5" />
                       中文协助确认
                     </span>
+                    {qualityBadges.map((label) => (
+                      <span key={label} className="inline-flex items-center rounded-full bg-gray-50 px-2.5 py-1 text-xs font-medium text-gray-500">
+                        {label}
+                      </span>
+                    ))}
                   </div>
                   <h1 className="text-2xl md:text-3xl font-bold text-gray-900 leading-tight">{l.title}</h1>
                   <p className="mt-3 flex items-center gap-1.5 text-gray-500">

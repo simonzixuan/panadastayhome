@@ -27,6 +27,7 @@ export default function InlineLeadForm({ source = "listings", compact = false }:
         message: form.get("message"),
         source,
         referrer: document.referrer || "",
+        current_path: `${window.location.pathname}${window.location.search}`,
       }),
     })
 

@@ -27,6 +27,7 @@ export default function HomeLeadForm() {
         message: form.get("message"),
         source: "homepage",
         referrer: document.referrer || "",
+        current_path: `${window.location.pathname}${window.location.search}`,
       }),
     })
 

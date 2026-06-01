@@ -6,6 +6,11 @@ export const cityPages = {
     metaTitle: "温哥华华人租房｜中文找房与看房协助",
     description: "适合留学生、新移民和华人家庭的温哥华租房信息。",
     searchIntent: "温哥华租房、Vancouver 华人租房、UBC 附近租房、温哥华中文找房",
+    areas: ["Downtown Vancouver", "Burnaby", "Richmond", "Coquitlam", "Surrey", "New Westminster"],
+    faqs: [
+      ["温哥华找房需要提前多久？", "热门区域建议提前 4-8 周开始确认预算、入住时间和看房方式。"],
+      ["可以帮忙确认房源真实吗？", "可以。你留下需求后，我们会先确认房源状态，再对接看房。"],
+    ],
   },
   toronto: {
     title: "多伦多华人租房",
@@ -14,6 +19,11 @@ export const cityPages = {
     metaTitle: "多伦多华人租房｜中文确认房源与预约看房",
     description: "中文协助确认多伦多公寓、合租和家庭住房。",
     searchIntent: "多伦多租房、Toronto 华人租房、多伦多留学生租房、多伦多中文找房",
+    areas: ["Downtown Toronto", "North York", "Scarborough", "Markham", "Richmond Hill", "Mississauga"],
+    faqs: [
+      ["多伦多哪些区域适合华人租房？", "North York、Scarborough、Markham 和 Richmond Hill 都是常见选择，通勤和预算差异较大。"],
+      ["没有合适房源怎么办？", "可以先提交需求，我们按预算、入住时间和区域帮你筛选。"],
+    ],
   },
   "los-angeles": {
     title: "洛杉矶华人租房",
@@ -22,6 +32,11 @@ export const cityPages = {
     metaTitle: "洛杉矶华人租房｜LA 中文找房服务",
     description: "面向洛杉矶华人社区的租房和买房信息。",
     searchIntent: "洛杉矶租房、LA 华人租房、Los Angeles 中文找房、南加州华人租房",
+    areas: ["Los Angeles", "Irvine", "Arcadia", "Alhambra", "Pasadena", "Monterey Park", "Rowland Heights", "San Gabriel"],
+    faqs: [
+      ["点洛杉矶会看到周边城市吗？", "会。洛杉矶入口会覆盖 Irvine、Arcadia、Alhambra、Pasadena 等南加常见华人租房区域。"],
+      ["可以帮忙筛掉过期房源吗？", "可以。我们会优先确认是否仍可看房，再联系房东或经纪人。"],
+    ],
   },
   seattle: {
     title: "西雅图华人租房",
@@ -30,6 +45,11 @@ export const cityPages = {
     metaTitle: "西雅图华人租房｜中文协助筛选房源",
     description: "帮你筛选西雅图合适房源，并对接房东或经纪人。",
     searchIntent: "西雅图租房、Seattle 华人租房、Bellevue 租房、华盛顿州中文找房",
+    areas: ["Seattle", "Bellevue", "Redmond", "Kirkland", "Renton", "Bothell"],
+    faqs: [
+      ["西雅图找房会覆盖 Bellevue 吗？", "会。西雅图入口会同时覆盖 Bellevue、Redmond、Kirkland 等常见通勤区域。"],
+      ["适合新移民或留学生吗？", "适合。我们会用中文确认预算、入住时间和沟通方式。"],
+    ],
   },
   "new-york": {
     title: "纽约华人租房",
@@ -38,6 +58,11 @@ export const cityPages = {
     metaTitle: "纽约华人租房｜NYC 中文找房与看房协助",
     description: "纽约华人找房入口，适合学生、上班族和新移民。",
     searchIntent: "纽约租房、NYC 华人租房、纽约留学生租房、纽约中文找房",
+    areas: ["Manhattan", "Queens", "Brooklyn", "Flushing", "Long Island City", "Jersey City"],
+    faqs: [
+      ["纽约入口包含 Jersey City 吗？", "会。很多用户会同时比较 NYC 和 Jersey City 的通勤与预算。"],
+      ["提交需求后会公开吗？", "不会。需求只用于人工匹配和联系，不会展示在公开页面。"],
+    ],
   },
 } as const
 
@@ -49,5 +74,10 @@ export const schoolPages = {
     metaTitle: "UBC 附近租房｜温哥华留学生中文找房",
     description: "帮 UBC 留学生和家长筛选温哥华校区附近合适房源。",
     searchIntent: "UBC 租房、UBC 附近公寓、温哥华留学生租房、UBC 中文找房",
+    areas: ["UBC", "Point Grey", "Kitsilano", "Dunbar", "Kerrisdale", "Downtown Vancouver"],
+    faqs: [
+      ["UBC 附近租房看哪些区域？", "Point Grey、Kitsilano、Dunbar 和 Kerrisdale 是常见选择，预算和通勤差异较大。"],
+      ["家长可以帮孩子先留需求吗？", "可以。留下联系方式和入住时间，我们会按条件帮你确认。"],
+    ],
   },
 } as const

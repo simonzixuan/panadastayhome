@@ -35,6 +35,9 @@ export default function NavbarMobile() {
           <Link href="/publish" className="text-sm text-gray-500 hover:text-gray-900" onClick={() => setOpen(false)}>
             发布房源
           </Link>
+          <Link href="/about" className="text-sm text-gray-500 hover:text-gray-900" onClick={() => setOpen(false)}>
+            关于我们
+          </Link>
         </div>
       )}
     </div>

@@ -19,6 +19,11 @@ export default function ListingCard({ listing, isFavorited = false }: Props) {
 
   const images = listing.images ?? []
   const showSecond = hovered && images.length > 1
+  const qualityBadges = [
+    images.length >= 3 ? "图片较完整" : null,
+    listing.contact_phone || listing.contact_email ? "可联系确认" : null,
+    listing.featured ? "人工精选" : null,
+  ].filter(Boolean) as string[]
 
   return (
     <Link href={`/listings/${listing.id}`} className="block h-full">
@@ -96,6 +101,15 @@ export default function ListingCard({ listing, isFavorited = false }: Props) {
           <h3 className="font-semibold text-[#222222] line-clamp-2 leading-snug mb-1">
             {listing.title}
           </h3>
+          {qualityBadges.length > 0 && (
+            <div className="mb-2 flex flex-wrap gap-1.5">
+              {qualityBadges.slice(0, 3).map((label) => (
+                <span key={label} className="rounded-full bg-gray-50 px-2 py-1 text-xs text-gray-500">
+                  {label}
+                </span>
+              ))}
+            </div>
+          )}
           <p className="flex items-center gap-1 text-sm text-gray-400 mb-3">
             <MapPin className="size-3.5 shrink-0" />
             {listing.city}{listing.state ? `, ${listing.state}` : ""}

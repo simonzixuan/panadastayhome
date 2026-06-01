@@ -25,6 +25,9 @@ export default function Navbar() {
             <Link href="/publish" className="text-sm text-gray-500 hover:text-[#222222] transition-colors">
               发布房源
             </Link>
+            <Link href="/about" className="text-sm text-gray-500 hover:text-[#222222] transition-colors">
+              关于我们
+            </Link>
           </div>
           <NavbarAuth />
           <NavbarMobile />

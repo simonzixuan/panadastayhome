@@ -21,6 +21,17 @@ test("allows homepage lead without listing id", () => {
   assert.equal(result.ok, true)
 })
 
+test("keeps current page path for conversion tracking", () => {
+  const result = validateLeadInput({
+    name: "李同学",
+    contact: "wechat-id",
+    current_path: "/city/vancouver?utm_source=telegram",
+  })
+
+  assert.equal(result.ok, true)
+  assert.equal(result.data.current_path, "/city/vancouver?utm_source=telegram")
+})
+
 test("rejects missing contact", () => {
   const result = validateLeadInput({
     listing_id: "listing-1",

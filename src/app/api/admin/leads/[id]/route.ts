@@ -16,6 +16,8 @@ export async function PATCH(
   if ("transferred" in body) patch.transferred = Boolean(body.transferred)
   if ("status" in body) patch.status = String(body.status || "new")
   if ("notes" in body) patch.notes = String(body.notes || "")
+  if ("assigned_to" in body) patch.assigned_to = String(body.assigned_to || "")
+  if ("next_follow_up_at" in body) patch.next_follow_up_at = body.next_follow_up_at || null
 
   const { error } = await adminSupabase
     .from("leads")
