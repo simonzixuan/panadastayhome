@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { LockKeyhole, Send } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
@@ -44,7 +45,7 @@ export default function LeadForm({ listingId }: { listingId: string }) {
 
   if (sent) {
     return (
-      <div className="bg-green-50 rounded-xl p-6 mt-6">
+      <div className="bg-green-50 rounded-xl border border-green-200 p-6">
         <h2 className="text-lg font-semibold text-green-800 mb-2">已收到咨询</h2>
         <p className="text-sm text-green-700">我们会尽快确认房源情况，并通过你留下的联系方式回复。</p>
       </div>
@@ -52,7 +53,7 @@ export default function LeadForm({ listingId }: { listingId: string }) {
   }
 
   return (
-    <div className="bg-white border rounded-xl p-6 mt-6">
+    <div className="bg-white border rounded-xl p-6 shadow-sm">
       <h2 className="text-lg font-semibold mb-2">预约看房 / 获取更多信息</h2>
       <p className="text-sm text-gray-500 mb-4">不用注册，留下联系方式后我们帮你确认房源。</p>
 
@@ -72,9 +73,14 @@ export default function LeadForm({ listingId }: { listingId: string }) {
           className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-ring"
         />
         {error && <p className="text-sm text-red-500">{error}</p>}
-        <Button type="submit" disabled={submitting} className="w-full bg-[#FF6B35] hover:bg-[#e85a24] text-white">
+        <Button type="submit" disabled={submitting} className="w-full h-11 bg-[#FF6B35] hover:bg-[#e85a24] text-white">
+          {!submitting && <Send className="size-4" />}
           {submitting ? "提交中..." : "提交咨询"}
         </Button>
+        <p className="flex items-center justify-center gap-1.5 text-xs text-gray-400">
+          <LockKeyhole className="size-3.5" />
+          信息仅用于本次房源咨询
+        </p>
       </form>
     </div>
   )

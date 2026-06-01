@@ -11,6 +11,7 @@ import FavoriteButton from "@/components/listings/FavoriteButton"
 import ListingMap from "@/components/listings/ListingMap"
 import LeadForm from "@/components/listings/LeadForm"
 import type { Metadata } from "next"
+import { Bath, BedDouble, Home, MapPin, Ruler, ShieldCheck } from "lucide-react"
 
 export async function generateMetadata({
   params,
@@ -105,85 +106,104 @@ export default async function ListingDetailPage({
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      {/* 图片画廊 */}
-      {l.images?.length > 0 ? (
-        <ImageGallery images={l.images} title={l.title} />
-      ) : (
-        <div className="aspect-video bg-gray-100 rounded-xl flex items-center justify-center text-gray-400 mb-6">
-          暂无图片
-        </div>
-      )}
+    <div className="bg-[#F7F7F7]">
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="grid lg:grid-cols-[minmax(0,1fr)_380px] gap-8 items-start">
+          <main className="min-w-0">
+            {l.images?.length > 0 ? (
+              <ImageGallery images={l.images} title={l.title} />
+            ) : (
+              <div className="aspect-video bg-gray-100 rounded-xl flex items-center justify-center text-gray-400 mb-6">
+                暂无图片
+              </div>
+            )}
 
-      <div className="flex items-start justify-between gap-4 mb-4">
-        <h1 className="text-2xl font-bold text-gray-900">{l.title}</h1>
-        <div className="flex items-center gap-2 shrink-0">
-          <FavoriteButton listingId={l.id} />
-          <Badge variant={l.type === "rent" ? "default" : "secondary"}>
-            {l.type === "rent" ? "租房 For Rent" : "买房 For Sale"}
-          </Badge>
+            <section className="bg-white border rounded-xl p-6 mb-6">
+              <div className="flex items-start justify-between gap-4 mb-4">
+                <div>
+                  <div className="flex flex-wrap items-center gap-2 mb-3">
+                    <Badge variant={l.type === "rent" ? "default" : "secondary"}>
+                      {l.type === "rent" ? "租房 For Rent" : "买房 For Sale"}
+                    </Badge>
+                    <span className="inline-flex items-center gap-1 rounded-full bg-[#FFF1EA] px-2.5 py-1 text-xs font-medium text-[#FF6B35]">
+                      <ShieldCheck className="size-3.5" />
+                      中文协助确认
+                    </span>
+                  </div>
+                  <h1 className="text-2xl md:text-3xl font-bold text-gray-900 leading-tight">{l.title}</h1>
+                  <p className="mt-3 flex items-center gap-1.5 text-gray-500">
+                    <MapPin className="size-4 shrink-0" />
+                    {[l.address, l.district, l.city, l.state, l.zip_code].filter(Boolean).join(", ") || "地址待确认"}
+                  </p>
+                </div>
+                <FavoriteButton listingId={l.id} />
+              </div>
+
+              <p className="text-3xl font-bold text-[#FF6B35] mb-6">
+                {l.price != null ? `$${l.price.toLocaleString()}` : "价格待定"}
+                {l.type === "rent" && <span className="text-base font-normal text-gray-500">/mo</span>}
+              </p>
+
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                {l.area != null && l.area > 0 && (
+                  <div className="rounded-xl bg-gray-50 p-4">
+                    <Ruler className="size-5 text-[#FF6B35] mb-2" />
+                    <p className="text-sm text-gray-500">面积</p>
+                    <p className="font-semibold">{l.area.toLocaleString()} sq ft</p>
+                  </div>
+                )}
+                <div className="rounded-xl bg-gray-50 p-4">
+                  <BedDouble className="size-5 text-[#FF6B35] mb-2" />
+                  <p className="text-sm text-gray-500">卧室</p>
+                  <p className="font-semibold">{l.bedrooms} bd</p>
+                </div>
+                <div className="rounded-xl bg-gray-50 p-4">
+                  <Bath className="size-5 text-[#FF6B35] mb-2" />
+                  <p className="text-sm text-gray-500">卫生间</p>
+                  <p className="font-semibold">{l.bathrooms} ba</p>
+                </div>
+                <div className="rounded-xl bg-gray-50 p-4">
+                  <Home className="size-5 text-[#FF6B35] mb-2" />
+                  <p className="text-sm text-gray-500">类型</p>
+                  <p className="font-semibold">{PROPERTY_TYPE_LABELS[l.property_type] ?? l.property_type}</p>
+                </div>
+              </div>
+            </section>
+
+            {l.description && (
+              <section className="bg-white border rounded-xl p-6 mb-6">
+                <h2 className="text-lg font-semibold mb-3">房源描述</h2>
+                <p className="text-gray-600 leading-7 whitespace-pre-wrap">{l.description}</p>
+              </section>
+            )}
+
+            <section className="bg-white border rounded-xl p-6 mb-6">
+              <h2 className="text-lg font-semibold mb-3">位置与周边</h2>
+              <ListingMap
+                address={l.address}
+                city={l.city}
+                state={l.state}
+                zipCode={l.zip_code}
+              />
+            </section>
+
+            {l.user_id && <LandlordReviews userId={l.user_id} />}
+
+            <div className="lg:hidden space-y-6">
+              <ContactSection listingId={l.id} />
+              {l.user_id && <MessageForm listingId={l.id} ownerUserId={l.user_id} />}
+            </div>
+          </main>
+
+          <aside className="lg:sticky lg:top-24 space-y-5">
+            <LeadForm listingId={l.id} />
+            <div className="hidden lg:block space-y-5">
+              <ContactSection listingId={l.id} />
+              {l.user_id && <MessageForm listingId={l.id} ownerUserId={l.user_id} />}
+            </div>
+          </aside>
         </div>
       </div>
-
-      <p className="text-3xl font-bold text-blue-600 mb-6">
-        {l.price != null ? `$${l.price.toLocaleString()}` : "价格待定"}
-        {l.type === "rent" && <span className="text-base font-normal text-gray-500">/mo</span>}
-      </p>
-
-      {/* 详细参数 */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 bg-gray-50 rounded-xl p-4 mb-6">
-        {l.area != null && l.area > 0 && (
-          <div className="text-center">
-            <p className="text-sm text-gray-500">面积</p>
-            <p className="font-semibold">{l.area.toLocaleString()} sq ft</p>
-          </div>
-        )}
-        <div className="text-center">
-          <p className="text-sm text-gray-500">卧室</p>
-          <p className="font-semibold">{l.bedrooms} bd</p>
-        </div>
-        <div className="text-center">
-          <p className="text-sm text-gray-500">卫生间</p>
-          <p className="font-semibold">{l.bathrooms} ba</p>
-        </div>
-        <div className="text-center">
-          <p className="text-sm text-gray-500">类型</p>
-          <p className="font-semibold">{PROPERTY_TYPE_LABELS[l.property_type] ?? l.property_type}</p>
-        </div>
-      </div>
-
-      {/* 地址 */}
-      <div className="mb-6">
-        <h2 className="text-lg font-semibold mb-2">地址</h2>
-        <p className="text-gray-600">
-          {[l.address, l.district, l.city, l.state, l.zip_code].filter(Boolean).join(", ")}
-        </p>
-      </div>
-
-      {/* 地图 */}
-      <ListingMap
-        address={l.address}
-        city={l.city}
-        state={l.state}
-        zipCode={l.zip_code}
-      />
-
-      {/* 描述 */}
-      {l.description && (
-        <div className="mb-6">
-          <h2 className="text-lg font-semibold mb-2">房源描述</h2>
-          <p className="text-gray-600 whitespace-pre-wrap">{l.description}</p>
-        </div>
-      )}
-
-      {/* 房东评价 */}
-      {l.user_id && <LandlordReviews userId={l.user_id} />}
-
-      <LeadForm listingId={l.id} />
-      {/* 联系方式（登录后可见） */}
-      <ContactSection listingId={l.id} />
-      {/* 发消息给房东 */}
-      {l.user_id && <MessageForm listingId={l.id} ownerUserId={l.user_id} />}
     </div>
     </>
   )
