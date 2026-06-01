@@ -12,6 +12,7 @@ import { Suspense } from "react"
 import Link from "next/link"
 import ListingsGrid from "@/components/listings/ListingsGrid"
 import ListingFilters from "@/components/search/ListingFilters"
+import InlineLeadForm from "@/components/leads/InlineLeadForm"
 import type { Listing } from "@/types"
 
 const PAGE_SIZE = 9
@@ -78,30 +79,47 @@ export default async function ListingsPage({
   }
 
   return (
+    <div className="bg-[#F7F7F7]">
     <div className="max-w-7xl mx-auto px-4 py-8">
-      <div className="flex items-center justify-between mb-4">
-        <h1 className="text-2xl font-bold text-gray-900">
-          找房源
-          {count != null && (
-            <span className="text-base font-normal text-gray-400 ml-2">
-              共 {count} 套
-            </span>
-          )}
-        </h1>
-      </div>
+      <section className="rounded-2xl bg-white border p-6 mb-6 shadow-sm">
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5 mb-5">
+          <div>
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
+              找房源
+              {count != null && (
+                <span className="text-base font-normal text-gray-400 ml-2">
+                  共 {count} 套
+                </span>
+              )}
+            </h1>
+            <p className="mt-2 text-gray-500">
+              先浏览现有房源；如果没有合适的，留下需求，我们用中文帮你匹配和确认。
+            </p>
+          </div>
+          <Link href="/#find-help" className="text-sm font-medium text-[#FF6B35] hover:underline">
+            不想自己筛？提交找房需求
+          </Link>
+        </div>
+        <InlineLeadForm source="listings_top" />
+      </section>
 
-      <Suspense>
-        <ListingFilters />
-      </Suspense>
+      <div className="mb-6">
+        <Suspense>
+          <ListingFilters />
+        </Suspense>
+      </div>
 
       {error ? (
         <p className="text-red-500 text-center py-16">加载失败，请稍后重试</p>
       ) : !listings || listings.length === 0 ? (
-        <div className="text-center py-16">
-          <p className="text-gray-400 text-lg mb-2">没有找到符合条件的房源</p>
+        <div className="bg-white border rounded-2xl p-8 md:p-10">
+          <div className="text-center max-w-2xl mx-auto mb-6">
+          <p className="text-gray-900 text-xl font-semibold mb-2">没有找到完全匹配的房源</p>
           {hasFilter && (
-            <p className="text-gray-400 text-sm">试试调整筛选条件</p>
+            <p className="text-gray-500 text-sm">可以调整筛选条件，也可以直接留下需求，我们帮你找。</p>
           )}
+          </div>
+          <InlineLeadForm source="listings_empty" />
         </div>
       ) : (
         <>
@@ -136,6 +154,7 @@ export default async function ListingsPage({
           )}
         </>
       )}
+    </div>
     </div>
   )
 }

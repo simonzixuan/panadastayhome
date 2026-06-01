@@ -1,0 +1,66 @@
+"use client"
+
+import { useState } from "react"
+import { Send } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+
+export default function InlineLeadForm({ source = "listings" }: { source?: string }) {
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState("")
+  const [sent, setSent] = useState(false)
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    setSubmitting(true)
+    setError("")
+
+    const form = new FormData(e.currentTarget)
+    const res = await fetch("/api/leads", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: form.get("name"),
+        contact: form.get("contact"),
+        budget: form.get("budget"),
+        move_in_date: form.get("move_in_date"),
+        message: form.get("message"),
+        source,
+        referrer: document.referrer || "",
+      }),
+    })
+
+    setSubmitting(false)
+
+    if (!res.ok) {
+      const data = await res.json().catch(() => null)
+      setError(data?.error ?? "提交失败，请重试")
+      return
+    }
+
+    setSent(true)
+  }
+
+  if (sent) {
+    return (
+      <div className="rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
+        已收到需求，我们会根据你的条件帮你匹配合适房源。
+      </div>
+    )
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_1fr_auto] gap-3">
+      <Input name="name" placeholder="称呼 *" required />
+      <Input name="contact" placeholder="微信或电话 *" required />
+      <Input name="budget" placeholder="预算" />
+      <Input name="message" placeholder="城市/学校/房型" />
+      <input type="hidden" name="move_in_date" value="" />
+      <Button type="submit" disabled={submitting} className="h-10 bg-[#FF6B35] hover:bg-[#e85a24] text-white">
+        {!submitting && <Send className="size-4" />}
+        {submitting ? "提交中" : "帮我找"}
+      </Button>
+      {error && <p className="md:col-span-5 text-sm text-red-500">{error}</p>}
+    </form>
+  )
+}
