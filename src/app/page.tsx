@@ -35,7 +35,14 @@ const steps = [
   { icon: UserRoundCheck, title: "对接看房", desc: "联系房东或经纪人" },
 ]
 
-const cities = ["温哥华租房", "多伦多租房", "洛杉矶租房", "西雅图租房", "纽约租房", "UBC 附近租房"]
+const cities = [
+  ["温哥华租房", "/city/vancouver"],
+  ["多伦多租房", "/city/toronto"],
+  ["洛杉矶租房", "/city/los-angeles"],
+  ["西雅图租房", "/city/seattle"],
+  ["纽约租房", "/city/new-york"],
+  ["UBC 附近租房", "/schools/ubc"],
+]
 
 export default function HomePage() {
   return (
@@ -149,10 +156,10 @@ export default function HomePage() {
             <p className="text-gray-400 mt-2">先从城市、学校和生活圈开始。</p>
           </div>
           <div className="flex flex-wrap gap-2">
-            {cities.map((city) => (
+            {cities.map(([city, href]) => (
               <Link
                 key={city}
-                href={`/listings?city=${encodeURIComponent(city.replace("租房", ""))}`}
+                href={href}
                 className="rounded-full border bg-white px-4 py-2 text-sm text-gray-600 hover:border-[#FF6B35] hover:text-[#FF6B35]"
               >
                 {city}
