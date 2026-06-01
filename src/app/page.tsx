@@ -47,10 +47,10 @@ const cities = [
 export default function HomePage() {
   return (
     <div className="bg-[#F7F7F7] text-[#222222]">
-      <section className="relative overflow-hidden bg-white px-4 pt-10 pb-14 md:pt-12 md:pb-16">
+      <section className="relative overflow-hidden bg-white px-4 pt-8 pb-10 md:pt-10 xl:pt-12">
         <div className="absolute inset-x-0 bottom-0 h-28 bg-[#F7F7F7]" />
-        <div className="relative max-w-6xl mx-auto grid xl:grid-cols-[minmax(0,1fr)_520px] gap-10 xl:gap-12 items-center">
-          <div className="py-4 md:py-6 max-w-2xl">
+        <div className="relative max-w-6xl mx-auto grid xl:grid-cols-[minmax(0,1fr)_520px] gap-8 xl:gap-10 items-center">
+          <div className="py-4 max-w-2xl">
             <div className="inline-flex items-center gap-2 rounded-full bg-[#FFF1EA] px-3 py-1.5 text-sm font-medium text-[#FF6B35] mb-5">
               <MessageCircle className="size-4" />
               华人找房助手
@@ -91,8 +91,7 @@ export default function HomePage() {
           </div>
 
           <div className="relative w-full max-w-xl justify-self-center xl:max-w-none">
-            <div className="pointer-events-none absolute -right-7 -top-7 z-0 hidden h-32 w-32 rounded-full bg-[#FF6B35]/10 xl:block" />
-            <div className="pointer-events-none absolute -left-6 bottom-10 z-0 hidden h-24 w-24 rounded-full bg-blue-100 xl:block" />
+            <div className="pointer-events-none absolute -right-7 -top-7 z-0 hidden h-28 w-28 rounded-full bg-[#FF6B35]/10 xl:block" />
             <div id="find-help" className="relative z-10 bg-white border rounded-2xl shadow-[0_18px_60px_rgba(0,0,0,0.12)] p-6">
               <div className="mb-5 overflow-hidden rounded-xl border bg-gray-50">
                 <div className="h-32 bg-[linear-gradient(135deg,#fff7f3_0%,#f5fbff_50%,#ffffff_100%)] p-4">
@@ -117,10 +116,7 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-      </section>
-
-      <section className="bg-[#F7F7F7] px-4 py-10">
-        <div className="max-w-6xl mx-auto rounded-2xl bg-white border p-5 shadow-sm">
+        <div className="relative max-w-6xl mx-auto mt-8 rounded-2xl bg-white border p-5 shadow-sm">
           <div className="grid md:grid-cols-4 gap-3">
             {steps.map(({ icon: Icon, title, desc }) => (
               <div key={title} className="flex items-center gap-3 rounded-xl bg-gray-50 p-4">
