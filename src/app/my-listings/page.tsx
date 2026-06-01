@@ -108,7 +108,7 @@ export default function MyListingsPage() {
                     <Badge className="shrink-0 bg-[#FF6B35] text-white">⭐ 精选</Badge>
                   )}
                   {!listing.is_available && (
-                    <Badge variant="outline" className="shrink-0 text-gray-400">已下架</Badge>
+                    <Badge variant="outline" className="shrink-0 text-gray-400">待审核</Badge>
                   )}
                 </div>
                 <p className="text-blue-600 font-bold">
@@ -131,10 +131,11 @@ export default function MyListingsPage() {
                 <Button
                   variant="outline"
                   size="sm"
+                  disabled={!listing.is_available}
                   onClick={() => handleToggle(listing)}
                   className="w-full"
                 >
-                  {listing.is_available ? "下架" : "上架"}
+                  {listing.is_available ? "下架" : "等待审核"}
                 </Button>
                 <Button
                   variant="outline"

@@ -256,7 +256,7 @@ export default function AdminDashboard() {
               >
                 <option value="all">全部状态</option>
                 <option value="available">已上架</option>
-                <option value="unavailable">已下架</option>
+                <option value="unavailable">待审核/未上架</option>
                 <option value="featured">已置顶</option>
               </select>
             </div>
@@ -299,7 +299,7 @@ export default function AdminDashboard() {
                       <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium ${
                         l.is_available ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-500"
                       }`}>
-                        {l.is_available ? "已上架" : "已下架"}
+                        {l.is_available ? "已上架" : "待审核"}
                       </span>
                     </td>
                     <td className="px-4 py-3">
@@ -318,7 +318,7 @@ export default function AdminDashboard() {
                           disabled={actionId === l.id}
                           onClick={() => patchListing(l.id, { is_available: !l.is_available })}
                         >
-                          {actionId === l.id ? "处理中..." : l.is_available ? "下架" : "上架"}
+                          {actionId === l.id ? "处理中..." : l.is_available ? "下架" : "通过上架"}
                         </Button>
                         <Button
                           size="sm"

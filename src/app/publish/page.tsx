@@ -21,6 +21,7 @@ export default function PublishPage() {
   const [authChecked, setAuthChecked] = useState(false)
   const [listingType, setListingType] = useState("")
   const [propertyType, setPropertyType] = useState("")
+  const [submittedId, setSubmittedId] = useState("")
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
@@ -98,6 +99,7 @@ export default function PublishPage() {
         contact_phone: form.get("contact_phone"),
         contact_email: form.get("contact_email") || null,
         images,
+        is_available: false,
       })
       .select("id")
       .single()
@@ -109,7 +111,35 @@ export default function PublishPage() {
       return
     }
 
-    router.push(`/listings/${listing.id}`)
+    setSubmittedId(listing.id)
+  }
+
+  if (submittedId) {
+    return (
+      <div className="bg-[#F7F7F7]">
+        <div className="max-w-2xl mx-auto px-4 py-16">
+          <div className="bg-white border rounded-2xl p-8 text-center shadow-sm">
+            <CheckCircle2 className="mx-auto size-12 text-[#FF6B35]" />
+            <h1 className="mt-5 text-2xl font-bold text-gray-900">已收到房源，等待审核</h1>
+            <p className="mt-3 text-gray-500 leading-7">
+              房源暂不会公开展示。我们会先检查图片、价格、位置和联系方式，通过后再帮你上架并做中文推广。
+            </p>
+            <div className="mt-6 flex flex-col sm:flex-row justify-center gap-3">
+              <Button onClick={() => router.push("/my-listings")} className="bg-[#FF6B35] hover:bg-[#e85a24] text-white">
+                查看我的房源
+              </Button>
+              <Button variant="outline" onClick={() => {
+                setSubmittedId("")
+                setListingType("")
+                setPropertyType("")
+              }}>
+                继续发布
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -283,11 +313,11 @@ export default function PublishPage() {
 
         <Button type="submit" disabled={submitting} className="w-full bg-[#FF6B35] hover:bg-[#e85a24] text-white" size="lg">
           {!submitting && <Sparkles className="size-4" />}
-          {submitting ? "发布中，请稍候..." : "发布房源"}
+          {submitting ? "提交中，请稍候..." : "提交房源，等待审核"}
         </Button>
         <p className="flex items-center justify-center gap-1.5 text-xs text-gray-400">
           <MessageCircle className="size-3.5" />
-          发布后可把房源链接发给我们，用于后续中文推广
+          提交后房源先进入审核，通过后再公开展示和中文推广
         </p>
       </form>
     </div>
