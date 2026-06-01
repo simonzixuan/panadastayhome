@@ -14,8 +14,16 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const page = cityPages[slug as keyof typeof cityPages]
   if (!page) return {}
   return {
-    title: page.title,
-    description: page.description,
+    title: page.metaTitle,
+    description: `${page.description} ${page.searchIntent}，熊猫之家提供中文找房、房源确认和看房对接。`,
+    keywords: page.searchIntent.split("、"),
+    alternates: { canonical: `/city/${slug}` },
+    openGraph: {
+      title: page.metaTitle,
+      description: page.description,
+      url: `/city/${slug}`,
+      type: "website",
+    },
   }
 }
 
@@ -38,8 +46,10 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
     <LandingListingPage
       title={page.title}
       description={page.description}
+      searchIntent={page.searchIntent}
       listings={(data as Listing[]) ?? []}
       source={`city_${slug}`}
+      canonicalPath={`/city/${slug}`}
     />
   )
 }

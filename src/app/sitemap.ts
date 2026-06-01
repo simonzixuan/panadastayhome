@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next"
 import { createServerClient } from "@/lib/supabase/server"
+import { cityPages, schoolPages } from "@/lib/landing-pages"
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://panadastayhome.com"
@@ -9,6 +10,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${siteUrl}/listings`, lastModified: new Date(), changeFrequency: "hourly", priority: 0.9 },
     { url: `${siteUrl}/publish`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
     { url: `${siteUrl}/terms`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.3 },
+  ]
+
+  const landingRoutes: MetadataRoute.Sitemap = [
+    ...Object.keys(cityPages).map((slug) => ({
+      url: `${siteUrl}/city/${slug}`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.85,
+    })),
+    ...Object.keys(schoolPages).map((slug) => ({
+      url: `${siteUrl}/schools/${slug}`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.85,
+    })),
   ]
 
   try {
@@ -25,8 +41,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
     }))
 
-    return [...staticRoutes, ...listingRoutes]
+    return [...staticRoutes, ...landingRoutes, ...listingRoutes]
   } catch {
-    return staticRoutes
+    return [...staticRoutes, ...landingRoutes]
   }
 }
