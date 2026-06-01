@@ -11,10 +11,15 @@ export async function PATCH(
 
   const { id } = await params
   const body = await req.json()
+  const patch: Record<string, unknown> = {}
+
+  if ("transferred" in body) patch.transferred = Boolean(body.transferred)
+  if ("status" in body) patch.status = String(body.status || "new")
+  if ("notes" in body) patch.notes = String(body.notes || "")
 
   const { error } = await adminSupabase
     .from("leads")
-    .update({ transferred: Boolean(body.transferred) })
+    .update(patch)
     .eq("id", id)
 
   if (error) return Response.json({ error: error.message }, { status: 500 })

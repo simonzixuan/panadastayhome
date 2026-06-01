@@ -36,6 +36,8 @@ type Lead = {
   source: string | null
   referrer: string | null
   transferred: boolean
+  status: string
+  notes: string | null
   created_at: string
   listings: { id: string; title: string; city: string | null; state: string | null } | null
 }
@@ -141,6 +143,17 @@ export default function AdminDashboard() {
       method: "PATCH",
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
       body: JSON.stringify({ transferred: !transferred }),
+    })
+    await fetchLeads()
+    setActionId(null)
+  }
+
+  async function patchLead(id: string, patch: Record<string, unknown>) {
+    setActionId(id)
+    await fetch(`/api/admin/leads/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+      body: JSON.stringify(patch),
     })
     await fetchLeads()
     setActionId(null)
@@ -265,6 +278,20 @@ export default function AdminDashboard() {
         loadingLeads ? (
           <div className="text-gray-400 py-12 text-center">加载中...</div>
         ) : (
+          <>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+            {[
+              ["新线索", leads.filter((l) => l.status === "new").length],
+              ["已联系", leads.filter((l) => l.status === "contacted").length],
+              ["已转交", leads.filter((l) => l.status === "transferred" || l.transferred).length],
+              ["无效", leads.filter((l) => l.status === "invalid").length],
+            ].map(([label, value]) => (
+              <div key={label} className="bg-white border rounded-xl p-4">
+                <p className="text-sm text-gray-500">{label}</p>
+                <p className="text-2xl font-bold text-gray-900 mt-1">{value}</p>
+              </div>
+            ))}
+          </div>
           <div className="bg-white rounded-xl border overflow-x-auto">
             <table className="w-full text-sm">
               <thead className="bg-gray-50 border-b">
@@ -275,6 +302,7 @@ export default function AdminDashboard() {
                   <th className="text-left px-4 py-3 font-medium text-gray-700">预算/时间</th>
                   <th className="text-left px-4 py-3 font-medium text-gray-700">来源</th>
                   <th className="text-left px-4 py-3 font-medium text-gray-700">状态</th>
+                  <th className="text-left px-4 py-3 font-medium text-gray-700">备注</th>
                   <th className="text-left px-4 py-3 font-medium text-gray-700">操作</th>
                 </tr>
               </thead>
@@ -304,11 +332,31 @@ export default function AdminDashboard() {
                       {lead.referrer && <div className="text-xs truncate">{lead.referrer}</div>}
                     </td>
                     <td className="px-4 py-3">
-                      <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium ${
-                        lead.transferred ? "bg-green-100 text-green-700" : "bg-amber-100 text-amber-700"
-                      }`}>
-                        {lead.transferred ? "已转交" : "待转交"}
-                      </span>
+                      <select
+                        value={lead.status || (lead.transferred ? "transferred" : "new")}
+                        onChange={(e) => patchLead(lead.id, {
+                          status: e.target.value,
+                          transferred: e.target.value === "transferred",
+                        })}
+                        className="h-9 rounded-lg border px-2 text-sm"
+                      >
+                        <option value="new">新线索</option>
+                        <option value="contacted">已联系</option>
+                        <option value="transferred">已转交</option>
+                        <option value="invalid">无效</option>
+                      </select>
+                    </td>
+                    <td className="px-4 py-3 min-w-[180px]">
+                      <input
+                        defaultValue={lead.notes ?? ""}
+                        placeholder="添加备注"
+                        onBlur={(e) => {
+                          if (e.target.value !== (lead.notes ?? "")) {
+                            patchLead(lead.id, { notes: e.target.value })
+                          }
+                        }}
+                        className="h-9 w-full rounded-lg border px-2 text-sm"
+                      />
                     </td>
                     <td className="px-4 py-3">
                       <Button
@@ -328,6 +376,7 @@ export default function AdminDashboard() {
               <div className="text-center py-12 text-gray-400">暂无线索</div>
             )}
           </div>
+          </>
         )
       ) : (
         loadingUsers ? (
