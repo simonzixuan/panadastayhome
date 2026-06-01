@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { LockKeyhole, Send } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
@@ -62,8 +63,13 @@ export default function HomeLeadForm() {
       <Input name="message" placeholder="城市/学校/房型，例如 UBC 附近 2B" />
       {error && <p className="text-sm text-red-500">{error}</p>}
       <Button type="submit" disabled={submitting} className="w-full h-12 bg-[#FF6B35] hover:bg-[#e85a24] text-white">
+        {!submitting && <Send className="size-4" />}
         {submitting ? "提交中..." : "提交找房需求"}
       </Button>
+      <p className="flex items-center justify-center gap-1.5 text-xs text-gray-400">
+        <LockKeyhole className="size-3.5" />
+        信息仅用于找房服务，不会公开展示
+      </p>
     </form>
   )
 }
