@@ -101,7 +101,7 @@ export default function NavbarAuth() {
         </Button>
       </Link>
       <Link href="/auth/register">
-        <Button size="sm" className="rounded-xl bg-[#FF6B35] hover:bg-[#e85a24] text-white">
+        <Button size="sm" className="rounded-xl bg-[#FF6B35] hover:bg-[#e85a24] text-white hidden sm:inline-flex">
           注册
         </Button>
       </Link>
