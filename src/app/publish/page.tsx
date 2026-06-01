@@ -157,7 +157,7 @@ export default function PublishPage() {
           <Field label="标题 *">
             <Input name="title" placeholder="例：Bright 2BR Apartment Near Downtown" required />
           </Field>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Field label="出租 / 出售 *">
               <select
                 name="type"
@@ -186,7 +186,7 @@ export default function PublishPage() {
               </select>
             </Field>
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Field label="价格（USD $）*">
               <Input name="price" type="number" min={0} placeholder="2500" required />
             </Field>
@@ -194,7 +194,7 @@ export default function PublishPage() {
               <Input name="area" type="number" min={1} placeholder="900（选填）" />
             </Field>
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Field label="卧室">
               <Input name="bedrooms" type="number" min={0} defaultValue={1} />
             </Field>
@@ -243,7 +243,7 @@ export default function PublishPage() {
           <Field label="街道地址">
             <Input name="address" placeholder="123 Main Street, Apt 4B" />
           </Field>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Field label="城市">
               <Input name="city" placeholder={country === "CA" ? "Toronto" : "Los Angeles"} />
             </Field>
@@ -256,7 +256,7 @@ export default function PublishPage() {
               </select>
             </Field>
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Field label={zipLabel}>
               <Input name="zip_code" placeholder={zipPlaceholder} />
             </Field>
@@ -268,7 +268,7 @@ export default function PublishPage() {
 
         {/* 联系方式 */}
         <Section title="联系方式">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Field label="联系人 *">
               <Input name="contact_name" placeholder="John Smith" required />
             </Field>

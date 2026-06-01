@@ -25,7 +25,7 @@ export default function NavbarMobile() {
       </button>
 
       {open && (
-        <div className="absolute top-18 left-0 right-0 bg-white border-b border-gray-100 shadow-sm z-50 px-6 py-4 flex flex-col gap-4">
+        <div className="absolute top-[72px] left-0 right-0 bg-white border-b border-gray-100 shadow-sm z-50 px-6 py-4 flex flex-col gap-4">
           <Link href="/listings" className="text-sm text-gray-500 hover:text-gray-900" onClick={() => setOpen(false)}>
             浏览房源
           </Link>

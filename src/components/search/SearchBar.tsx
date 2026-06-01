@@ -28,7 +28,7 @@ export default function SearchBar() {
   }
 
   return (
-    <div className="flex gap-2 w-full">
+    <div className="flex flex-col sm:flex-row gap-2 w-full">
       <Input
         placeholder="城市或 Zip Code..."
         value={query}
@@ -39,7 +39,7 @@ export default function SearchBar() {
       <select
         value={type}
         onChange={(e) => setType(e.target.value)}
-        className="w-28 h-12 rounded-xl border border-gray-200 bg-white text-gray-600 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6B35]"
+        className="w-full sm:w-28 h-12 rounded-xl border border-gray-200 bg-white text-gray-600 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6B35]"
       >
         <option value="">类型</option>
         <option value="rent">租房</option>
@@ -47,7 +47,7 @@ export default function SearchBar() {
       </select>
       <Button
         onClick={handleSearch}
-        className="h-12 px-8 bg-[#FF6B35] hover:bg-[#e85a24] text-white rounded-xl font-medium"
+        className="h-12 w-full sm:w-auto px-8 bg-[#FF6B35] hover:bg-[#e85a24] text-white rounded-xl font-medium"
       >
         搜索
       </Button>
