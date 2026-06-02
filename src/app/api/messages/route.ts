@@ -5,8 +5,8 @@ import { adminSupabase } from "@/lib/supabase/admin"
 import { Resend } from "resend"
 import NewMessageEmail from "@/emails/NewMessageEmail"
 
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL ?? "noreply@pandastayhome.com"
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://pandastayhome.com"
+const FROM_EMAIL = process.env.RESEND_FROM_EMAIL ?? "simon@panadastayhome.com"
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.panadastayhome.com"
 
 // BUG 1+2: 模块顶层初始化，key 不存在时只 warn 一次
 const RESEND_API_KEY = process.env.RESEND_API_KEY

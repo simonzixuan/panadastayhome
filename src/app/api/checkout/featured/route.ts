@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
   const selected = plans[plan]
   if (!selected) return NextResponse.json({ error: "无效套餐" }, { status: 400 })
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://pandastayhome.com"
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.panadastayhome.com"
 
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],

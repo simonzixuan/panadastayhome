@@ -88,7 +88,7 @@ export default async function ListingDetailPage({
   ].filter(Boolean) as string[]
 
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://panadastayhome.com"
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.panadastayhome.com"
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": l.type === "rent" ? "ApartmentComplex" : "SingleFamilyResidence",
