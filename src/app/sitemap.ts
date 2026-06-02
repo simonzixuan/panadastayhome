@@ -3,7 +3,7 @@ import { createServerClient } from "@/lib/supabase/server"
 import { cityPages, schoolPages } from "@/lib/landing-pages"
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://panadastayhome.com"
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.panadastayhome.com"
 
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: siteUrl, lastModified: new Date(), changeFrequency: "daily", priority: 1 },
