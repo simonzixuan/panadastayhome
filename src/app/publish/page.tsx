@@ -22,6 +22,7 @@ export default function PublishPage() {
   const [listingType, setListingType] = useState("")
   const [propertyType, setPropertyType] = useState("")
   const [submittedId, setSubmittedId] = useState("")
+  const [submittedIsAvailable, setSubmittedIsAvailable] = useState(false)
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
@@ -77,6 +78,14 @@ export default function PublishPage() {
       return
     }
 
+    const { data: trustedPublisher } = await supabase
+      .from("trusted_publishers")
+      .select("trusted")
+      .eq("user_id", user.id)
+      .eq("trusted", true)
+      .maybeSingle()
+    const canPublishImmediately = trustedPublisher?.trusted === true
+
     const { data: listing, error: insertError } = await supabase
       .from("listings")
       .insert({
@@ -99,7 +108,7 @@ export default function PublishPage() {
         contact_phone: form.get("contact_phone"),
         contact_email: form.get("contact_email") || null,
         images,
-        is_available: false,
+        is_available: canPublishImmediately,
         publisher_type: form.get("publisher_type"),
         listing_source: "publish_form",
       })
@@ -113,6 +122,7 @@ export default function PublishPage() {
       return
     }
 
+    setSubmittedIsAvailable(canPublishImmediately)
     setSubmittedId(listing.id)
   }
 
@@ -122,9 +132,13 @@ export default function PublishPage() {
         <div className="max-w-2xl mx-auto px-4 py-16">
           <div className="bg-white border rounded-2xl p-8 text-center shadow-sm">
             <CheckCircle2 className="mx-auto size-12 text-[#FF6B35]" />
-            <h1 className="mt-5 text-2xl font-bold text-gray-900">已收到房源，等待审核</h1>
+            <h1 className="mt-5 text-2xl font-bold text-gray-900">
+              {submittedIsAvailable ? "房源已发布" : "已收到房源，等待审核"}
+            </h1>
             <p className="mt-3 text-gray-500 leading-7">
-              房源暂不会公开展示。我们会先检查图片、价格、位置和联系方式，通过后再帮你上架并做中文推广。
+              {submittedIsAvailable
+                ? "你的账号已通过发布者认证，本次房源已直接公开展示。"
+                : "房源暂不会公开展示。我们会先检查图片、价格、位置和联系方式，通过后再帮你上架并做中文推广。"}
             </p>
             <div className="mt-6 flex flex-col sm:flex-row justify-center gap-3">
               <Button onClick={() => router.push("/my-listings")} className="bg-[#FF6B35] hover:bg-[#e85a24] text-white">
@@ -132,6 +146,7 @@ export default function PublishPage() {
               </Button>
               <Button variant="outline" onClick={() => {
                 setSubmittedId("")
+                setSubmittedIsAvailable(false)
                 setListingType("")
                 setPropertyType("")
               }}>

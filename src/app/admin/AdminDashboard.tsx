@@ -27,6 +27,7 @@ type UserRow = {
   name: string
   created_at: string
   banned_until: string | null
+  trusted_publisher: boolean
 }
 
 type Lead = {
@@ -187,6 +188,17 @@ export default function AdminDashboard() {
       method: "PATCH",
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
       body: JSON.stringify({ ban: !isBanned }),
+    })
+    await fetchUsers()
+    setActionId(null)
+  }
+
+  async function toggleTrustedPublisher(id: string, trustedPublisher: boolean) {
+    setActionId(id)
+    await fetch(`/api/admin/users/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+      body: JSON.stringify({ trusted_publisher: !trustedPublisher }),
     })
     await fetchUsers()
     setActionId(null)
@@ -583,6 +595,7 @@ export default function AdminDashboard() {
                   <th className="text-left px-4 py-3 font-medium text-gray-700">邮箱</th>
                   <th className="text-left px-4 py-3 font-medium text-gray-700">姓名</th>
                   <th className="text-left px-4 py-3 font-medium text-gray-700">注册时间</th>
+                  <th className="text-left px-4 py-3 font-medium text-gray-700">发布权限</th>
                   <th className="text-left px-4 py-3 font-medium text-gray-700">状态</th>
                   <th className="text-left px-4 py-3 font-medium text-gray-700">操作</th>
                 </tr>
@@ -599,12 +612,28 @@ export default function AdminDashboard() {
                       </td>
                       <td className="px-4 py-3">
                         <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium ${
+                          u.trusted_publisher ? "bg-orange-100 text-orange-700" : "bg-gray-100 text-gray-500"
+                        }`}>
+                          {u.trusted_publisher ? "免审核" : "需审核"}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3">
+                        <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium ${
                           isBanned ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700"
                         }`}>
                           {isBanned ? "已封禁" : "正常"}
                         </span>
                       </td>
                       <td className="px-4 py-3">
+                        <Button
+                          size="sm"
+                          variant={u.trusted_publisher ? "outline" : "default"}
+                          disabled={actionId === u.id}
+                          onClick={() => toggleTrustedPublisher(u.id, u.trusted_publisher)}
+                          className="mr-2"
+                        >
+                          {actionId === u.id ? "处理中..." : u.trusted_publisher ? "取消免审" : "设为免审"}
+                        </Button>
                         <Button
                           size="sm"
                           variant={isBanned ? "outline" : "destructive"}
