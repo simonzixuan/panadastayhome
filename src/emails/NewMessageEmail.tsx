@@ -63,7 +63,7 @@ export default function NewMessageEmail({
           </Button>
 
           <Text style={{ color: "#9ca3af", fontSize: 12, marginTop: 32 }}>
-            熊猫之家 · Panda House
+            熊猫之家 · Panda Stay Home
           </Text>
         </Container>
       </Body>

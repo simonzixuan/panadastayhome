@@ -45,7 +45,7 @@ export async function generateMetadata({
       l.city, l.state,
       l.type === "rent" ? "租房" : "买房",
       l.type === "rent" ? "出租" : "出售",
-      "北美华人租房", "华人找房", "Panda House",
+      "北美华人租房", "华人找房", "Panda Stay Home",
       ...(l.zip_code ? [l.zip_code] : []),
     ].filter(Boolean) as string[],
     alternates: { canonical: `/listings/${id}` },
