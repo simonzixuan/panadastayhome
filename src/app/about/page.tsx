@@ -16,8 +16,8 @@ const trustItems = [
 ]
 
 export const metadata = {
-  title: "关于我们",
-  description: "了解熊猫之家如何帮助北美华人找房、确认房源并对接看房。",
+  title: "关于熊猫之家 Panda Stay Home",
+  description: "熊猫之家 Panda Stay Home 是面向北美华人的租房找房平台，帮助留学生、新移民和华人家庭提交需求、确认房源并对接看房。",
 }
 
 export default function AboutPage() {
@@ -28,13 +28,13 @@ export default function AboutPage() {
           <div>
             <div className="inline-flex items-center gap-2 rounded-full bg-[#FFF1EA] px-3 py-1.5 text-sm font-medium text-[#FF6B35] mb-5">
               <ShieldCheck className="size-4" />
-              中文找房助手
+              熊猫之家 Panda Stay Home
             </div>
             <h1 className="text-3xl md:text-5xl font-bold text-gray-900 leading-tight">
-              我们帮北美华人把找房这件事变简单一点
+              熊猫之家帮北美华人把租房找房变简单一点
             </h1>
             <p className="mt-5 text-gray-500 leading-8 max-w-2xl">
-              熊猫之家面向留学生、新移民、华人家庭、房东和经纪人。我们不是只做一个房源列表，而是帮用户提交需求、筛选房源、确认信息，并把合适的沟通方式对接起来。
+              熊猫之家 Panda Stay Home 是面向北美华人的租房找房平台，服务留学生、新移民、华人家庭、房东和经纪人。我们不是只做一个房源列表，而是帮用户提交需求、筛选房源、确认信息，并把合适的沟通方式对接起来。
             </p>
             <div className="mt-7 flex flex-col sm:flex-row gap-3">
               <Link href="/#find-help">

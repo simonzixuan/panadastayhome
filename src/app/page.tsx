@@ -54,13 +54,13 @@ export default function HomePage() {
           <div className="py-4 max-w-2xl">
             <div className="inline-flex items-center gap-2 rounded-full bg-[#FFF1EA] px-3 py-1.5 text-sm font-medium text-[#FF6B35] mb-5">
               <MessageCircle className="size-4" />
-              华人找房助手
+              熊猫之家 Panda Stay Home
             </div>
             <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-5 tracking-normal">
-              北美华人找房，<br />中文帮你确认
+              熊猫之家，<br />北美华人租房找房平台
             </h1>
             <p className="text-gray-500 text-lg leading-8 mb-8 max-w-xl">
-              不用自己到处问群、筛假房源、联系房东。告诉我们城市、预算和入住时间，我们帮你筛选房源、确认信息，并对接房东或经纪人。
+              熊猫之家 Panda Stay Home 面向留学生、新移民和华人家庭。不用自己到处问群、筛假房源、联系房东。告诉我们城市、预算和入住时间，我们帮你筛选房源、确认信息，并对接房东或经纪人。
             </p>
             <div className="flex flex-col sm:flex-row gap-3 mb-8">
               <a href="#find-help">

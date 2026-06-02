@@ -121,6 +121,11 @@ const sections = [
   },
 ]
 
+export const metadata = {
+  title: "隐私政策",
+  description: "熊猫之家 Panda Stay Home 的隐私政策。熊猫之家是面向北美华人的租房找房平台，说明我们如何收集、使用和保护用户信息。",
+}
+
 export default function PrivacyPage() {
   return (
     <div className="max-w-3xl mx-auto px-4 py-12">
