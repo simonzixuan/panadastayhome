@@ -1,9 +1,31 @@
+import type { Metadata } from "next"
 import SearchBar from "@/components/search/SearchBar"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import HomeLeadForm from "@/components/leads/HomeLeadForm"
 import HomeActivityCard from "@/components/home/HomeActivityCard"
 import { CheckCircle2, ClipboardList, Home, MapPin, MessageCircle, Search, ShieldCheck, Sparkles, UserRoundCheck } from "lucide-react"
+
+export const metadata: Metadata = {
+  title: "熊猫之家｜Panda Stay Home 北美华人租房找房平台",
+  description: "熊猫之家 Panda Stay Home 是面向北美华人的租房找房平台，提供中文找房、房源发布、房源核实和租房防骗服务，适合留学生、新移民和华人家庭。",
+  keywords: [
+    "熊猫之家",
+    "Panda Stay Home",
+    "panadastayhome",
+    "熊猫之家租房",
+    "熊猫之家找房",
+    "北美华人租房",
+    "中文找房平台",
+  ],
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: "熊猫之家｜Panda Stay Home 北美华人租房找房平台",
+    description: "中文找房、房源发布、房源核实和租房防骗服务。",
+    url: "/",
+    type: "website",
+  },
+}
 
 const features = [
   {
