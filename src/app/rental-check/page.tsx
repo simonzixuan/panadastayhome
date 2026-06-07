@@ -6,8 +6,24 @@ import { Button } from "@/components/ui/button"
 import { AlertTriangle, CheckCircle2, ClipboardCheck, FileText, MessageCircle, SearchCheck, ShieldCheck } from "lucide-react"
 
 export const metadata: Metadata = {
-  title: "付款前房源核实",
-  description: "小红书、微信、Facebook 房源付款前先查风险，避免押金和合同骗局。",
+  title: "小红书租房交押金前房源核实｜租房防骗人工快查",
+  description: "小红书、微信群、Facebook 租房交押金前，人工查看房源截图、聊天记录、付款方式和合同风险，帮留学生和华人租客判断是否继续沟通或暂停付款。",
+  keywords: [
+    "小红书租房防骗",
+    "租房交押金前检查",
+    "房源核实",
+    "美国租房押金被骗",
+    "留学生租房防骗",
+    "微信群租房防骗",
+    "洛杉矶租房防骗",
+  ],
+  alternates: { canonical: "/rental-check" },
+  openGraph: {
+    title: "小红书租房交押金前房源核实｜Panda Stay Home",
+    description: "付款前人工快查房源截图、聊天记录、收款方式和合同风险。",
+    url: "/rental-check",
+    type: "website",
+  },
 }
 
 const recentFindings = [

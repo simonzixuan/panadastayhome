@@ -40,9 +40,12 @@ const cities = [
   ["温哥华租房", "/city/vancouver"],
   ["多伦多租房", "/city/toronto"],
   ["洛杉矶租房", "/city/los-angeles"],
+  ["USC 附近租房", "/schools/usc"],
+  ["UCLA 附近租房", "/schools/ucla"],
   ["西雅图租房", "/city/seattle"],
   ["纽约租房", "/city/new-york"],
   ["UBC 附近租房", "/schools/ubc"],
+  ["租房防骗核实", "/rental-check"],
 ]
 
 export default function HomePage() {

@@ -67,6 +67,32 @@ export const cityPages = {
 } as const
 
 export const schoolPages = {
+  usc: {
+    title: "USC 附近租房",
+    city: "Los Angeles",
+    listingKeywords: ["USC", "University of Southern California", "Koreatown", "Downtown LA"],
+    metaTitle: "USC 附近租房｜洛杉矶留学生中文找房",
+    description: "帮 USC 留学生和家长筛选洛杉矶校区附近公寓、合租和整租房源。",
+    searchIntent: "USC 租房、USC 附近公寓、洛杉矶留学生租房、USC 中文找房、Koreatown 租房",
+    areas: ["USC", "Koreatown", "Downtown LA", "West Adams", "University Park", "Los Angeles"],
+    faqs: [
+      ["USC 附近租房要注意什么？", "建议重点确认通勤距离、停车、安全、租约条款和付款方式。小红书或微信群房源在交押金前最好先做核实。"],
+      ["可以帮忙看房源靠谱吗？", "可以。你可以先提交房源链接、聊天截图和付款要求，我们会做付款前风险判断。"],
+    ],
+  },
+  ucla: {
+    title: "UCLA 附近租房",
+    city: "Los Angeles",
+    listingKeywords: ["UCLA", "University of California Los Angeles", "Westwood", "Sawtelle"],
+    metaTitle: "UCLA 附近租房｜洛杉矶 Westwood 中文找房",
+    description: "帮 UCLA 留学生、新生和家长筛选 Westwood 及周边合适房源。",
+    searchIntent: "UCLA 租房、UCLA 附近公寓、Westwood 租房、洛杉矶留学生租房、UCLA 中文找房",
+    areas: ["UCLA", "Westwood", "Sawtelle", "Brentwood", "Century City", "Santa Monica"],
+    faqs: [
+      ["UCLA 附近哪些区域常见？", "Westwood、Sawtelle、Brentwood、Century City 和 Santa Monica 都是常见选择，预算和通勤差异较大。"],
+      ["没到洛杉矶可以先确认房源吗？", "可以先做线上风险检查，付款前重点确认视频看房、合同姓名、收款人和授权关系。"],
+    ],
+  },
   ubc: {
     title: "UBC 附近租房",
     city: "Vancouver",
