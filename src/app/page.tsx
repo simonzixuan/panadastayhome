@@ -121,7 +121,17 @@ export default function HomePage() {
             <div id="find-help" className="relative z-10 bg-white border rounded-2xl shadow-[0_18px_60px_rgba(0,0,0,0.12)] p-6">
               <HomeActivityCard />
               <h2 className="text-xl font-bold mb-2">先告诉我们你想找什么房</h2>
-              <p className="text-sm text-gray-500 mb-5">我们会把合适房源和看房方式发给你。</p>
+              <p className="text-sm text-gray-500 mb-4">还没确定房源？提交需求，我们帮你匹配方向和可选房源。</p>
+              <div className="mb-5 rounded-xl border bg-[#FFF8F5] p-3 text-sm leading-6">
+                <p className="font-semibold text-[#222222]">不知道选哪个？</p>
+                <p className="mt-1 text-gray-500">还没找到房源，继续填下面表单。</p>
+                <p className="text-gray-500">
+                  已经看到房源、准备联系或付款？
+                  <Link href="/rental-check" className="font-semibold text-[#FF6B35] hover:text-[#e85a24]">
+                    去做房源核实
+                  </Link>
+                </p>
+              </div>
               <HomeLeadForm />
             </div>
           </div>
