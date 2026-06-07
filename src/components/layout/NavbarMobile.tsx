@@ -32,6 +32,9 @@ export default function NavbarMobile() {
           <Link href="/#find-help" className="text-sm font-medium text-[#FF6B35]" onClick={() => setOpen(false)}>
             帮我找房
           </Link>
+          <Link href="/rental-check" className="text-sm text-gray-500 hover:text-gray-900" onClick={() => setOpen(false)}>
+            房源核实
+          </Link>
           <Link href="/publish" className="text-sm text-gray-500 hover:text-gray-900" onClick={() => setOpen(false)}>
             发布房源
           </Link>

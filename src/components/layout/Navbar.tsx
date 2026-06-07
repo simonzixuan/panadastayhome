@@ -8,7 +8,7 @@ export default function Navbar() {
     <nav className="bg-white border-b border-gray-100 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-[72px] flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
-          <Image src="/LOGO 3.png" alt="Panda Stay Home" width={48} height={48} className="h-12 w-auto object-contain" />
+          <Image src="/LOGO 3.png" alt="Panda Stay Home" width={48} height={48} className="h-12 w-auto object-contain" style={{ height: "auto" }} />
           <div className="flex flex-col leading-tight">
             <span className="text-[#222222] font-bold text-base">熊猫之家</span>
             <span className="text-gray-400 text-xs tracking-wide">中文找房助手</span>
@@ -21,6 +21,9 @@ export default function Navbar() {
             </Link>
             <Link href="/#find-help" className="text-sm font-medium text-[#FF6B35] hover:text-[#e85a24] transition-colors">
               帮我找房
+            </Link>
+            <Link href="/rental-check" className="text-sm text-gray-500 hover:text-[#222222] transition-colors">
+              房源核实
             </Link>
             <Link href="/publish" className="text-sm text-gray-500 hover:text-[#222222] transition-colors">
               发布房源
