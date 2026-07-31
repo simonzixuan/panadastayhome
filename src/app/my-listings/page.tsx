@@ -151,7 +151,7 @@ export default function MyListingsPage() {
           ))}
         </div>
         {Math.ceil(listings.length / PAGE_SIZE) > 1 && (
-          <div className="flex justify-center items-center gap-2 mt-6">
+          <div className="flex flex-wrap justify-center items-center gap-2 mt-6">
             {page > 1 && (
               <button onClick={() => setPage(p => p - 1)} className="px-4 py-2 rounded-lg border text-sm hover:bg-gray-50">上一页</button>
             )}

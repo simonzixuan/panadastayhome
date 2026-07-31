@@ -482,18 +482,18 @@ export default function AdminDashboard() {
             </div>
           </div>
           <div className="bg-white rounded-xl border overflow-x-auto">
-            <table className="w-full text-sm">
+            <table className="w-full table-fixed text-sm">
               <thead className="bg-gray-50 border-b">
                 <tr>
-                  <th className="text-left px-4 py-3 font-medium text-gray-700">咨询人</th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-700">联系方式</th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-700">房源</th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-700">预算/时间</th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-700">来源</th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-700">状态</th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-700">跟进</th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-700">备注</th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-700">操作</th>
+                  <th className="w-[10%] text-left px-4 py-3 font-medium text-gray-700">咨询人</th>
+                  <th className="w-[10%] text-left px-4 py-3 font-medium text-gray-700">联系方式</th>
+                  <th className="w-[14%] text-left px-4 py-3 font-medium text-gray-700">房源</th>
+                  <th className="w-[14%] text-left px-4 py-3 font-medium text-gray-700">预算/时间</th>
+                  <th className="w-[12%] text-left px-4 py-3 font-medium text-gray-700">来源</th>
+                  <th className="w-[8%] text-left px-4 py-3 font-medium text-gray-700">状态</th>
+                  <th className="w-[14%] text-left px-4 py-3 font-medium text-gray-700">跟进</th>
+                  <th className="w-[10%] text-left px-4 py-3 font-medium text-gray-700">备注</th>
+                  <th className="w-[8%] text-left px-4 py-3 font-medium text-gray-700">操作</th>
                 </tr>
               </thead>
               <tbody className="divide-y">
@@ -505,8 +505,8 @@ export default function AdminDashboard() {
                         {new Date(lead.created_at).toLocaleDateString("zh-CN", { month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit" })}
                       </div>
                     </td>
-                    <td className="px-4 py-3 text-gray-600">{lead.contact}</td>
-                    <td className="px-4 py-3 max-w-[220px]">
+                    <td className="px-4 py-3 text-gray-600 break-words">{lead.contact}</td>
+                    <td className="px-4 py-3">
                       <div className="font-medium truncate">{lead.listings?.title ?? "未知房源"}</div>
                       <div className="text-xs text-gray-400">
                         {[lead.listings?.city, lead.listings?.state].filter(Boolean).join(", ")}
@@ -515,10 +515,10 @@ export default function AdminDashboard() {
                     <td className="px-4 py-3 text-gray-500">
                       <div>{lead.budget || "—"}</div>
                       <div className="text-xs">{lead.move_in_date || "—"}</div>
-                      {lead.message && <div className="text-xs mt-1 max-w-[220px] whitespace-pre-wrap">{lead.message}</div>}
+                      {lead.message && <div className="text-xs mt-1 whitespace-pre-wrap break-words">{lead.message}</div>}
                     </td>
-                    <td className="px-4 py-3 text-gray-500 max-w-[180px]">
-                      <div>{lead.source || "直接访问"}</div>
+                    <td className="px-4 py-3 text-gray-500">
+                      <div className="truncate">{lead.source || "直接访问"}</div>
                       {lead.current_path && <div className="text-xs truncate">{lead.current_path}</div>}
                       {lead.referrer && <div className="text-xs truncate">{lead.referrer}</div>}
                     </td>
@@ -529,7 +529,7 @@ export default function AdminDashboard() {
                           status: e.target.value,
                           transferred: e.target.value === "transferred",
                         })}
-                        className="h-9 rounded-lg border px-2 text-sm"
+                        className="h-9 w-full rounded-lg border px-2 text-sm"
                       >
                         <option value="new">新线索</option>
                         <option value="contacted">已联系</option>
@@ -537,7 +537,7 @@ export default function AdminDashboard() {
                         <option value="invalid">无效</option>
                       </select>
                     </td>
-                    <td className="px-4 py-3 min-w-[180px]">
+                    <td className="px-4 py-3">
                       <input
                         defaultValue={lead.assigned_to ?? ""}
                         placeholder="负责人"
@@ -559,7 +559,7 @@ export default function AdminDashboard() {
                         className="h-9 w-full rounded-lg border px-2 text-sm"
                       />
                     </td>
-                    <td className="px-4 py-3 min-w-[180px]">
+                    <td className="px-4 py-3">
                       <input
                         defaultValue={lead.notes ?? ""}
                         placeholder="添加备注"
