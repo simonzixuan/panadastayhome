@@ -8,6 +8,23 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import type { Listing } from "@/types"
 
+function getPaginationItems(currentPage: number, totalPages: number) {
+  if (totalPages <= 7) {
+    return Array.from({ length: totalPages }, (_, index) => index + 1)
+  }
+
+  const items: Array<number | "start-ellipsis" | "end-ellipsis"> = [1]
+  const start = Math.max(2, currentPage - 2)
+  const end = Math.min(totalPages - 1, currentPage + 2)
+
+  if (start > 2) items.push("start-ellipsis")
+  for (let page = start; page <= end; page += 1) items.push(page)
+  if (end < totalPages - 1) items.push("end-ellipsis")
+  items.push(totalPages)
+
+  return items
+}
+
 export default function MyListingsPage() {
   const router = useRouter()
   const [listings, setListings] = useState<Listing[]>([])
@@ -150,23 +167,68 @@ export default function MyListingsPage() {
             </div>
           ))}
         </div>
-        {Math.ceil(listings.length / PAGE_SIZE) > 1 && (
-          <div className="flex flex-wrap justify-center items-center gap-2 mt-6">
-            {page > 1 && (
-              <button onClick={() => setPage(p => p - 1)} className="px-4 py-2 rounded-lg border text-sm hover:bg-gray-50">上一页</button>
-            )}
-            {Array.from({ length: Math.ceil(listings.length / PAGE_SIZE) }, (_, i) => i + 1).map((p) => (
-              <button
-                key={p}
-                onClick={() => setPage(p)}
-                className={`px-4 py-2 rounded-lg border text-sm ${p === page ? "bg-[#FF6B35] text-white border-[#FF6B35]" : "hover:bg-gray-50"}`}
-              >{p}</button>
-            ))}
-            {page < Math.ceil(listings.length / PAGE_SIZE) && (
-              <button onClick={() => setPage(p => p + 1)} className="px-4 py-2 rounded-lg border text-sm hover:bg-gray-50">下一页</button>
-            )}
-          </div>
-        )}
+        {Math.ceil(listings.length / PAGE_SIZE) > 1 && (() => {
+          const totalPages = Math.ceil(listings.length / PAGE_SIZE)
+          const paginationItems = getPaginationItems(page, totalPages)
+          return (
+            <div className="mt-6 flex flex-col items-center justify-center gap-4 sm:flex-row sm:flex-wrap">
+              <div className="flex flex-wrap items-center justify-center gap-2">
+                {page > 1 && (
+                  <button onClick={() => setPage(p => p - 1)} className="px-4 py-2 rounded-lg border text-sm hover:bg-gray-50">上一页</button>
+                )}
+                {paginationItems.map((item) =>
+                  typeof item === "number" ? (
+                    <button
+                      key={item}
+                      onClick={() => setPage(item)}
+                      aria-current={item === page ? "page" : undefined}
+                      className={`min-w-10 rounded-lg border px-3 py-2 text-center text-sm ${
+                        item === page
+                          ? "border-[#FF6B35] bg-[#FF6B35] text-white"
+                          : "hover:bg-gray-50"
+                      }`}
+                    >
+                      {item}
+                    </button>
+                  ) : (
+                    <span key={item} className="px-1 text-sm text-gray-400" aria-hidden="true">
+                      …
+                    </span>
+                  ),
+                )}
+                {page < totalPages && (
+                  <button onClick={() => setPage(p => p + 1)} className="px-4 py-2 rounded-lg border text-sm hover:bg-gray-50">下一页</button>
+                )}
+              </div>
+
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault()
+                  const input = e.currentTarget.elements.namedItem("page-jump") as HTMLInputElement
+                  const target = Math.min(totalPages, Math.max(1, Number(input.value) || 1))
+                  setPage(target)
+                }}
+                className="flex items-center gap-2 text-sm"
+              >
+                <label htmlFor="page-jump" className="text-gray-500">跳至</label>
+                <input
+                  key={page}
+                  id="page-jump"
+                  name="page-jump"
+                  type="number"
+                  min={1}
+                  max={totalPages}
+                  defaultValue={page}
+                  inputMode="numeric"
+                  aria-label={`输入页码，范围 1 到 ${totalPages}`}
+                  className="h-10 w-20 rounded-lg border bg-white px-3 text-center outline-none focus:border-[#FF6B35] focus:ring-2 focus:ring-[#FF6B35]/20"
+                />
+                <span className="text-gray-500">/ {totalPages} 页</span>
+                <button type="submit" className="h-10 rounded-lg border px-4 hover:bg-gray-50">跳转</button>
+              </form>
+            </div>
+          )
+        })()}
         </>
       )}
     </div>
