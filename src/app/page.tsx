@@ -4,7 +4,41 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import HomeLeadForm from "@/components/leads/HomeLeadForm"
 import HomeActivityCard from "@/components/home/HomeActivityCard"
+import ListingCarousel from "@/components/home/ListingCarousel"
 import { CheckCircle2, ClipboardList, Home, MapPin, MessageCircle, Search, ShieldCheck, Sparkles, UserRoundCheck } from "lucide-react"
+import { createServerClient } from "@/lib/supabase/server"
+import { cityPages } from "@/lib/landing-pages"
+import { buildListingCityFilter } from "@/lib/landing-query"
+import type { Listing } from "@/types"
+
+export const revalidate = 600
+
+const homeCarouselCities: Array<{ slug: keyof typeof cityPages; label: string }> = [
+  { slug: "los-angeles", label: "洛杉矶热门房源" },
+  { slug: "vancouver", label: "温哥华热门房源" },
+  { slug: "toronto", label: "多伦多热门房源" },
+]
+
+async function getHomeCarousels() {
+  const supabase = createServerClient()
+  const results = await Promise.all(
+    homeCarouselCities.map(async ({ slug, label }) => {
+      const page = cityPages[slug]
+      const cityFilter = buildListingCityFilter(page.nearbyCities ?? [page.city])
+      const { data } = await supabase
+        .from("listings")
+        .select("*")
+        .eq("is_available", true)
+        .or(cityFilter)
+        .order("featured", { ascending: false })
+        .order("created_at", { ascending: false })
+        .limit(10)
+
+      return { slug, label, listings: (data as Listing[]) ?? [] }
+    })
+  )
+  return results
+}
 
 export const metadata: Metadata = {
   title: "熊猫之家｜Panda Stay Home 北美华人租房找房平台",
@@ -76,7 +110,9 @@ const cities = [
   ["Markham 租房", "/area/markham"],
 ]
 
-export default function HomePage() {
+export default async function HomePage() {
+  const carousels = await getHomeCarousels()
+
   return (
     <div className="bg-[#F7F7F7] text-[#222222]">
       <section className="relative overflow-hidden bg-white px-4 pt-8 pb-10 md:pt-10 xl:pt-12">
@@ -170,6 +206,10 @@ export default function HomePage() {
           <SearchBar />
         </div>
       </section>
+
+      {carousels.map(({ slug, label, listings }) => (
+        <ListingCarousel key={slug} title={label} listings={listings} viewAllHref={`/city/${slug}`} />
+      ))}
 
       <section className="bg-[#F7F7F7] px-4 py-10">
         <div className="max-w-6xl mx-auto grid md:grid-cols-[1fr_1fr] gap-5">
