@@ -4,6 +4,8 @@ import { cityPages, schoolPages } from "@/lib/landing-pages"
 import { areaPages } from "@/lib/area-pages"
 import { getAreaListings, MIN_INDEXABLE_AREA_LISTINGS } from "@/lib/area-listings"
 
+export const revalidate = 600
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.panadastayhome.com"
 

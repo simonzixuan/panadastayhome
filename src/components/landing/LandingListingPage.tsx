@@ -58,6 +58,19 @@ export default function LandingListingPage({
           { "@type": "ListItem", "position": parentLink ? 3 : 2, "name": title, "item": canonicalUrl },
         ],
       },
+      ...(faqs.length > 0
+        ? [
+            {
+              "@type": "FAQPage",
+              "@id": `${canonicalUrl}#faq`,
+              "mainEntity": faqs.map(([question, answer]) => ({
+                "@type": "Question",
+                "name": question,
+                "acceptedAnswer": { "@type": "Answer", "text": answer },
+              })),
+            },
+          ]
+        : []),
     ],
   }
 

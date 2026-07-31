@@ -97,23 +97,51 @@ export default async function ListingDetailPage({
 
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.panadastayhome.com"
+  const listingUrl = `${siteUrl}/listings/${l.id}`
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": l.type === "rent" ? "ApartmentComplex" : "SingleFamilyResidence",
-    "name": l.title,
-    "description": l.description,
-    "url": `${siteUrl}/listings/${l.id}`,
-    "numberOfRooms": l.bedrooms,
-    "floorSize": { "@type": "QuantitativeValue", "value": l.area, "unitCode": "FTK" },
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": l.address,
-      "addressLocality": l.city,
-      "addressRegion": l.state,
-      "postalCode": l.zip_code,
-      "addressCountry": l.country,
-    },
-    ...(l.images?.[0] ? { "image": l.images[0] } : {}),
+    "@graph": [
+      {
+        "@type": l.type === "rent" ? "ApartmentComplex" : "SingleFamilyResidence",
+        "@id": `${listingUrl}#listing`,
+        "name": l.title,
+        "description": l.description,
+        "url": listingUrl,
+        "numberOfRooms": l.bedrooms,
+        "floorSize": { "@type": "QuantitativeValue", "value": l.area, "unitCode": "FTK" },
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": l.address,
+          "addressLocality": l.city,
+          "addressRegion": l.state,
+          "postalCode": l.zip_code,
+          "addressCountry": l.country,
+        },
+        ...(l.images?.[0] ? { "image": l.images[0] } : {}),
+        ...(l.price != null
+          ? {
+              "offers": {
+                "@type": "Offer",
+                "price": l.price,
+                "priceCurrency": "USD",
+                "availability": l.is_available ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+                "url": listingUrl,
+              },
+            }
+          : {}),
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${listingUrl}#breadcrumb`,
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "首页", "item": siteUrl },
+          ...(areaLink
+            ? [{ "@type": "ListItem", "position": 2, "name": areaLink.label, "item": `${siteUrl}${areaLink.href}` }]
+            : []),
+          { "@type": "ListItem", "position": areaLink ? 3 : 2, "name": l.title, "item": listingUrl },
+        ],
+      },
+    ],
   }
 
   return (

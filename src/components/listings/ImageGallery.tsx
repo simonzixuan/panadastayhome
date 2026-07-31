@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
 import { X, ChevronLeft, ChevronRight } from "lucide-react"
 
 export default function ImageGallery({ images, title }: { images: string[]; title: string }) {
@@ -20,13 +21,16 @@ export default function ImageGallery({ images, title }: { images: string[]; titl
       <div className="grid grid-cols-1 gap-2 mb-6">
         {/* 主图 */}
         <div
-          className="aspect-video rounded-xl overflow-hidden bg-gray-100 cursor-zoom-in"
+          className="aspect-video rounded-xl overflow-hidden bg-gray-100 cursor-zoom-in relative"
           onClick={() => openLightbox(0)}
         >
-          <img
+          <Image
             src={images[0]}
             alt={title}
-            className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+            fill
+            priority
+            sizes="(max-width: 768px) 100vw, 800px"
+            className="object-cover hover:scale-105 transition-transform duration-300"
           />
         </div>
 
@@ -41,10 +45,12 @@ export default function ImageGallery({ images, title }: { images: string[]; titl
                   className="relative aspect-video rounded-lg overflow-hidden bg-gray-100 cursor-zoom-in"
                   onClick={() => openLightbox(i + 1)}
                 >
-                  <img
+                  <Image
                     src={url}
                     alt=""
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                    fill
+                    sizes="25vw"
+                    className="object-cover hover:scale-105 transition-transform duration-300"
                   />
                   {isLast && (
                     <div className="absolute inset-0 bg-black/55 flex items-center justify-center text-white font-semibold text-xl">
@@ -94,12 +100,18 @@ export default function ImageGallery({ images, title }: { images: string[]; titl
             </button>
           )}
 
-          <img
-            src={images[lightboxIndex]}
-            alt={title}
-            className="max-w-[90vw] max-h-[85vh] object-contain rounded-lg"
+          <div
+            className="relative w-[90vw] h-[85vh]"
             onClick={(e) => e.stopPropagation()}
-          />
+          >
+            <Image
+              src={images[lightboxIndex]}
+              alt={title}
+              fill
+              sizes="90vw"
+              className="object-contain rounded-lg"
+            />
+          </div>
 
           {images.length > 1 && (
             <button

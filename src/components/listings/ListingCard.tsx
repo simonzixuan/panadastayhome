@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { Bath, BedDouble, Heart, MapPin, Ruler, ShieldCheck } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Listing } from "@/types"
@@ -39,16 +40,20 @@ export default function ListingCard({ listing, isFavorited = false }: Props) {
         <div className="h-52 bg-gray-100 relative flex-shrink-0">
           {images[0] ? (
             <>
-              <img
+              <Image
                 src={images[0]}
                 alt={listing.title}
-                className={`w-full h-full object-cover absolute inset-0 transition-opacity duration-300 ${showSecond ? "opacity-0" : "opacity-100"}`}
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                className={`object-cover transition-opacity duration-300 ${showSecond ? "opacity-0" : "opacity-100"}`}
               />
               {images[1] && (
-                <img
+                <Image
                   src={images[1]}
                   alt={listing.title}
-                  className={`w-full h-full object-cover absolute inset-0 transition-opacity duration-300 ${showSecond ? "opacity-100" : "opacity-0"}`}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className={`object-cover transition-opacity duration-300 ${showSecond ? "opacity-100" : "opacity-0"}`}
                 />
               )}
             </>
