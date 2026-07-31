@@ -290,42 +290,42 @@ export default function AdminDashboard() {
             </div>
           </div>
           <div className="bg-white rounded-xl border overflow-x-auto">
-            <table className="w-full text-sm">
+            <table className="w-full table-fixed text-sm">
               <thead className="bg-gray-50 border-b">
                 <tr>
-                  <th className="text-left px-4 py-3 font-medium text-gray-700">标题</th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-700">城市/州</th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-700">类型</th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-700">价格</th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-700">联系人</th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-700">发布者</th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-700">发布时间</th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-700">状态</th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-700">审核备注</th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-700">原创摘要与核实</th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-700">操作</th>
+                  <th className="w-[13%] text-left px-4 py-3 font-medium text-gray-700">标题</th>
+                  <th className="w-[7%] text-left px-4 py-3 font-medium text-gray-700">城市/州</th>
+                  <th className="w-[4%] text-left px-4 py-3 font-medium text-gray-700">类型</th>
+                  <th className="w-[5%] text-left px-4 py-3 font-medium text-gray-700">价格</th>
+                  <th className="w-[6%] text-left px-4 py-3 font-medium text-gray-700">联系人</th>
+                  <th className="w-[10%] text-left px-4 py-3 font-medium text-gray-700">发布者</th>
+                  <th className="w-[6%] text-left px-4 py-3 font-medium text-gray-700">发布时间</th>
+                  <th className="w-[5%] text-left px-4 py-3 font-medium text-gray-700">状态</th>
+                  <th className="w-[11%] text-left px-4 py-3 font-medium text-gray-700">审核备注</th>
+                  <th className="w-[18%] text-left px-4 py-3 font-medium text-gray-700">原创摘要与核实</th>
+                  <th className="w-[15%] text-left px-4 py-3 font-medium text-gray-700">操作</th>
                 </tr>
               </thead>
               <tbody className="divide-y">
                 {visibleListings.map((l) => (
                   <tr key={l.id} className={`hover:bg-gray-50 ${l.featured ? "bg-amber-50" : ""}`}>
-                    <td className="px-4 py-3 max-w-[180px]">
-                      <div className="flex items-center gap-1.5">
+                    <td className="px-4 py-3">
+                      <div className="flex min-w-0 items-center gap-1.5">
                         {l.featured && (
                           <span className="text-amber-500 text-xs font-bold shrink-0">置顶</span>
                         )}
                         <span className="truncate font-medium">{l.title}</span>
                       </div>
                     </td>
-                    <td className="px-4 py-3 text-gray-500">
+                    <td className="px-4 py-3 text-gray-500 break-words">
                       {[l.city, l.state].filter(Boolean).join(", ") || "—"}
                     </td>
                     <td className="px-4 py-3 text-gray-500">{l.type === "rent" ? "租房" : "买房"}</td>
                     <td className="px-4 py-3 text-gray-500">${l.price.toLocaleString()}</td>
-                    <td className="px-4 py-3 text-gray-500">{l.contact_name}</td>
+                    <td className="px-4 py-3 text-gray-500 break-words">{l.contact_name}</td>
                     <td className="px-4 py-3 text-gray-500">
                       <div>{l.publisher_type ? publisherTypeLabels[l.publisher_type] ?? l.publisher_type : "—"}</div>
-                      {l.listing_source && <div className="text-xs text-gray-400">{l.listing_source}</div>}
+                      {l.listing_source && <div className="break-all text-xs text-gray-400">{l.listing_source}</div>}
                     </td>
                     <td className="px-4 py-3 text-gray-500">
                       {new Date(l.created_at).toLocaleDateString("zh-CN")}
@@ -337,7 +337,7 @@ export default function AdminDashboard() {
                         {l.is_available ? "已上架" : "待审核"}
                       </span>
                     </td>
-                    <td className="px-4 py-3 min-w-[180px]">
+                    <td className="px-4 py-3">
                       <input
                         defaultValue={l.review_notes ?? ""}
                         placeholder="审核备注"
@@ -349,7 +349,7 @@ export default function AdminDashboard() {
                         className="h-9 w-full rounded-lg border px-2 text-sm"
                       />
                     </td>
-                    <td className="px-4 py-3 min-w-[320px]">
+                    <td className="px-4 py-3">
                       <textarea
                         defaultValue={l.editorial_summary ?? ""}
                         placeholder="留空时自动生成结构化摘要"
@@ -376,7 +376,7 @@ export default function AdminDashboard() {
                       </p>
                     </td>
                     <td className="px-4 py-3">
-                      <div className="flex gap-2">
+                      <div className="flex flex-wrap gap-1.5">
                         <Button
                           size="sm"
                           variant={l.featured ? "outline" : "secondary"}
