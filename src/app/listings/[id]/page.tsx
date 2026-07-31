@@ -10,6 +10,7 @@ import ImageGallery from "@/components/listings/ImageGallery"
 import FavoriteButton from "@/components/listings/FavoriteButton"
 import ListingMap from "@/components/listings/ListingMap"
 import LeadForm from "@/components/listings/LeadForm"
+import StickyContactBar from "@/components/listings/StickyContactBar"
 import TrackEvent from "@/components/analytics/TrackEvent"
 import type { Metadata } from "next"
 import { Bath, BedDouble, Home, MapPin, Ruler, ShieldCheck } from "lucide-react"
@@ -160,7 +161,7 @@ export default async function ListingDetailPage({
         }}
       />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-    <div className="bg-[#F7F7F7]">
+    <div className="bg-[#F7F7F7] pb-24 lg:pb-0">
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="grid lg:grid-cols-[minmax(0,1fr)_380px] gap-8 items-start">
           <main className="min-w-0">
@@ -235,30 +236,32 @@ export default async function ListingDetailPage({
             </section>
 
             <section className="bg-white border rounded-xl p-6 mb-6">
-              <div className="flex flex-wrap items-center justify-between gap-2">
-                <h2 className="text-lg font-semibold">熊猫之家摘要</h2>
-                <span className="rounded-full bg-gray-50 px-3 py-1 text-xs text-gray-500">
-                  {verification.label} · {verification.dateLabel}
-                </span>
+              <div>
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <h2 className="text-lg font-semibold">熊猫之家摘要</h2>
+                  <span className="rounded-full bg-gray-50 px-3 py-1 text-xs text-gray-500">
+                    {verification.label} · {verification.dateLabel}
+                  </span>
+                </div>
+                <p className="mt-3 text-gray-600 leading-7">{editorialSummary}</p>
               </div>
-              <p className="mt-3 text-gray-600 leading-7">{editorialSummary}</p>
-            </section>
 
-            {l.description && (
-              <section className="bg-white border rounded-xl p-6 mb-6">
-                <h2 className="text-lg font-semibold mb-3">房源描述</h2>
-                <p className="text-gray-600 leading-7 whitespace-pre-wrap">{l.description}</p>
-              </section>
-            )}
+              {l.description && (
+                <div className="mt-6 border-t pt-6">
+                  <h2 className="text-lg font-semibold mb-3">房源描述</h2>
+                  <p className="text-gray-600 leading-7 whitespace-pre-wrap">{l.description}</p>
+                </div>
+              )}
 
-            <section className="bg-white border rounded-xl p-6 mb-6">
-              <h2 className="text-lg font-semibold mb-3">位置与周边</h2>
-              <ListingMap
-                address={l.address}
-                city={l.city}
-                state={l.state}
-                zipCode={l.zip_code}
-              />
+              <div className="mt-6 border-t pt-6">
+                <h2 className="text-lg font-semibold mb-3">位置与周边</h2>
+                <ListingMap
+                  address={l.address}
+                  city={l.city}
+                  state={l.state}
+                  zipCode={l.zip_code}
+                />
+              </div>
             </section>
 
             {l.user_id && <LandlordReviews userId={l.user_id} />}
@@ -269,7 +272,7 @@ export default async function ListingDetailPage({
             </div>
           </main>
 
-          <aside className="lg:sticky lg:top-24 space-y-5">
+          <aside id="contact-form" className="scroll-mt-20 lg:sticky lg:top-24 space-y-5">
             <LeadForm listingId={l.id} />
             <div className="hidden lg:block space-y-5">
               <ContactSection listingId={l.id} />
@@ -278,6 +281,7 @@ export default async function ListingDetailPage({
           </aside>
         </div>
       </div>
+      <StickyContactBar listing={l} />
     </div>
     </>
   )
