@@ -8,7 +8,7 @@ export async function GET(req: NextRequest) {
 
   const { data, error } = await adminSupabase
     .from("listings")
-    .select("id, title, city, state, type, price, contact_name, is_available, featured, publisher_type, listing_source, review_notes, created_at")
+    .select("id, title, city, state, type, price, contact_name, is_available, featured, publisher_type, listing_source, review_notes, editorial_summary, verification_status, verified_at, created_at")
     .order("created_at", { ascending: false })
 
   if (error) return Response.json({ error: error.message }, { status: 500 })

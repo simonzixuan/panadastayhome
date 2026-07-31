@@ -12,9 +12,22 @@ interface Props {
   canonicalPath: string
   areas?: readonly string[]
   faqs?: readonly (readonly [string, string])[]
+  parentLink?: { label: string; href: string }
+  relatedLinks?: readonly { label: string; href: string }[]
 }
 
-export default function LandingListingPage({ title, description, searchIntent, listings, source, canonicalPath, areas = [], faqs = [] }: Props) {
+export default function LandingListingPage({
+  title,
+  description,
+  searchIntent,
+  listings,
+  source,
+  canonicalPath,
+  areas = [],
+  faqs = [],
+  parentLink,
+  relatedLinks = [],
+}: Props) {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.panadastayhome.com"
   const canonicalUrl = `${siteUrl}${canonicalPath}`
   const jsonLd = {
@@ -39,7 +52,10 @@ export default function LandingListingPage({ title, description, searchIntent, l
         "@id": `${canonicalUrl}#breadcrumb`,
         "itemListElement": [
           { "@type": "ListItem", "position": 1, "name": "首页", "item": siteUrl },
-          { "@type": "ListItem", "position": 2, "name": title, "item": canonicalUrl },
+          ...(parentLink
+            ? [{ "@type": "ListItem", "position": 2, "name": parentLink.label, "item": `${siteUrl}${parentLink.href}` }]
+            : []),
+          { "@type": "ListItem", "position": parentLink ? 3 : 2, "name": title, "item": canonicalUrl },
         ],
       },
     ],
@@ -52,6 +68,11 @@ export default function LandingListingPage({ title, description, searchIntent, l
         <section className="bg-white border rounded-2xl p-6 md:p-8 mb-8 shadow-sm">
           <div className="grid lg:grid-cols-[1fr_460px] gap-8 items-center">
             <div>
+              {parentLink && (
+                <Link href={parentLink.href} className="mb-4 inline-flex text-sm text-gray-500 hover:text-[#FF6B35]">
+                  ← {parentLink.label}
+                </Link>
+              )}
               <h1 className="text-3xl md:text-5xl font-bold text-gray-900 leading-tight">{title}</h1>
               <p className="mt-4 text-gray-500 leading-7 max-w-2xl">
                 {description} 留下预算、入住时间和联系方式，我们用中文帮你确认房源并对接看房。
@@ -102,12 +123,21 @@ export default function LandingListingPage({ title, description, searchIntent, l
           ))}
         </section>
 
-        {(areas.length > 0 || faqs.length > 0) && (
+        {(areas.length > 0 || relatedLinks.length > 0 || faqs.length > 0) && (
           <section className="mt-8 grid lg:grid-cols-[360px_1fr] gap-4">
-            {areas.length > 0 && (
+            {(areas.length > 0 || relatedLinks.length > 0) && (
               <div className="bg-white border rounded-xl p-5">
-                <h2 className="font-semibold text-gray-900">热门区域</h2>
+                <h2 className="font-semibold text-gray-900">{relatedLinks.length > 0 ? "相关区域" : "热门区域"}</h2>
                 <div className="mt-4 flex flex-wrap gap-2">
+                  {relatedLinks.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className="rounded-full border bg-gray-50 px-3 py-1.5 text-sm text-gray-600 hover:border-[#FF6B35] hover:text-[#FF6B35]"
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
                   {areas.map((area) => (
                     <span key={area} className="rounded-full border bg-gray-50 px-3 py-1.5 text-sm text-gray-600">
                       {area}

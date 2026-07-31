@@ -13,6 +13,10 @@ import LeadForm from "@/components/listings/LeadForm"
 import TrackEvent from "@/components/analytics/TrackEvent"
 import type { Metadata } from "next"
 import { Bath, BedDouble, Home, MapPin, Ruler, ShieldCheck } from "lucide-react"
+import Link from "next/link"
+import { getListingEditorialSummary } from "@/lib/listing-editorial"
+import { getListingVerification } from "@/lib/listing-verification"
+import { getAreaLinkForListing } from "@/lib/area-pages"
 
 export async function generateMetadata({
   params,
@@ -82,6 +86,9 @@ export default async function ListingDetailPage({
   if (!listing) notFound()
 
   const l = listing as Listing
+  const editorialSummary = getListingEditorialSummary(l)
+  const verification = getListingVerification(l)
+  const areaLink = getAreaLinkForListing(l)
   const qualityBadges = [
     l.images?.length >= 3 ? "图片较完整" : null,
     l.contact_phone || l.contact_email ? "可联系确认" : null,
@@ -159,6 +166,11 @@ export default async function ListingDetailPage({
                     <MapPin className="size-4 shrink-0" />
                     {[l.address, l.district, l.city, l.state, l.zip_code].filter(Boolean).join(", ") || "地址待确认"}
                   </p>
+                  {areaLink && (
+                    <Link href={areaLink.href} className="mt-2 inline-flex text-sm text-[#FF6B35] hover:underline">
+                      查看{areaLink.label}
+                    </Link>
+                  )}
                 </div>
                 <FavoriteButton listingId={l.id} />
               </div>
@@ -192,6 +204,16 @@ export default async function ListingDetailPage({
                   <p className="font-semibold">{PROPERTY_TYPE_LABELS[l.property_type] ?? l.property_type}</p>
                 </div>
               </div>
+            </section>
+
+            <section className="bg-white border rounded-xl p-6 mb-6">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <h2 className="text-lg font-semibold">熊猫之家摘要</h2>
+                <span className="rounded-full bg-gray-50 px-3 py-1 text-xs text-gray-500">
+                  {verification.label} · {verification.dateLabel}
+                </span>
+              </div>
+              <p className="mt-3 text-gray-600 leading-7">{editorialSummary}</p>
             </section>
 
             {l.description && (

@@ -13,6 +13,17 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   if ("is_available" in body) update.is_available = body.is_available
   if ("featured" in body) update.featured = body.featured
   if ("review_notes" in body) update.review_notes = String(body.review_notes || "")
+  if ("editorial_summary" in body) update.editorial_summary = String(body.editorial_summary || "")
+  if ("verification_status" in body) {
+    const allowedStatuses = ["pending", "contacting", "verified_available", "stale", "unavailable"]
+    if (!allowedStatuses.includes(body.verification_status)) {
+      return Response.json({ error: "Invalid verification status" }, { status: 400 })
+    }
+    update.verification_status = body.verification_status
+    if (body.verification_status === "verified_available") {
+      update.verified_at = new Date().toISOString()
+    }
+  }
 
   const { error } = await adminSupabase
     .from("listings")

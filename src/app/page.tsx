@@ -68,6 +68,12 @@ const cities = [
   ["纽约租房", "/city/new-york"],
   ["UBC 附近租房", "/schools/ubc"],
   ["租房防骗核实", "/rental-check"],
+  ["Arcadia 租房", "/area/arcadia"],
+  ["San Gabriel 租房", "/area/san-gabriel"],
+  ["Richmond BC 租房", "/area/richmond"],
+  ["Burnaby 租房", "/area/burnaby"],
+  ["North York 租房", "/area/north-york"],
+  ["Markham 租房", "/area/markham"],
 ]
 
 export default function HomePage() {

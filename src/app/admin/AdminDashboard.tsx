@@ -18,6 +18,9 @@ type Listing = {
   publisher_type: string | null
   listing_source: string | null
   review_notes: string | null
+  editorial_summary: string | null
+  verification_status: string | null
+  verified_at: string | null
   created_at: string
 }
 
@@ -299,6 +302,7 @@ export default function AdminDashboard() {
                   <th className="text-left px-4 py-3 font-medium text-gray-700">发布时间</th>
                   <th className="text-left px-4 py-3 font-medium text-gray-700">状态</th>
                   <th className="text-left px-4 py-3 font-medium text-gray-700">审核备注</th>
+                  <th className="text-left px-4 py-3 font-medium text-gray-700">原创摘要与核实</th>
                   <th className="text-left px-4 py-3 font-medium text-gray-700">操作</th>
                 </tr>
               </thead>
@@ -344,6 +348,32 @@ export default function AdminDashboard() {
                         }}
                         className="h-9 w-full rounded-lg border px-2 text-sm"
                       />
+                    </td>
+                    <td className="px-4 py-3 min-w-[260px]">
+                      <textarea
+                        defaultValue={l.editorial_summary ?? ""}
+                        placeholder="留空时自动生成结构化摘要"
+                        onBlur={(e) => {
+                          if (e.target.value !== (l.editorial_summary ?? "")) {
+                            patchListing(l.id, { editorial_summary: e.target.value })
+                          }
+                        }}
+                        className="min-h-20 w-full rounded-lg border px-2 py-1.5 text-sm"
+                      />
+                      <select
+                        value={l.verification_status ?? "pending"}
+                        onChange={(e) => patchListing(l.id, { verification_status: e.target.value })}
+                        className="mt-2 h-9 w-full rounded-lg border px-2 text-sm"
+                      >
+                        <option value="pending">待核实</option>
+                        <option value="contacting">联系核实中</option>
+                        <option value="verified_available">已核实可租</option>
+                        <option value="stale">需要重新核实</option>
+                        <option value="unavailable">已失效</option>
+                      </select>
+                      <p className="mt-1 text-xs text-gray-400">
+                        {l.verified_at ? `最后核实：${new Date(l.verified_at).toLocaleDateString("zh-CN")}` : "尚未核实"}
+                      </p>
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex gap-2">

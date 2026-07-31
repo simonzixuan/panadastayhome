@@ -1,5 +1,6 @@
 export type ListingType = "rent" | "sale"
 export type PropertyType = "apartment" | "house" | "condo" | "townhouse" | "studio" | "office"
+export type VerificationStatus = "pending" | "contacting" | "verified_available" | "stale" | "unavailable"
 
 export interface Listing {
   id: string
@@ -28,6 +29,9 @@ export interface Listing {
   publisher_type?: string | null
   listing_source?: string | null
   review_notes?: string | null
+  editorial_summary?: string | null
+  verification_status?: VerificationStatus | null
+  verified_at?: string | null
   created_at: string
   updated_at: string
   user_id?: string

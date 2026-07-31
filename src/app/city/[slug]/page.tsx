@@ -4,6 +4,7 @@ import { createServerClient } from "@/lib/supabase/server"
 import LandingListingPage from "@/components/landing/LandingListingPage"
 import { cityPages } from "@/lib/landing-pages"
 import { buildListingCityFilter } from "@/lib/landing-query"
+import { getAreaLinksForCity } from "@/lib/area-pages"
 import type { Listing } from "@/types"
 import type { Metadata } from "next"
 
@@ -72,6 +73,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
       source={`city_${slug}`}
       canonicalPath={`/city/${slug}`}
       areas={page.areas}
+      relatedLinks={getAreaLinksForCity(slug)}
       faqs={page.faqs}
     />
   )

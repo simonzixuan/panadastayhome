@@ -7,6 +7,8 @@ import { Listing } from "@/types"
 import { PROPERTY_TYPE_LABELS } from "@/lib/constants"
 import { useFavorite } from "@/hooks/useFavorite"
 import { useState } from "react"
+import { getListingEditorialSummary } from "@/lib/listing-editorial"
+import { getListingVerification } from "@/lib/listing-verification"
 
 interface Props {
   listing: Listing
@@ -19,6 +21,8 @@ export default function ListingCard({ listing, isFavorited = false }: Props) {
 
   const images = listing.images ?? []
   const showSecond = hovered && images.length > 1
+  const editorialSummary = getListingEditorialSummary(listing)
+  const verification = getListingVerification(listing)
   const qualityBadges = [
     images.length >= 3 ? "图片较完整" : null,
     listing.contact_phone || listing.contact_email ? "可联系确认" : null,
@@ -101,6 +105,10 @@ export default function ListingCard({ listing, isFavorited = false }: Props) {
           <h3 className="font-semibold text-[#222222] line-clamp-2 leading-snug mb-1">
             {listing.title}
           </h3>
+          <p className="mb-2 line-clamp-2 text-sm leading-5 text-gray-500">{editorialSummary}</p>
+          <p className="mb-2 text-xs text-gray-400">
+            {verification.label} · {verification.dateLabel}
+          </p>
           {qualityBadges.length > 0 && (
             <div className="mb-2 flex flex-wrap gap-1.5">
               {qualityBadges.slice(0, 3).map((label) => (

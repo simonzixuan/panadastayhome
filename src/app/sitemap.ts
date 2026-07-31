@@ -1,6 +1,8 @@
 import type { MetadataRoute } from "next"
 import { createServerClient } from "@/lib/supabase/server"
 import { cityPages, schoolPages } from "@/lib/landing-pages"
+import { areaPages } from "@/lib/area-pages"
+import { getAreaListings, MIN_INDEXABLE_AREA_LISTINGS } from "@/lib/area-listings"
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.panadastayhome.com"
@@ -30,6 +32,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ]
 
   try {
+    const areaResults = await Promise.all(
+      Object.keys(areaPages).map(async (slug) => ({
+        slug,
+        result: await getAreaListings(slug),
+      }))
+    )
+    const areaRoutes: MetadataRoute.Sitemap = areaResults
+      .filter(({ result }) =>
+        result?.querySucceeded && result.listings.length >= MIN_INDEXABLE_AREA_LISTINGS
+      )
+      .map(({ slug }) => ({
+        url: `${siteUrl}/area/${slug}`,
+        lastModified: new Date(),
+        changeFrequency: "weekly",
+        priority: 0.8,
+      }))
+
     const supabase = createServerClient()
     const { data: listings } = await supabase
       .from("listings")
@@ -43,7 +62,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
     }))
 
-    return [...staticRoutes, ...landingRoutes, ...listingRoutes]
+    return [...staticRoutes, ...landingRoutes, ...areaRoutes, ...listingRoutes]
   } catch {
     return [...staticRoutes, ...landingRoutes]
   }
