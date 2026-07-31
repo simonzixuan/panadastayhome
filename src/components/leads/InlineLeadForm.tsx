@@ -4,6 +4,7 @@ import { useState } from "react"
 import { Send } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { trackEvent } from "@/lib/analytics"
 
 export default function InlineLeadForm({ source = "listings", compact = false }: { source?: string; compact?: boolean }) {
   const [submitting, setSubmitting] = useState(false)
@@ -39,6 +40,7 @@ export default function InlineLeadForm({ source = "listings", compact = false }:
       return
     }
 
+    trackEvent("generate_lead", { lead_source: source })
     setSent(true)
   }
 

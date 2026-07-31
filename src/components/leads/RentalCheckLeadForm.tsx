@@ -5,6 +5,7 @@ import Link from "next/link"
 import { LockKeyhole, Send } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { trackEvent } from "@/lib/analytics"
 
 export default function RentalCheckLeadForm() {
   const [submitting, setSubmitting] = useState(false)
@@ -50,6 +51,10 @@ export default function RentalCheckLeadForm() {
       return
     }
 
+    trackEvent("generate_lead", {
+      lead_source: "rental_check",
+      lead_type: "rental_check",
+    })
     setSent(true)
   }
 

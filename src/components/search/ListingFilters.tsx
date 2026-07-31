@@ -5,6 +5,7 @@ import { useState } from "react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { US_STATES, CA_PROVINCES, COUNTRIES, PROPERTY_TYPE_LABELS } from "@/lib/constants"
+import { trackEvent } from "@/lib/analytics"
 
 const selectClass = "w-full h-10 rounded-md border border-input bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
 
@@ -43,6 +44,17 @@ export default function ListingFilters() {
     if (maxPrice) params.set("max_price", maxPrice)
     if (bedrooms) params.set("bedrooms", bedrooms)
     if (bathrooms) params.set("bathrooms", bathrooms)
+    trackEvent("search", {
+      search_term: zip ? "zip_code" : city ? "city" : "all",
+      country: country || "all",
+      region: state || "all",
+      listing_type: type || "all",
+      property_type: propertyType || "all",
+      has_price_filter: Boolean(minPrice || maxPrice),
+      minimum_bedrooms: bedrooms || "all",
+      minimum_bathrooms: bathrooms || "all",
+      search_source: "listings",
+    })
     router.push(`/listings?${params.toString()}`)
   }
 

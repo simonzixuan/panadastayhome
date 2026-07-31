@@ -4,6 +4,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import { trackEvent } from "@/lib/analytics"
 
 function isZipCode(value: string) {
   return /^\d{5}(-\d{4})?$/.test(value.trim()) || /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/.test(value.trim())
@@ -16,6 +17,7 @@ export default function SearchBar() {
 
   function handleSearch() {
     const params = new URLSearchParams()
+    const locationType = isZipCode(query) ? "zip_code" : query.trim() ? "city" : "all"
     if (query) {
       if (isZipCode(query)) {
         params.set("zip", query.trim())
@@ -24,6 +26,11 @@ export default function SearchBar() {
       }
     }
     if (type) params.set("type", type)
+    trackEvent("search", {
+      search_term: locationType,
+      listing_type: type || "all",
+      search_source: "homepage",
+    })
     router.push(`/listings?${params.toString()}`)
   }
 

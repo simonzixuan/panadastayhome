@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { supabase } from "@/lib/supabase/client"
+import { trackEvent } from "@/lib/analytics"
 
 interface ContactInfo {
   contact_name: string
@@ -65,14 +66,22 @@ export default function ContactSection({ listingId }: { listingId: string }) {
       <p className="text-gray-700 mb-1">联系人：{contact.contact_name}</p>
       <p className="text-gray-700 mb-1">
         电话：
-        <a href={`tel:${contact.contact_phone}`} className="text-blue-600 hover:underline">
+        <a
+          href={`tel:${contact.contact_phone}`}
+          onClick={() => trackEvent("contact_click", { method: "phone", listing_id: listingId })}
+          className="text-blue-600 hover:underline"
+        >
           {contact.contact_phone}
         </a>
       </p>
       {contact.contact_email && (
         <p className="text-gray-700">
           邮箱：
-          <a href={`mailto:${contact.contact_email}`} className="text-blue-600 hover:underline">
+          <a
+            href={`mailto:${contact.contact_email}`}
+            onClick={() => trackEvent("contact_click", { method: "email", listing_id: listingId })}
+            className="text-blue-600 hover:underline"
+          >
             {contact.contact_email}
           </a>
         </p>

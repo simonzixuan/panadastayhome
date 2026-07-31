@@ -9,6 +9,7 @@ import ImageUpload from "@/components/listings/ImageUpload"
 import type { ImageUploadHandle } from "@/components/listings/ImageUpload"
 import { US_STATES, CA_PROVINCES, COUNTRIES, PROPERTY_TYPE_LABELS } from "@/lib/constants"
 import { CheckCircle2, Megaphone, MessageCircle, Sparkles } from "lucide-react"
+import { trackEvent } from "@/lib/analytics"
 
 const selectClass = "w-full h-10 rounded-md border border-input bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
 
@@ -122,6 +123,13 @@ export default function PublishPage() {
       return
     }
 
+    trackEvent("submit_listing", {
+      listing_id: listing.id,
+      listing_type: listingType,
+      property_type: propertyType,
+      country,
+      publication_status: canPublishImmediately ? "published" : "pending_review",
+    })
     setSubmittedIsAvailable(canPublishImmediately)
     setSubmittedId(listing.id)
   }

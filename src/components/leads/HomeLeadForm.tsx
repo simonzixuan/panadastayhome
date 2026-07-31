@@ -4,6 +4,7 @@ import { useState } from "react"
 import { LockKeyhole, Send } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { trackEvent } from "@/lib/analytics"
 
 export default function HomeLeadForm() {
   const [submitting, setSubmitting] = useState(false)
@@ -39,6 +40,7 @@ export default function HomeLeadForm() {
       return
     }
 
+    trackEvent("generate_lead", { lead_source: "homepage" })
     setSent(true)
   }
 

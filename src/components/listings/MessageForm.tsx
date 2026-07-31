@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { supabase } from "@/lib/supabase/client"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import { trackEvent } from "@/lib/analytics"
 
 interface Props {
   listingId: string
@@ -42,6 +43,10 @@ export default function MessageForm({ listingId, ownerUserId }: Props) {
       return
     }
     setContent("")
+    trackEvent("generate_lead", {
+      lead_source: "listing_message",
+      listing_id: listingId,
+    })
     setStatus("sent")
   }
 

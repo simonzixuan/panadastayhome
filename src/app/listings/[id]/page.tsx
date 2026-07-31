@@ -10,6 +10,7 @@ import ImageGallery from "@/components/listings/ImageGallery"
 import FavoriteButton from "@/components/listings/FavoriteButton"
 import ListingMap from "@/components/listings/ListingMap"
 import LeadForm from "@/components/listings/LeadForm"
+import TrackEvent from "@/components/analytics/TrackEvent"
 import type { Metadata } from "next"
 import { Bath, BedDouble, Home, MapPin, Ruler, ShieldCheck } from "lucide-react"
 
@@ -110,6 +111,19 @@ export default async function ListingDetailPage({
 
   return (
     <>
+      <TrackEvent
+        eventName="view_item"
+        parameters={{
+          currency: "USD",
+          value: l.price ?? 0,
+          listing_id: l.id,
+          listing_type: l.type,
+          property_type: l.property_type,
+          city: l.city ?? "",
+          country: l.country ?? "",
+          items: [{ item_id: l.id }],
+        }}
+      />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
     <div className="bg-[#F7F7F7]">
       <div className="max-w-7xl mx-auto px-4 py-8">
