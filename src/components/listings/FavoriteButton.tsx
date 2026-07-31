@@ -35,7 +35,10 @@ export default function FavoriteButton({ listingId }: Props) {
     e.stopPropagation()
 
     const { data: { session } } = await supabase.auth.getSession()
-    if (!session) { window.location.href = "/auth/login"; return }
+    if (!session) {
+      window.location.href = `/auth/login?redirect=${encodeURIComponent(window.location.pathname + window.location.search)}`
+      return
+    }
 
     setLoading(true)
     const res = await fetch("/api/favorites", {

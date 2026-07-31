@@ -36,7 +36,7 @@ export default function MyListingsPage() {
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
       if (!user) {
-        router.push("/auth/login")
+        router.push("/auth/login?redirect=/my-listings")
         return
       }
       supabase

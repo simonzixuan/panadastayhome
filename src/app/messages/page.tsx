@@ -83,7 +83,7 @@ export default function MessagesPage() {
 
   useEffect(() => {
     supabase.auth.getUser().then(async ({ data: { user } }) => {
-      if (!user) { router.push("/auth/login"); return }
+      if (!user) { router.push("/auth/login?redirect=/messages"); return }
       setCurrentUserId(user.id)
       const meta = user.user_metadata ?? {}
       setEmailNotifications(meta.email_notifications !== false)

@@ -21,7 +21,7 @@ export default function EditListingPage() {
 
   useEffect(() => {
     supabase.auth.getUser().then(async ({ data: { user } }) => {
-      if (!user) { router.push("/auth/login"); return }
+      if (!user) { router.push(`/auth/login?redirect=/my-listings/${id}/edit`); return }
       const { data } = await supabase.from("listings").select("*").eq("id", id).single()
       if (!data || data.user_id !== user.id) { router.push("/my-listings"); return }
       setListing(data as Listing)

@@ -13,7 +13,7 @@ export function useFavorite(listingId: string, initialFavorited: boolean) {
 
     const { data: { session } } = await supabase.auth.getSession()
     if (!session) {
-      window.location.href = "/auth/login"
+      window.location.href = `/auth/login?redirect=${encodeURIComponent(window.location.pathname + window.location.search)}`
       return
     }
 

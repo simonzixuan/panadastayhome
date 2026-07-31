@@ -33,7 +33,8 @@ export default function LoginPage() {
       return
     }
 
-    router.push("/")
+    const redirect = new URLSearchParams(window.location.search).get("redirect")
+    router.push(redirect || "/")
     router.refresh()
   }
 
