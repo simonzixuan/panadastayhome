@@ -349,7 +349,7 @@ export default function AdminDashboard() {
                         className="h-9 w-full rounded-lg border px-2 text-sm"
                       />
                     </td>
-                    <td className="px-4 py-3 min-w-[260px]">
+                    <td className="px-4 py-3 min-w-[320px]">
                       <textarea
                         defaultValue={l.editorial_summary ?? ""}
                         placeholder="留空时自动生成结构化摘要"
@@ -358,7 +358,7 @@ export default function AdminDashboard() {
                             patchListing(l.id, { editorial_summary: e.target.value })
                           }
                         }}
-                        className="min-h-20 w-full rounded-lg border px-2 py-1.5 text-sm"
+                        className="min-h-32 w-full rounded-lg border px-2 py-1.5 text-sm"
                       />
                       <select
                         value={l.verification_status ?? "pending"}
