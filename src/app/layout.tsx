@@ -3,6 +3,7 @@ import { Geist } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import BottomTabBar from "@/components/layout/BottomTabBar";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 
 const geistSans = Geist({
@@ -126,8 +127,9 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col bg-gray-50" suppressHydrationWarning>
         <Navbar />
-        <main className="flex-1">{children}</main>
+        <main className="flex-1 pb-20 md:pb-0">{children}</main>
         <Footer />
+        <BottomTabBar />
       </body>
       {gaId && <GoogleAnalytics gaId={gaId} />}
     </html>

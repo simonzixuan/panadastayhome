@@ -102,7 +102,7 @@ export default function ReviewDialog({
             <div>
               <p className="text-sm text-gray-500 mb-2">评论（可选）</p>
               <textarea
-                className="w-full border border-gray-200 rounded-xl p-3 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-[#FF6B35]"
+                className="w-full border border-gray-200 rounded-xl p-3 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-[#2F6B52]"
                 rows={4}
                 maxLength={500}
                 placeholder="分享你的入住/合租体验..."
@@ -116,7 +116,7 @@ export default function ReviewDialog({
               <p className="text-xs text-red-500">{error}</p>
             )}
             <Button
-              className="w-full bg-[#FF6B35] hover:bg-[#e85a24] text-white"
+              className="w-full bg-[#2F6B52] hover:bg-[#24543f] text-white"
               disabled={rating === 0 || submitting}
               onClick={handleSubmit}
             >

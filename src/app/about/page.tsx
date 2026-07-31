@@ -26,7 +26,7 @@ export default function AboutPage() {
       <section className="bg-white border-b px-4 py-12">
         <div className="max-w-5xl mx-auto grid lg:grid-cols-[1fr_360px] gap-8 items-center">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full bg-[#FFF1EA] px-3 py-1.5 text-sm font-medium text-[#FF6B35] mb-5">
+            <div className="inline-flex items-center gap-2 rounded-full bg-[#EAF1EC] px-3 py-1.5 text-sm font-medium text-[#2F6B52] mb-5">
               <ShieldCheck className="size-4" />
               熊猫之家 Panda Stay Home
             </div>
@@ -38,7 +38,7 @@ export default function AboutPage() {
             </p>
             <div className="mt-7 flex flex-col sm:flex-row gap-3">
               <Link href="/#find-help">
-                <Button className="bg-[#FF6B35] hover:bg-[#e85a24] text-white">提交找房需求</Button>
+                <Button className="bg-[#2F6B52] hover:bg-[#24543f] text-white">提交找房需求</Button>
               </Link>
               <Link href="/publish">
                 <Button variant="outline">发布房源合作</Button>
@@ -48,7 +48,7 @@ export default function AboutPage() {
           <div className="bg-gray-50 border rounded-2xl p-5">
             {trustItems.map(([title, body]) => (
               <div key={title} className="flex gap-3 py-4 first:pt-0 last:pb-0 border-b last:border-b-0">
-                <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-[#FF6B35]" />
+                <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-[#2F6B52]" />
                 <div>
                   <p className="font-semibold text-gray-900">{title}</p>
                   <p className="mt-1 text-sm leading-6 text-gray-500">{body}</p>
@@ -63,7 +63,7 @@ export default function AboutPage() {
         <div className="grid md:grid-cols-4 gap-4">
           {steps.map(([title, body], index) => (
             <div key={title} className="bg-white border rounded-xl p-5">
-              <div className="flex size-10 items-center justify-center rounded-full bg-[#FFF1EA] text-[#FF6B35] font-bold">
+              <div className="flex size-10 items-center justify-center rounded-full bg-[#EAF1EC] text-[#2F6B52] font-bold">
                 {index + 1}
               </div>
               <h2 className="mt-4 font-semibold text-gray-900">{title}</h2>
@@ -76,17 +76,17 @@ export default function AboutPage() {
       <section className="max-w-5xl mx-auto px-4 pb-14">
         <div className="bg-white border rounded-2xl p-6 md:p-8 grid md:grid-cols-3 gap-5">
           <div>
-            <MessageCircle className="size-6 text-[#FF6B35]" />
+            <MessageCircle className="size-6 text-[#2F6B52]" />
             <h2 className="mt-3 font-semibold text-gray-900">找房用户</h2>
             <p className="mt-2 text-sm leading-6 text-gray-500">留下城市、预算和入住时间，我们会根据条件帮你匹配。</p>
           </div>
           <div>
-            <ClipboardCheck className="size-6 text-[#FF6B35]" />
+            <ClipboardCheck className="size-6 text-[#2F6B52]" />
             <h2 className="mt-3 font-semibold text-gray-900">房东/经纪人</h2>
             <p className="mt-2 text-sm leading-6 text-gray-500">免费提交房源，审核通过后公开展示，并用于中文渠道推广。</p>
           </div>
           <div>
-            <UserRoundCheck className="size-6 text-[#FF6B35]" />
+            <UserRoundCheck className="size-6 text-[#2F6B52]" />
             <h2 className="mt-3 font-semibold text-gray-900">联系方式</h2>
             <p className="mt-2 text-sm leading-6 text-gray-500">目前优先通过站内表单收集需求，再由人工通过你留下的微信或电话联系。</p>
           </div>

@@ -53,8 +53,8 @@ export default function HomeActivityCard() {
             <p className="text-xs font-medium text-gray-400">正在处理</p>
             <p className="mt-2 text-sm font-semibold">{current.request}</p>
             <p className="mt-1 text-xs text-gray-400">{current.detail}</p>
-            <div className="mt-3 h-2 w-24 overflow-hidden rounded-full bg-[#FF6B35]/15">
-              <div className="h-full w-2/3 rounded-full bg-[#FF6B35]/25" />
+            <div className="mt-3 h-2 w-24 overflow-hidden rounded-full bg-[#2F6B52]/15">
+              <div className="h-full w-2/3 rounded-full bg-[#2F6B52]/25" />
             </div>
           </div>
           <div className="rounded-lg bg-[#222222] p-3 text-white shadow-sm">

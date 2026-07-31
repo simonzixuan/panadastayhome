@@ -180,7 +180,7 @@ export default async function ListingDetailPage({
                     <Badge variant={l.type === "rent" ? "default" : "secondary"}>
                       {l.type === "rent" ? "租房 For Rent" : "买房 For Sale"}
                     </Badge>
-                    <span className="inline-flex items-center gap-1 rounded-full bg-[#FFF1EA] px-2.5 py-1 text-xs font-medium text-[#FF6B35]">
+                    <span className="inline-flex items-center gap-1 rounded-full bg-[#EAF1EC] px-2.5 py-1 text-xs font-medium text-[#2F6B52]">
                       <ShieldCheck className="size-3.5" />
                       中文协助确认
                     </span>
@@ -196,7 +196,7 @@ export default async function ListingDetailPage({
                     {[l.address, l.district, l.city, l.state, l.zip_code].filter(Boolean).join(", ") || "地址待确认"}
                   </p>
                   {areaLink && (
-                    <Link href={areaLink.href} className="mt-2 inline-flex text-sm text-[#FF6B35] hover:underline">
+                    <Link href={areaLink.href} className="mt-2 inline-flex text-sm text-[#2F6B52] hover:underline">
                       查看{areaLink.label}
                     </Link>
                   )}
@@ -204,7 +204,7 @@ export default async function ListingDetailPage({
                 <FavoriteButton listingId={l.id} />
               </div>
 
-              <p className="text-3xl font-bold text-[#FF6B35] mb-6">
+              <p className="text-3xl font-bold text-[#2F6B52] mb-6">
                 {l.price != null ? `$${l.price.toLocaleString()}` : "价格待定"}
                 {l.type === "rent" && <span className="text-base font-normal text-gray-500">/mo</span>}
               </p>
@@ -212,23 +212,23 @@ export default async function ListingDetailPage({
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 {l.area != null && l.area > 0 && (
                   <div className="rounded-xl bg-gray-50 p-4">
-                    <Ruler className="size-5 text-[#FF6B35] mb-2" />
+                    <Ruler className="size-5 text-[#2F6B52] mb-2" />
                     <p className="text-sm text-gray-500">面积</p>
                     <p className="font-semibold">{l.area.toLocaleString()} sq ft</p>
                   </div>
                 )}
                 <div className="rounded-xl bg-gray-50 p-4">
-                  <BedDouble className="size-5 text-[#FF6B35] mb-2" />
+                  <BedDouble className="size-5 text-[#2F6B52] mb-2" />
                   <p className="text-sm text-gray-500">卧室</p>
                   <p className="font-semibold">{l.bedrooms} bd</p>
                 </div>
                 <div className="rounded-xl bg-gray-50 p-4">
-                  <Bath className="size-5 text-[#FF6B35] mb-2" />
+                  <Bath className="size-5 text-[#2F6B52] mb-2" />
                   <p className="text-sm text-gray-500">卫生间</p>
                   <p className="font-semibold">{l.bathrooms} ba</p>
                 </div>
                 <div className="rounded-xl bg-gray-50 p-4">
-                  <Home className="size-5 text-[#FF6B35] mb-2" />
+                  <Home className="size-5 text-[#2F6B52] mb-2" />
                   <p className="text-sm text-gray-500">类型</p>
                   <p className="font-semibold">{PROPERTY_TYPE_LABELS[l.property_type] ?? l.property_type}</p>
                 </div>

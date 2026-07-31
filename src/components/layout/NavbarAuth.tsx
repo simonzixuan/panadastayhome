@@ -62,7 +62,7 @@ export default function NavbarAuth() {
     return (
       <div className="hidden md:flex items-center gap-4">
         {isAdmin && (
-          <Link href="/admin" className="text-sm font-medium text-[#FF6B35] hover:text-[#e85a24]">
+          <Link href="/admin" className="text-sm font-medium text-[#2F6B52] hover:text-[#24543f]">
             后台管理
           </Link>
         )}
@@ -75,7 +75,7 @@ export default function NavbarAuth() {
         <Link href="/messages" className="relative text-sm text-gray-500 hover:text-[#222222]">
           消息
           {unreadCount > 0 && (
-            <span className="absolute -top-2 -right-4 bg-[#FF6B35] text-white text-xs rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1">
+            <span className="absolute -top-2 -right-4 bg-[#2F6B52] text-white text-xs rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1">
               {unreadCount}
             </span>
           )}
@@ -101,7 +101,7 @@ export default function NavbarAuth() {
         </Button>
       </Link>
       <Link href="/auth/register">
-        <Button size="sm" className="rounded-xl bg-[#FF6B35] hover:bg-[#e85a24] text-white hidden sm:inline-flex">
+        <Button size="sm" className="rounded-xl bg-[#2F6B52] hover:bg-[#24543f] text-white hidden sm:inline-flex">
           注册
         </Button>
       </Link>

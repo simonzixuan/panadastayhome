@@ -122,7 +122,7 @@ export default function MyListingsPage() {
                     {listing.type === "rent" ? "租房" : "买房"}
                   </Badge>
                   {listing.featured && (
-                    <Badge className="shrink-0 bg-[#FF6B35] text-white">⭐ 精选</Badge>
+                    <Badge className="shrink-0 bg-[#2F6B52] text-white">⭐ 精选</Badge>
                   )}
                   {!listing.is_available && (
                     <Badge variant="outline" className="shrink-0 text-gray-400">待审核</Badge>
@@ -184,7 +184,7 @@ export default function MyListingsPage() {
                       aria-current={item === page ? "page" : undefined}
                       className={`min-w-10 rounded-lg border px-3 py-2 text-center text-sm ${
                         item === page
-                          ? "border-[#FF6B35] bg-[#FF6B35] text-white"
+                          ? "border-[#2F6B52] bg-[#2F6B52] text-white"
                           : "hover:bg-gray-50"
                       }`}
                     >
@@ -221,7 +221,7 @@ export default function MyListingsPage() {
                   defaultValue={page}
                   inputMode="numeric"
                   aria-label={`输入页码，范围 1 到 ${totalPages}`}
-                  className="h-10 w-20 rounded-lg border bg-white px-3 text-center outline-none focus:border-[#FF6B35] focus:ring-2 focus:ring-[#FF6B35]/20"
+                  className="h-10 w-20 rounded-lg border bg-white px-3 text-center outline-none focus:border-[#2F6B52] focus:ring-2 focus:ring-[#2F6B52]/20"
                 />
                 <span className="text-gray-500">/ {totalPages} 页</span>
                 <button type="submit" className="h-10 rounded-lg border px-4 hover:bg-gray-50">跳转</button>

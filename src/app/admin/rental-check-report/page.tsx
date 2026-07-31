@@ -259,14 +259,14 @@ ${disclaimer}
       <div className="mx-auto max-w-7xl">
         <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-[#FFF1EA] px-3 py-1.5 text-sm font-medium text-[#FF6B35]">
+            <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-[#EAF1EC] px-3 py-1.5 text-sm font-medium text-[#2F6B52]">
               <ShieldCheck className="size-4" />
               房源核实报告模板
             </div>
             <h1 className="text-3xl font-bold">自动生成客户报告</h1>
             <p className="mt-2 text-sm text-gray-500">按客户购买档位生成不同报告：人工快查、单房源核实、合同/付款前核实、签约前陪跑。</p>
           </div>
-          <Button onClick={copyReport} className="h-11 bg-[#FF6B35] text-white hover:bg-[#e85a24]">
+          <Button onClick={copyReport} className="h-11 bg-[#2F6B52] text-white hover:bg-[#24543f]">
             <Copy className="size-4" />
             {copied ? "已复制" : "复制报告"}
           </Button>

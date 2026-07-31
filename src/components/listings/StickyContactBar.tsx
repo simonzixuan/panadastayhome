@@ -13,7 +13,7 @@ export default function StickyContactBar({ listing }: { listing: Listing }) {
         </div>
         <a
           href="#contact-form"
-          className="shrink-0 rounded-full bg-[#FF6B35] px-6 py-3 text-sm font-semibold text-white hover:bg-[#e85a24]"
+          className="shrink-0 rounded-full bg-[#2F6B52] px-6 py-3 text-sm font-semibold text-white hover:bg-[#24543f]"
         >
           咨询 / 预约看房
         </a>

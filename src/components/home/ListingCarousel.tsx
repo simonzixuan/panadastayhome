@@ -15,7 +15,7 @@ export default function ListingCarousel({ title, listings, viewAllHref }: Props)
     <section className="max-w-6xl mx-auto px-4 py-8">
       <div className="mb-4 flex items-center justify-between">
         <h2 className="text-xl font-bold text-[#222222]">{title}</h2>
-        <Link href={viewAllHref} className="text-sm font-medium text-[#FF6B35] hover:text-[#e85a24]">
+        <Link href={viewAllHref} className="text-sm font-medium text-[#2F6B52] hover:text-[#24543f]">
           查看全部 →
         </Link>
       </div>

@@ -99,7 +99,7 @@ export default function RentalCheckPage() {
       <section className="bg-white px-4 py-12 md:py-16">
         <div className="max-w-6xl mx-auto grid gap-8 lg:grid-cols-[minmax(0,1fr)_440px] lg:items-start">
           <div className="max-w-2xl">
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-[#FFF1EA] px-3 py-1.5 text-sm font-medium text-[#FF6B35]">
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-[#EAF1EC] px-3 py-1.5 text-sm font-medium text-[#2F6B52]">
               <ShieldCheck className="size-4" />
               Panda Stay Home 房源核实
             </div>
@@ -111,7 +111,7 @@ export default function RentalCheckPage() {
             </p>
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
               <a href="#risk-test">
-                <Button className="h-12 px-7 bg-[#FF6B35] hover:bg-[#e85a24] text-white">
+                <Button className="h-12 px-7 bg-[#2F6B52] hover:bg-[#24543f] text-white">
                   免费测风险
                 </Button>
               </a>
@@ -152,7 +152,7 @@ export default function RentalCheckPage() {
           <div className="grid gap-3 sm:grid-cols-2">
             {recentFindings.map((item) => (
               <div key={item} className="flex gap-3 rounded-xl border bg-white p-4">
-                <AlertTriangle className="mt-0.5 size-5 shrink-0 text-[#FF6B35]" />
+                <AlertTriangle className="mt-0.5 size-5 shrink-0 text-[#2F6B52]" />
                 <p className="text-sm font-medium leading-6">{item}</p>
               </div>
             ))}
@@ -171,7 +171,7 @@ export default function RentalCheckPage() {
           <div className="grid gap-3 sm:grid-cols-2">
             {trustPoints.map((item) => (
               <div key={item} className="flex gap-3 rounded-xl border bg-white p-4">
-                <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-[#FF6B35]" />
+                <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-[#2F6B52]" />
                 <p className="text-sm font-medium leading-6">{item}</p>
               </div>
             ))}
@@ -190,7 +190,7 @@ export default function RentalCheckPage() {
           <div className="grid gap-3 sm:grid-cols-2">
             {checks.map((item) => (
               <div key={item} className="flex gap-3 rounded-xl border bg-white p-4">
-                <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-[#FF6B35]" />
+                <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-[#2F6B52]" />
                 <p className="text-sm font-medium leading-6">{item}</p>
               </div>
             ))}
@@ -209,7 +209,7 @@ export default function RentalCheckPage() {
           <div className="grid gap-3 sm:grid-cols-2">
             {deliverables.map((item) => (
               <div key={item} className="flex gap-3 rounded-xl border bg-white p-4">
-                <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-[#FF6B35]" />
+                <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-[#2F6B52]" />
                 <p className="text-sm font-medium leading-6">{item}</p>
               </div>
             ))}
@@ -223,7 +223,7 @@ export default function RentalCheckPage() {
           <p className="mt-2 mb-5 text-sm leading-6 text-gray-500">
             先提交信息，我们确认范围后发付款链接。截图和合同可以先在微信里补发。
           </p>
-          <p className="mb-4 rounded-xl bg-[#FFF1EA] px-4 py-3 text-sm leading-6 text-[#B94820]">
+          <p className="mb-4 rounded-xl bg-[#EAF1EC] px-4 py-3 text-sm leading-6 text-[#B94820]">
             支持美元 / 加币 / 人民币付款。国内用户可用微信或支付宝，北美用户可用信用卡、e-Transfer 或 Zelle。
           </p>
           <RentalCheckLeadForm />
@@ -240,7 +240,7 @@ export default function RentalCheckPage() {
               { icon: FileText, title: "已经收到合同", desc: "准备签约前，想先看合同和付款流程有没有明显风险。" },
             ].map(({ icon: Icon, title, desc }) => (
               <div key={title} className="rounded-xl border bg-white p-6">
-                <div className="mb-4 flex size-11 items-center justify-center rounded-xl bg-[#FFF1EA] text-[#FF6B35]">
+                <div className="mb-4 flex size-11 items-center justify-center rounded-xl bg-[#EAF1EC] text-[#2F6B52]">
                   <Icon className="size-5" />
                 </div>
                 <h3 className="font-semibold">{title}</h3>
@@ -261,7 +261,7 @@ export default function RentalCheckPage() {
           </div>
           <div className="flex flex-col gap-3 sm:flex-row md:justify-end">
             <Link href="/listings">
-              <Button className="h-11 w-full bg-[#FF6B35] px-6 text-white hover:bg-[#e85a24] sm:w-auto">
+              <Button className="h-11 w-full bg-[#2F6B52] px-6 text-white hover:bg-[#24543f] sm:w-auto">
                 浏览房源
               </Button>
             </Link>
@@ -278,10 +278,10 @@ export default function RentalCheckPage() {
         <div className="max-w-6xl mx-auto grid gap-4 md:grid-cols-3">
           {plans.map((plan) => (
             <div key={plan.name} className="rounded-xl border bg-white p-6">
-              <p className="text-sm font-medium text-[#FF6B35]">{plan.name}</p>
+              <p className="text-sm font-medium text-[#2F6B52]">{plan.name}</p>
               <p className="mt-3 text-3xl font-bold">{plan.price}</p>
               <p className="mt-3 min-h-16 text-sm leading-6 text-gray-500">{plan.desc}</p>
-              <a href="#top-form" className="mt-5 inline-flex text-sm font-semibold text-[#FF6B35]">
+              <a href="#top-form" className="mt-5 inline-flex text-sm font-semibold text-[#2F6B52]">
                 先提交房源
               </a>
             </div>
@@ -311,7 +311,7 @@ export default function RentalCheckPage() {
                     <h3 className="font-semibold">{tier.title}</h3>
                     <p className="mt-1 text-sm text-gray-500">{tier.bestFor}</p>
                   </div>
-                  <p className="shrink-0 text-lg font-bold text-[#FF6B35]">{tier.price}</p>
+                  <p className="shrink-0 text-lg font-bold text-[#2F6B52]">{tier.price}</p>
                 </div>
                 <div className="mt-4 grid gap-3 sm:grid-cols-2">
                   <div>
@@ -342,7 +342,7 @@ export default function RentalCheckPage() {
               { icon: ShieldCheck, title: "给你结论", desc: "低/中/高风险，附下一步该问对方的话术。" },
             ].map(({ icon: Icon, title, desc }) => (
               <div key={title} className="flex gap-3">
-                <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-white/10 text-[#FF6B35]">
+                <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-white/10 text-[#2F6B52]">
                   <Icon className="size-5" />
                 </div>
                 <div>

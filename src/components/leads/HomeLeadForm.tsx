@@ -65,7 +65,7 @@ export default function HomeLeadForm() {
       </div>
       <Input name="message" placeholder="城市/学校/房型，例如 UBC 附近 2B" />
       {error && <p className="text-sm text-red-500">{error}</p>}
-      <Button type="submit" disabled={submitting} className="w-full h-12 bg-[#FF6B35] hover:bg-[#e85a24] text-white">
+      <Button type="submit" disabled={submitting} className="w-full h-12 bg-[#2F6B52] hover:bg-[#24543f] text-white">
         {!submitting && <Send className="size-4" />}
         {submitting ? "提交中..." : "提交找房需求"}
       </Button>

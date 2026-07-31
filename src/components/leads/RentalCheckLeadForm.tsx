@@ -70,7 +70,7 @@ export default function RentalCheckLeadForm() {
         </p>
         <div className="mt-4 grid gap-2 sm:grid-cols-2">
           <Link href="/listings">
-            <Button className="h-10 w-full bg-[#FF6B35] text-white hover:bg-[#e85a24]">
+            <Button className="h-10 w-full bg-[#2F6B52] text-white hover:bg-[#24543f]">
               浏览房源
             </Button>
           </Link>
@@ -140,7 +140,7 @@ export default function RentalCheckLeadForm() {
 
       {error && <p className="text-sm text-red-500">{error}</p>}
 
-      <Button type="submit" disabled={submitting} className="w-full h-12 bg-[#FF6B35] hover:bg-[#e85a24] text-white">
+      <Button type="submit" disabled={submitting} className="w-full h-12 bg-[#2F6B52] hover:bg-[#24543f] text-white">
         {!submitting && <Send className="size-4" />}
         {submitting ? "提交中..." : "提交房源，获取人工报告"}
       </Button>

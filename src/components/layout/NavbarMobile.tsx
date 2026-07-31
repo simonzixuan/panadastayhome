@@ -51,7 +51,7 @@ export default function NavbarMobile() {
           <Link href="/listings" className="text-sm text-gray-500 hover:text-gray-900" onClick={() => setOpen(false)}>
             浏览房源
           </Link>
-          <Link href="/#find-help" className="text-sm font-medium text-[#FF6B35]" onClick={() => setOpen(false)}>
+          <Link href="/#find-help" className="text-sm font-medium text-[#2F6B52]" onClick={() => setOpen(false)}>
             帮我找房
           </Link>
           <Link href="/rental-check" className="text-sm text-gray-500 hover:text-gray-900" onClick={() => setOpen(false)}>
@@ -67,7 +67,7 @@ export default function NavbarMobile() {
             {user ? (
               <>
                 {isAdmin && (
-                  <Link href="/admin" className="text-sm font-medium text-[#FF6B35]" onClick={() => setOpen(false)}>
+                  <Link href="/admin" className="text-sm font-medium text-[#2F6B52]" onClick={() => setOpen(false)}>
                     后台管理
                   </Link>
                 )}
@@ -89,7 +89,7 @@ export default function NavbarMobile() {
                 <Link href="/auth/login" className="text-sm text-gray-500 hover:text-gray-900" onClick={() => setOpen(false)}>
                   登录
                 </Link>
-                <Link href="/auth/register" className="text-sm font-medium text-[#FF6B35]" onClick={() => setOpen(false)}>
+                <Link href="/auth/register" className="text-sm font-medium text-[#2F6B52]" onClick={() => setOpen(false)}>
                   注册
                 </Link>
               </>

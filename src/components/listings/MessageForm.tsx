@@ -60,7 +60,7 @@ export default function MessageForm({ listingId, ownerUserId }: Props) {
           <Button variant="outline" size="sm">登录</Button>
         </Link>
         <Link href="/auth/register">
-          <Button size="sm" className="bg-[#FF6B35] hover:bg-[#e85a24] text-white">免费注册</Button>
+          <Button size="sm" className="bg-[#2F6B52] hover:bg-[#24543f] text-white">免费注册</Button>
         </Link>
       </div>
     </div>
@@ -79,7 +79,7 @@ export default function MessageForm({ listingId, ownerUserId }: Props) {
     <div className="mt-6">
       <h2 className="text-lg font-semibold mb-3">发送消息给房东</h2>
       <textarea
-        className="w-full border border-gray-200 rounded-xl p-3 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-[#FF6B35]"
+        className="w-full border border-gray-200 rounded-xl p-3 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-[#2F6B52]"
         rows={4}
         placeholder="你好，我对这套房源感兴趣，请问..."
         value={content}
@@ -89,7 +89,7 @@ export default function MessageForm({ listingId, ownerUserId }: Props) {
         <p className="mt-2 text-sm text-red-500">{sendError}</p>
       )}
       <Button
-        className="mt-2 bg-[#FF6B35] hover:bg-[#e85a24] text-white"
+        className="mt-2 bg-[#2F6B52] hover:bg-[#24543f] text-white"
         disabled={!content.trim() || status === "sending"}
         onClick={handleSend}
       >

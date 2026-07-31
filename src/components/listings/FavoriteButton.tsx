@@ -59,12 +59,12 @@ export default function FavoriteButton({ listingId }: Props) {
     <button
       onClick={toggle}
       disabled={loading}
-      className="flex items-center gap-2 px-4 py-2 rounded-full border border-gray-200 hover:border-[#FF6B35] transition-colors text-sm font-medium"
+      className="flex items-center gap-2 px-4 py-2 rounded-full border border-gray-200 hover:border-[#2F6B52] transition-colors text-sm font-medium"
       aria-label={favorited ? "取消收藏" : "收藏"}
     >
       <Heart
         size={18}
-        className={favorited ? "fill-[#FF6B35] text-[#FF6B35]" : "text-gray-400"}
+        className={favorited ? "fill-[#2F6B52] text-[#2F6B52]" : "text-gray-400"}
       />
       {favorited ? "已收藏" : "收藏"}
     </button>

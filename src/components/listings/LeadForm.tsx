@@ -79,7 +79,7 @@ export default function LeadForm({ listingId }: { listingId: string }) {
           className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-ring"
         />
         {error && <p className="text-sm text-red-500">{error}</p>}
-        <Button type="submit" disabled={submitting} className="w-full h-11 bg-[#FF6B35] hover:bg-[#e85a24] text-white">
+        <Button type="submit" disabled={submitting} className="w-full h-11 bg-[#2F6B52] hover:bg-[#24543f] text-white">
           {!submitting && <Send className="size-4" />}
           {submitting ? "提交中..." : "提交咨询"}
         </Button>

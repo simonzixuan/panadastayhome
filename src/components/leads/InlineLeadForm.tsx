@@ -62,7 +62,7 @@ export default function InlineLeadForm({ source = "listings", compact = false }:
       <Input name="budget" placeholder="预算" />
       <Input name="move_in_date" placeholder="入住时间" />
       <Input name="message" placeholder="城市/学校/房型" />
-      <Button type="submit" disabled={submitting} className="h-10 bg-[#FF6B35] hover:bg-[#e85a24] text-white">
+      <Button type="submit" disabled={submitting} className="h-10 bg-[#2F6B52] hover:bg-[#24543f] text-white">
         {!submitting && <Send className="size-4" />}
         {submitting ? "提交中" : "帮我找"}
       </Button>

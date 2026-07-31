@@ -49,7 +49,7 @@ export default function LandlordReviews({ userId }: Props) {
           const date = new Date(r.created_at).toLocaleDateString("zh-CN")
           return (
             <div key={r.id} className="flex gap-3 p-4 bg-gray-50 rounded-xl">
-              <div className="w-9 h-9 rounded-full bg-[#FF6B35] text-white flex items-center justify-center text-sm font-medium shrink-0">
+              <div className="w-9 h-9 rounded-full bg-[#2F6B52] text-white flex items-center justify-center text-sm font-medium shrink-0">
                 {initial}
               </div>
               <div className="flex-1 min-w-0">

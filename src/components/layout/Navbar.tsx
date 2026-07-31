@@ -19,7 +19,7 @@ export default function Navbar() {
             <Link href="/listings" className="text-sm text-gray-500 hover:text-[#222222] transition-colors">
               浏览房源
             </Link>
-            <Link href="/#find-help" className="text-sm font-medium text-[#FF6B35] hover:text-[#e85a24] transition-colors">
+            <Link href="/#find-help" className="text-sm font-medium text-[#2F6B52] hover:text-[#24543f] transition-colors">
               帮我找房
             </Link>
             <Link href="/rental-check" className="text-sm text-gray-500 hover:text-[#222222] transition-colors">

@@ -119,7 +119,7 @@ export default async function ListingsPage({
           先浏览现有房源；如果没有合适的，留下需求，我们用中文帮你匹配和确认。
         </p>
         <details className="group mt-4">
-          <summary className="flex cursor-pointer list-none items-center gap-1 text-sm font-medium text-[#FF6B35]">
+          <summary className="flex cursor-pointer list-none items-center gap-1 text-sm font-medium text-[#2F6B52]">
             不想自己筛？留下需求让我们帮你找
             <ChevronDown className="size-4 transition-transform group-open:rotate-180" />
           </summary>
@@ -167,7 +167,7 @@ export default async function ListingsPage({
                     aria-current={item === page ? "page" : undefined}
                     className={`min-w-10 rounded-lg border px-3 py-2 text-center text-sm ${
                       item === page
-                        ? "border-[#FF6B35] bg-[#FF6B35] text-white"
+                        ? "border-[#2F6B52] bg-[#2F6B52] text-white"
                         : "hover:bg-gray-50"
                     }`}
                   >
@@ -204,7 +204,7 @@ export default async function ListingsPage({
                   defaultValue={page}
                   inputMode="numeric"
                   aria-label={`输入页码，范围 1 到 ${totalPages}`}
-                  className="h-10 w-20 rounded-lg border bg-white px-3 text-center outline-none focus:border-[#FF6B35] focus:ring-2 focus:ring-[#FF6B35]/20"
+                  className="h-10 w-20 rounded-lg border bg-white px-3 text-center outline-none focus:border-[#2F6B52] focus:ring-2 focus:ring-[#2F6B52]/20"
                 />
                 <span className="text-gray-500">/ {totalPages} 页</span>
                 <button type="submit" className="h-10 rounded-lg border px-4 hover:bg-gray-50">

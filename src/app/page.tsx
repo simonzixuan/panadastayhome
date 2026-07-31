@@ -119,7 +119,7 @@ export default async function HomePage() {
         <div className="absolute inset-x-0 bottom-0 h-28 bg-[#F7F7F7]" />
         <div className="relative max-w-6xl mx-auto grid xl:grid-cols-[minmax(0,1fr)_520px] gap-8 xl:gap-10 items-center">
           <div className="py-4 max-w-2xl">
-            <div className="inline-flex items-center gap-2 rounded-full bg-[#FFF1EA] px-3 py-1.5 text-sm font-medium text-[#FF6B35] mb-5">
+            <div className="inline-flex items-center gap-2 rounded-full bg-[#EAF1EC] px-3 py-1.5 text-sm font-medium text-[#2F6B52] mb-5">
               <MessageCircle className="size-4" />
               熊猫之家 Panda Stay Home
             </div>
@@ -131,7 +131,7 @@ export default async function HomePage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-3 mb-8">
               <a href="#find-help">
-                <Button className="h-12 px-7 bg-[#FF6B35] hover:bg-[#e85a24] text-white">
+                <Button className="h-12 px-7 bg-[#2F6B52] hover:bg-[#24543f] text-white">
                   提交找房需求
                 </Button>
               </a>
@@ -148,7 +148,7 @@ export default async function HomePage() {
                 ["不用注册", "先留下需求，再帮你匹配"],
               ].map(([title, desc]) => (
                 <div key={title} className="flex gap-2.5 rounded-xl border bg-white/80 p-3">
-                  <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-[#FF6B35]" />
+                  <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-[#2F6B52]" />
                   <div>
                     <p className="font-semibold">{title}</p>
                     <p className="text-gray-400 mt-1 leading-5">{desc}</p>
@@ -159,7 +159,7 @@ export default async function HomePage() {
           </div>
 
           <div className="relative w-full max-w-xl justify-self-center xl:max-w-none">
-            <div className="pointer-events-none absolute -right-7 -top-7 z-0 hidden h-28 w-28 rounded-full bg-[#FF6B35]/10 xl:block" />
+            <div className="pointer-events-none absolute -right-7 -top-7 z-0 hidden h-28 w-28 rounded-full bg-[#2F6B52]/10 xl:block" />
             <div id="find-help" className="relative z-10 bg-white border rounded-2xl shadow-[0_18px_60px_rgba(0,0,0,0.12)] p-6">
               <HomeActivityCard />
               <h2 className="text-xl font-bold mb-2">先告诉我们你想找什么房</h2>
@@ -169,7 +169,7 @@ export default async function HomePage() {
                 <p className="mt-1 text-gray-500">还没找到房源，继续填下面表单。</p>
                 <p className="text-gray-500">
                   已经看到房源、准备联系或付款？
-                  <Link href="/rental-check" className="font-semibold text-[#FF6B35] hover:text-[#e85a24]">
+                  <Link href="/rental-check" className="font-semibold text-[#2F6B52] hover:text-[#24543f]">
                     去做房源核实
                   </Link>
                 </p>
@@ -182,7 +182,7 @@ export default async function HomePage() {
           <div className="grid md:grid-cols-4 gap-3">
             {steps.map(({ icon: Icon, title, desc }) => (
               <div key={title} className="flex items-center gap-3 rounded-xl bg-gray-50 p-4">
-                <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-[#FFF1EA] text-[#FF6B35]">
+                <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-[#EAF1EC] text-[#2F6B52]">
                   <Icon className="size-5" />
                 </div>
                 <div>
@@ -239,7 +239,7 @@ export default async function HomePage() {
               <Link
                 key={city}
                 href={href}
-                className="rounded-full border bg-white px-4 py-2 text-sm text-gray-600 hover:border-[#FF6B35] hover:text-[#FF6B35]"
+                className="rounded-full border bg-white px-4 py-2 text-sm text-gray-600 hover:border-[#2F6B52] hover:text-[#2F6B52]"
               >
                 {city}
               </Link>
@@ -255,13 +255,13 @@ export default async function HomePage() {
               key={title}
               className="bg-white rounded-xl p-7 border shadow-sm hover:shadow-md transition-shadow"
             >
-              <div className="mb-5 flex size-12 items-center justify-center rounded-xl bg-[#FFF1EA] text-[#FF6B35]">
+              <div className="mb-5 flex size-12 items-center justify-center rounded-xl bg-[#EAF1EC] text-[#2F6B52]">
                 <Icon className="size-6" />
               </div>
               <h3 className="text-lg font-semibold text-[#222222] mb-2">{title}</h3>
               <p className="text-gray-400 text-sm mb-6">{desc}</p>
               <Link href={href}>
-                <Button className="w-full bg-[#FF6B35] hover:bg-[#e85a24] text-white rounded-xl h-11 font-medium">
+                <Button className="w-full bg-[#2F6B52] hover:bg-[#24543f] text-white rounded-xl h-11 font-medium">
                   {label}
                 </Button>
               </Link>

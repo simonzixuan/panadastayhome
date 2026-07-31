@@ -49,7 +49,7 @@ export default function NewMessageEmail({
           <Button
             href={messagesUrl}
             style={{
-              backgroundColor: "#FF6B35",
+              backgroundColor: "#2F6B52",
               color: "#ffffff",
               borderRadius: 8,
               padding: "12px 24px",

@@ -58,7 +58,7 @@ export default function RentalRiskTest() {
           <option value="normal">信用卡 / 正规平台 / 公寓官网</option>
           <option value="unknown">还不知道付款方式</option>
         </select>
-        <Button type="submit" className="h-11 w-full bg-[#FF6B35] text-white hover:bg-[#e85a24]">
+        <Button type="submit" className="h-11 w-full bg-[#2F6B52] text-white hover:bg-[#24543f]">
           立即看初步风险
         </Button>
       </form>
@@ -69,7 +69,7 @@ export default function RentalRiskTest() {
             {result.level === "低风险" ? (
               <CheckCircle2 className="size-5 text-green-600" />
             ) : (
-              <AlertTriangle className="size-5 text-[#FF6B35]" />
+              <AlertTriangle className="size-5 text-[#2F6B52]" />
             )}
             <p className="font-semibold">初步结果：{result.level}</p>
           </div>
@@ -78,7 +78,7 @@ export default function RentalRiskTest() {
               <li key={point}>- {point}</li>
             ))}
           </ul>
-          <a href="#top-form" className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-[#FF6B35]">
+          <a href="#top-form" className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-[#2F6B52]">
             让人工核实这个房源 <ArrowRight className="size-4" />
           </a>
         </div>

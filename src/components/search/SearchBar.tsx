@@ -41,12 +41,12 @@ export default function SearchBar() {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-        className="flex-1 h-12 rounded-xl border-gray-200 text-[#222222] placeholder:text-gray-400 text-sm focus-visible:ring-[#FF6B35]"
+        className="flex-1 h-12 rounded-xl border-gray-200 text-[#222222] placeholder:text-gray-400 text-sm focus-visible:ring-[#2F6B52]"
       />
       <select
         value={type}
         onChange={(e) => setType(e.target.value)}
-        className="w-full sm:w-28 h-12 rounded-xl border border-gray-200 bg-white text-gray-600 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6B35]"
+        className="w-full sm:w-28 h-12 rounded-xl border border-gray-200 bg-white text-gray-600 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#2F6B52]"
       >
         <option value="">类型</option>
         <option value="rent">租房</option>
@@ -54,7 +54,7 @@ export default function SearchBar() {
       </select>
       <Button
         onClick={handleSearch}
-        className="h-12 w-full sm:w-auto px-8 bg-[#FF6B35] hover:bg-[#e85a24] text-white rounded-xl font-medium"
+        className="h-12 w-full sm:w-auto px-8 bg-[#2F6B52] hover:bg-[#24543f] text-white rounded-xl font-medium"
       >
         搜索
       </Button>

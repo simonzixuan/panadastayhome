@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Image from "next/image"
-import { X, ChevronLeft, ChevronRight } from "lucide-react"
+import { X, ChevronLeft, ChevronRight, Grid3x3 } from "lucide-react"
 
 export default function ImageGallery({ images, title }: { images: string[]; title: string }) {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
@@ -17,8 +17,8 @@ export default function ImageGallery({ images, title }: { images: string[]; titl
 
   return (
     <>
-      {/* 画廊 */}
-      <div className="grid grid-cols-1 gap-2 mb-6">
+      {/* 画廊：手机端主图+缩略图行；房源图片不足 5 张时桌面端沿用同一套布局 */}
+      <div className={`grid grid-cols-1 gap-2 mb-6 ${images.length >= 5 ? "lg:hidden" : ""}`}>
         {/* 主图 */}
         <div
           className="aspect-video rounded-xl overflow-hidden bg-gray-100 cursor-zoom-in relative"
@@ -73,6 +73,41 @@ export default function ImageGallery({ images, title }: { images: string[]; titl
           </button>
         )}
       </div>
+
+      {/* 桌面端：图片 ≥5 张时用"一大四小"网格 */}
+      {images.length >= 5 && (
+        <div className="relative mb-6 hidden aspect-[16/7] gap-2 overflow-hidden rounded-2xl lg:grid lg:grid-cols-4 lg:grid-rows-2">
+          <div
+            className="relative col-span-2 row-span-2 cursor-zoom-in bg-gray-100"
+            onClick={() => openLightbox(0)}
+          >
+            <Image
+              src={images[0]}
+              alt={title}
+              fill
+              priority
+              sizes="50vw"
+              className="object-cover transition hover:brightness-95"
+            />
+          </div>
+          {thumbnails.map((url, i) => (
+            <div
+              key={i}
+              className="relative cursor-zoom-in bg-gray-100"
+              onClick={() => openLightbox(i + 1)}
+            >
+              <Image src={url} alt="" fill sizes="25vw" className="object-cover transition hover:brightness-95" />
+            </div>
+          ))}
+          <button
+            onClick={() => openLightbox(0)}
+            className="absolute bottom-4 right-4 flex items-center gap-1.5 rounded-lg border bg-white px-3 py-2 text-xs font-semibold shadow hover:bg-gray-50"
+          >
+            <Grid3x3 className="size-3.5" />
+            查看全部 {images.length} 张照片
+          </button>
+        </div>
+      )}
 
       {/* Lightbox */}
       {lightboxIndex !== null && (

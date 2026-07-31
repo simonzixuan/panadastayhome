@@ -177,7 +177,7 @@ export default function MessagesPage() {
       ) : (
         <div className="space-y-3">
           {conversations.map((conv) => (
-            <div key={conv.key} className={`bg-white border rounded-xl overflow-hidden ${conv.unread > 0 ? "border-[#FF6B35]" : "border-gray-100"}`}>
+            <div key={conv.key} className={`bg-white border rounded-xl overflow-hidden ${conv.unread > 0 ? "border-[#2F6B52]" : "border-gray-100"}`}>
               <div className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 cursor-pointer hover:bg-gray-50" onClick={() => handleOpen(conv)}>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
@@ -185,7 +185,7 @@ export default function MessagesPage() {
                       {conv.other_name || conv.other_email || "匿名用户"}
                     </span>
                     {conv.unread > 0 && (
-                      <span className="text-xs bg-[#FF6B35] text-white px-2 py-0.5 rounded-full">{conv.unread} 条新消息</span>
+                      <span className="text-xs bg-[#2F6B52] text-white px-2 py-0.5 rounded-full">{conv.unread} 条新消息</span>
                     )}
                   </div>
                   {conv.listing_title && (
@@ -210,7 +210,7 @@ export default function MessagesPage() {
                   <div className="space-y-3 mb-4 max-h-64 overflow-y-auto">
                     {conv.messages.map((msg) => (
                       <div key={msg.id} className={`flex ${msg.sender_id === currentUserId ? "justify-end" : "justify-start"}`}>
-                        <div className={`max-w-[80%] rounded-xl px-3 py-2 text-sm ${msg.sender_id === currentUserId ? "bg-[#FF6B35] text-white" : "bg-gray-100 text-gray-800"}`}>
+                        <div className={`max-w-[80%] rounded-xl px-3 py-2 text-sm ${msg.sender_id === currentUserId ? "bg-[#2F6B52] text-white" : "bg-gray-100 text-gray-800"}`}>
                           <p className="break-words">{msg.content}</p>
                           <p className={`text-xs mt-1 ${msg.sender_id === currentUserId ? "text-orange-100" : "text-gray-400"}`}>
                             {new Date(msg.created_at).toLocaleTimeString("zh-CN", { hour: "2-digit", minute: "2-digit" })}
@@ -221,7 +221,7 @@ export default function MessagesPage() {
                     <div ref={messagesEndRef} />
                   </div>
                   <textarea
-                    className="w-full border border-gray-200 rounded-xl p-3 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-[#FF6B35]"
+                    className="w-full border border-gray-200 rounded-xl p-3 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-[#2F6B52]"
                     rows={3}
                     placeholder="输入回复内容..."
                     value={replyContent}
@@ -233,7 +233,7 @@ export default function MessagesPage() {
                   <div className="flex items-center gap-2 mt-2">
                     <Button
                       size="sm"
-                      className="bg-[#FF6B35] hover:bg-[#e85a24] text-white"
+                      className="bg-[#2F6B52] hover:bg-[#24543f] text-white"
                       disabled={!replyContent.trim() || sending}
                       onClick={() => handleReply(conv)}
                     >

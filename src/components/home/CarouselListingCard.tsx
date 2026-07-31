@@ -36,7 +36,7 @@ export default function CarouselListingCard({ listing }: { listing: Listing }) {
           className="absolute right-2.5 top-2.5 p-1 text-white drop-shadow"
           aria-label={favorited ? "取消收藏" : "收藏"}
         >
-          <Heart size={22} className={favorited ? "fill-[#FF6B35] text-[#FF6B35]" : "fill-black/25 text-white"} />
+          <Heart size={22} className={favorited ? "fill-[#2F6B52] text-[#2F6B52]" : "fill-black/25 text-white"} />
         </button>
       </div>
       <div className="mt-2.5">

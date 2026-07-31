@@ -82,7 +82,7 @@ export default function LandingListingPage({
           <div className="grid lg:grid-cols-[1fr_460px] gap-8 items-center">
             <div>
               {parentLink && (
-                <Link href={parentLink.href} className="mb-4 inline-flex text-sm text-gray-500 hover:text-[#FF6B35]">
+                <Link href={parentLink.href} className="mb-4 inline-flex text-sm text-gray-500 hover:text-[#2F6B52]">
                   ← {parentLink.label}
                 </Link>
               )}
@@ -94,10 +94,10 @@ export default function LandingListingPage({
                 常见搜索：{searchIntent}
               </p>
               <div className="mt-6 flex flex-wrap gap-3">
-                <Link href="/listings" className="rounded-xl border px-4 py-2 text-sm font-medium hover:border-[#FF6B35] hover:text-[#FF6B35]">
+                <Link href="/listings" className="rounded-xl border px-4 py-2 text-sm font-medium hover:border-[#2F6B52] hover:text-[#2F6B52]">
                   浏览全部房源
                 </Link>
-                <Link href="/publish" className="rounded-xl border px-4 py-2 text-sm font-medium hover:border-[#FF6B35] hover:text-[#FF6B35]">
+                <Link href="/publish" className="rounded-xl border px-4 py-2 text-sm font-medium hover:border-[#2F6B52] hover:text-[#2F6B52]">
                   免费发布房源
                 </Link>
               </div>
@@ -146,7 +146,7 @@ export default function LandingListingPage({
                     <Link
                       key={link.href}
                       href={link.href}
-                      className="rounded-full border bg-gray-50 px-3 py-1.5 text-sm text-gray-600 hover:border-[#FF6B35] hover:text-[#FF6B35]"
+                      className="rounded-full border bg-gray-50 px-3 py-1.5 text-sm text-gray-600 hover:border-[#2F6B52] hover:text-[#2F6B52]"
                     >
                       {link.label}
                     </Link>

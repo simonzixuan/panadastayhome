@@ -139,7 +139,7 @@ export default function PublishPage() {
       <div className="bg-[#F7F7F7]">
         <div className="max-w-2xl mx-auto px-4 py-16">
           <div className="bg-white border rounded-2xl p-8 text-center shadow-sm">
-            <CheckCircle2 className="mx-auto size-12 text-[#FF6B35]" />
+            <CheckCircle2 className="mx-auto size-12 text-[#2F6B52]" />
             <h1 className="mt-5 text-2xl font-bold text-gray-900">
               {submittedIsAvailable ? "房源已发布" : "已收到房源，等待审核"}
             </h1>
@@ -149,7 +149,7 @@ export default function PublishPage() {
                 : "房源暂不会公开展示。我们会先检查图片、价格、位置和联系方式，通过后再帮你上架并做中文推广。"}
             </p>
             <div className="mt-6 flex flex-col sm:flex-row justify-center gap-3">
-              <Button onClick={() => router.push("/my-listings")} className="bg-[#FF6B35] hover:bg-[#e85a24] text-white">
+              <Button onClick={() => router.push("/my-listings")} className="bg-[#2F6B52] hover:bg-[#24543f] text-white">
                 查看我的房源
               </Button>
               <Button variant="outline" onClick={() => {
@@ -173,7 +173,7 @@ export default function PublishPage() {
       <section className="bg-white border rounded-2xl p-6 md:p-8 mb-8 shadow-sm">
         <div className="grid lg:grid-cols-[1fr_340px] gap-8 items-center">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full bg-[#FFF1EA] px-3 py-1.5 text-sm font-medium text-[#FF6B35] mb-4">
+            <div className="inline-flex items-center gap-2 rounded-full bg-[#EAF1EC] px-3 py-1.5 text-sm font-medium text-[#2F6B52] mb-4">
               <Megaphone className="size-4" />
               免费发布房源
             </div>
@@ -191,7 +191,7 @@ export default function PublishPage() {
               ["人工协助", "冷启动阶段先免费帮你分发"],
             ].map(([title, desc]) => (
               <div key={title} className="flex gap-3 py-3 first:pt-0 last:pb-0">
-                <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-[#FF6B35]" />
+                <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-[#2F6B52]" />
                 <div>
                   <p className="font-semibold text-gray-900">{title}</p>
                   <p className="text-sm text-gray-500 mt-1">{desc}</p>
@@ -345,7 +345,7 @@ export default function PublishPage() {
           </Field>
         </Section>
 
-        <Button type="submit" disabled={submitting} className="w-full bg-[#FF6B35] hover:bg-[#e85a24] text-white" size="lg">
+        <Button type="submit" disabled={submitting} className="w-full bg-[#2F6B52] hover:bg-[#24543f] text-white" size="lg">
           {!submitting && <Sparkles className="size-4" />}
           {submitting ? "提交中，请稍候..." : "提交房源，等待审核"}
         </Button>
