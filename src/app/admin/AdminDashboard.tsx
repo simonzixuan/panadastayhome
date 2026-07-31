@@ -619,15 +619,15 @@ export default function AdminDashboard() {
           <div className="text-gray-400 py-12 text-center">加载中...</div>
         ) : (
           <div className="bg-white rounded-xl border overflow-x-auto">
-            <table className="w-full text-sm">
+            <table className="w-full table-fixed text-sm">
               <thead className="bg-gray-50 border-b">
                 <tr>
-                  <th className="text-left px-4 py-3 font-medium text-gray-700">邮箱</th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-700">姓名</th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-700">注册时间</th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-700">发布权限</th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-700">状态</th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-700">操作</th>
+                  <th className="w-[26%] text-left px-4 py-3 font-medium text-gray-700">邮箱</th>
+                  <th className="w-[14%] text-left px-4 py-3 font-medium text-gray-700">姓名</th>
+                  <th className="w-[14%] text-left px-4 py-3 font-medium text-gray-700">注册时间</th>
+                  <th className="w-[14%] text-left px-4 py-3 font-medium text-gray-700">发布权限</th>
+                  <th className="w-[10%] text-left px-4 py-3 font-medium text-gray-700">状态</th>
+                  <th className="w-[22%] text-left px-4 py-3 font-medium text-gray-700">操作</th>
                 </tr>
               </thead>
               <tbody className="divide-y">
@@ -635,8 +635,8 @@ export default function AdminDashboard() {
                   const isBanned = !!u.banned_until && new Date(u.banned_until) > new Date()
                   return (
                     <tr key={u.id} className="hover:bg-gray-50">
-                      <td className="px-4 py-3">{u.email}</td>
-                      <td className="px-4 py-3 text-gray-500">{u.name || "—"}</td>
+                      <td className="px-4 py-3 break-all">{u.email}</td>
+                      <td className="px-4 py-3 text-gray-500 break-words">{u.name || "—"}</td>
                       <td className="px-4 py-3 text-gray-500">
                         {new Date(u.created_at).toLocaleDateString("zh-CN")}
                       </td>
@@ -655,23 +655,24 @@ export default function AdminDashboard() {
                         </span>
                       </td>
                       <td className="px-4 py-3">
-                        <Button
-                          size="sm"
-                          variant={u.trusted_publisher ? "outline" : "default"}
-                          disabled={actionId === u.id}
-                          onClick={() => toggleTrustedPublisher(u.id, u.trusted_publisher)}
-                          className="mr-2"
-                        >
-                          {actionId === u.id ? "处理中..." : u.trusted_publisher ? "取消免审" : "设为免审"}
-                        </Button>
-                        <Button
-                          size="sm"
-                          variant={isBanned ? "outline" : "destructive"}
-                          disabled={actionId === u.id}
-                          onClick={() => toggleBan(u.id, isBanned)}
-                        >
-                          {actionId === u.id ? "处理中..." : isBanned ? "解封" : "封禁"}
-                        </Button>
+                        <div className="flex flex-wrap gap-1.5">
+                          <Button
+                            size="sm"
+                            variant={u.trusted_publisher ? "outline" : "default"}
+                            disabled={actionId === u.id}
+                            onClick={() => toggleTrustedPublisher(u.id, u.trusted_publisher)}
+                          >
+                            {actionId === u.id ? "处理中..." : u.trusted_publisher ? "取消免审" : "设为免审"}
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant={isBanned ? "outline" : "destructive"}
+                            disabled={actionId === u.id}
+                            onClick={() => toggleBan(u.id, isBanned)}
+                          >
+                            {actionId === u.id ? "处理中..." : isBanned ? "解封" : "封禁"}
+                          </Button>
+                        </div>
                       </td>
                     </tr>
                   )

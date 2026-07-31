@@ -94,7 +94,7 @@ export default function EditListingPage() {
           <Field label="标题 *">
             <Input name="title" defaultValue={listing.title} required />
           </Field>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field label="出租 / 出售 *">
               <select name="type" defaultValue={listing.type} required className={selectClass}>
                 <option value="rent">租房 For Rent</option>
@@ -109,7 +109,7 @@ export default function EditListingPage() {
               </select>
             </Field>
           </div>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field label="价格（USD $）*">
               <Input name="price" type="number" min={0} defaultValue={listing.price} required />
             </Field>
@@ -117,7 +117,7 @@ export default function EditListingPage() {
               <Input name="area" type="number" min={1} defaultValue={listing.area ?? ""} />
             </Field>
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field label="卧室">
               <Input name="bedrooms" type="number" min={0} defaultValue={listing.bedrooms} />
             </Field>
@@ -160,7 +160,7 @@ export default function EditListingPage() {
           <Field label="街道地址">
             <Input name="address" defaultValue={listing.address ?? ""} />
           </Field>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field label="城市">
               <Input name="city" defaultValue={listing.city ?? ""} />
             </Field>
@@ -173,7 +173,7 @@ export default function EditListingPage() {
               </select>
             </Field>
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field label={zipLabel}>
               <Input name="zip_code" defaultValue={listing.zip_code ?? ""} />
             </Field>
@@ -184,7 +184,7 @@ export default function EditListingPage() {
         </Section>
 
         <Section title="联系方式">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field label="联系人 *">
               <Input name="contact_name" defaultValue={listing.contact_name} required />
             </Field>

@@ -1,10 +1,32 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { supabase } from "@/lib/supabase/client"
+import type { User } from "@supabase/supabase-js"
 
 export default function NavbarMobile() {
+  const router = useRouter()
   const [open, setOpen] = useState(false)
+  const [user, setUser] = useState<User | null>(null)
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => setUser(data.session?.user ?? null))
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null)
+    })
+    return () => subscription.unsubscribe()
+  }, [])
+
+  async function handleLogout() {
+    setOpen(false)
+    await supabase.auth.signOut()
+    router.push("/")
+    router.refresh()
+  }
+
+  const isAdmin = user?.app_metadata?.role === "admin"
 
   return (
     <div className="md:hidden">
@@ -41,6 +63,38 @@ export default function NavbarMobile() {
           <Link href="/about" className="text-sm text-gray-500 hover:text-gray-900" onClick={() => setOpen(false)}>
             关于我们
           </Link>
+          <div className="border-t border-gray-100 pt-4 flex flex-col gap-4">
+            {user ? (
+              <>
+                {isAdmin && (
+                  <Link href="/admin" className="text-sm font-medium text-[#FF6B35]" onClick={() => setOpen(false)}>
+                    后台管理
+                  </Link>
+                )}
+                <Link href="/my-listings" className="text-sm text-gray-500 hover:text-gray-900" onClick={() => setOpen(false)}>
+                  我的房源
+                </Link>
+                <Link href="/favorites" className="text-sm text-gray-500 hover:text-gray-900" onClick={() => setOpen(false)}>
+                  我的收藏
+                </Link>
+                <Link href="/messages" className="text-sm text-gray-500 hover:text-gray-900" onClick={() => setOpen(false)}>
+                  消息
+                </Link>
+                <button onClick={handleLogout} className="text-left text-sm text-gray-500 hover:text-gray-900">
+                  退出
+                </button>
+              </>
+            ) : (
+              <>
+                <Link href="/auth/login" className="text-sm text-gray-500 hover:text-gray-900" onClick={() => setOpen(false)}>
+                  登录
+                </Link>
+                <Link href="/auth/register" className="text-sm font-medium text-[#FF6B35]" onClick={() => setOpen(false)}>
+                  注册
+                </Link>
+              </>
+            )}
+          </div>
         </div>
       )}
     </div>

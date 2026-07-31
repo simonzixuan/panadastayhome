@@ -54,13 +54,13 @@ export default function NavbarAuth() {
     router.refresh()
   }
 
-  if (loading) return <div className="w-32 h-9" />
+  if (loading) return <div className="hidden md:block w-32 h-9" />
 
   if (user) {
     const name = user.user_metadata?.name || user.email?.split("@")[0]
     const isAdmin = user.app_metadata?.role === "admin"
     return (
-      <div className="flex items-center gap-4">
+      <div className="hidden md:flex items-center gap-4">
         {isAdmin && (
           <Link href="/admin" className="text-sm font-medium text-[#FF6B35] hover:text-[#e85a24]">
             后台管理
@@ -94,7 +94,7 @@ export default function NavbarAuth() {
   }
 
   return (
-    <div className="flex items-center gap-3">
+    <div className="hidden md:flex items-center gap-3">
       <Link href="/auth/login">
         <Button variant="outline" size="sm" className="rounded-xl border-gray-200 text-gray-600 hover:border-gray-400">
           登录

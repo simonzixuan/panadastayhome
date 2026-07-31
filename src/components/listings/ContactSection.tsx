@@ -80,7 +80,7 @@ export default function ContactSection({ listingId }: { listingId: string }) {
           <a
             href={`mailto:${contact.contact_email}`}
             onClick={() => trackEvent("contact_click", { method: "email", listing_id: listingId })}
-            className="text-blue-600 hover:underline"
+            className="break-all text-blue-600 hover:underline"
           >
             {contact.contact_email}
           </a>
