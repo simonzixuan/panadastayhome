@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 }
 import { Suspense } from "react"
 import Link from "next/link"
+import { redirect } from "next/navigation"
 import ListingsGrid from "@/components/listings/ListingsGrid"
 import ListingFilters from "@/components/search/ListingFilters"
 import InlineLeadForm from "@/components/leads/InlineLeadForm"
@@ -29,6 +30,23 @@ interface SearchParams {
   bedrooms?: string
   bathrooms?: string
   page?: string
+}
+
+function getPaginationItems(currentPage: number, totalPages: number) {
+  if (totalPages <= 7) {
+    return Array.from({ length: totalPages }, (_, index) => index + 1)
+  }
+
+  const items: Array<number | "start-ellipsis" | "end-ellipsis"> = [1]
+  const start = Math.max(2, currentPage - 2)
+  const end = Math.min(totalPages - 1, currentPage + 2)
+
+  if (start > 2) items.push("start-ellipsis")
+  for (let page = start; page <= end; page += 1) items.push(page)
+  if (end < totalPages - 1) items.push("end-ellipsis")
+  items.push(totalPages)
+
+  return items
 }
 
 export default async function ListingsPage({
@@ -78,6 +96,12 @@ export default async function ListingsPage({
     return `/listings${qs ? `?${qs}` : ""}`
   }
 
+  if (totalPages > 0 && page > totalPages) {
+    redirect(pageUrl(totalPages))
+  }
+
+  const paginationItems = getPaginationItems(page, totalPages)
+
   return (
     <div className="bg-[#F7F7F7]">
     <div className="max-w-7xl mx-auto px-4 py-8">
@@ -126,30 +150,65 @@ export default async function ListingsPage({
           <ListingsGrid listings={listings as Listing[]} />
 
           {totalPages > 1 && (
-            <div className="flex justify-center items-center gap-2 mt-10">
+            <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row sm:flex-wrap">
+              <div className="flex flex-wrap items-center justify-center gap-2">
               {page > 1 && (
                 <Link href={pageUrl(page - 1)} className="px-4 py-2 rounded-lg border text-sm hover:bg-gray-50">
                   上一页
                 </Link>
               )}
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
-                <Link
-                  key={p}
-                  href={pageUrl(p)}
-                  className={`px-4 py-2 rounded-lg border text-sm ${
-                    p === page
-                      ? "bg-[#FF6B35] text-white border-[#FF6B35]"
-                      : "hover:bg-gray-50"
-                  }`}
-                >
-                  {p}
-                </Link>
-              ))}
+              {paginationItems.map((item) =>
+                typeof item === "number" ? (
+                  <Link
+                    key={item}
+                    href={pageUrl(item)}
+                    aria-current={item === page ? "page" : undefined}
+                    className={`min-w-10 rounded-lg border px-3 py-2 text-center text-sm ${
+                      item === page
+                        ? "border-[#FF6B35] bg-[#FF6B35] text-white"
+                        : "hover:bg-gray-50"
+                    }`}
+                  >
+                    {item}
+                  </Link>
+                ) : (
+                  <span key={item} className="px-1 text-sm text-gray-400" aria-hidden="true">
+                    …
+                  </span>
+                ),
+              )}
               {page < totalPages && (
                 <Link href={pageUrl(page + 1)} className="px-4 py-2 rounded-lg border text-sm hover:bg-gray-50">
                   下一页
                 </Link>
               )}
+              </div>
+
+              <form action="/listings" method="get" className="flex items-center gap-2 text-sm">
+                {Object.entries(params).map(([key, value]) =>
+                  value && key !== "page" ? (
+                    <input key={key} type="hidden" name={key} value={value} />
+                  ) : null,
+                )}
+                <label htmlFor="page-jump" className="text-gray-500">
+                  跳至
+                </label>
+                <input
+                  id="page-jump"
+                  name="page"
+                  type="number"
+                  min={1}
+                  max={totalPages}
+                  defaultValue={page}
+                  inputMode="numeric"
+                  aria-label={`输入页码，范围 1 到 ${totalPages}`}
+                  className="h-10 w-20 rounded-lg border bg-white px-3 text-center outline-none focus:border-[#FF6B35] focus:ring-2 focus:ring-[#FF6B35]/20"
+                />
+                <span className="text-gray-500">/ {totalPages} 页</span>
+                <button type="submit" className="h-10 rounded-lg border px-4 hover:bg-gray-50">
+                  跳转
+                </button>
+              </form>
             </div>
           )}
         </>
