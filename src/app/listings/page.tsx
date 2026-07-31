@@ -11,6 +11,7 @@ export const metadata: Metadata = {
 import { Suspense } from "react"
 import Link from "next/link"
 import { redirect } from "next/navigation"
+import { ChevronDown } from "lucide-react"
 import ListingsGrid from "@/components/listings/ListingsGrid"
 import ListingFilters from "@/components/search/ListingFilters"
 import InlineLeadForm from "@/components/leads/InlineLeadForm"
@@ -106,25 +107,26 @@ export default async function ListingsPage({
     <div className="bg-[#F7F7F7]">
     <div className="max-w-7xl mx-auto px-4 py-8">
       <section className="rounded-2xl bg-white border p-6 mb-6 shadow-sm">
-        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5 mb-5">
-          <div>
-            <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
-              找房源
-              {count != null && (
-                <span className="text-base font-normal text-gray-400 ml-2">
-                  共 {count} 套
-                </span>
-              )}
-            </h1>
-            <p className="mt-2 text-gray-500">
-              先浏览现有房源；如果没有合适的，留下需求，我们用中文帮你匹配和确认。
-            </p>
+        <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
+          找房源
+          {count != null && (
+            <span className="text-base font-normal text-gray-400 ml-2">
+              共 {count} 套
+            </span>
+          )}
+        </h1>
+        <p className="mt-2 text-gray-500">
+          先浏览现有房源；如果没有合适的，留下需求，我们用中文帮你匹配和确认。
+        </p>
+        <details className="group mt-4">
+          <summary className="flex cursor-pointer list-none items-center gap-1 text-sm font-medium text-[#FF6B35]">
+            不想自己筛？留下需求让我们帮你找
+            <ChevronDown className="size-4 transition-transform group-open:rotate-180" />
+          </summary>
+          <div className="mt-4">
+            <InlineLeadForm source="listings_top" />
           </div>
-          <Link href="/#find-help" className="text-sm font-medium text-[#FF6B35] hover:underline">
-            不想自己筛？提交找房需求
-          </Link>
-        </div>
-        <InlineLeadForm source="listings_top" />
+        </details>
       </section>
 
       <div className="mb-6">

@@ -2,6 +2,7 @@
 
 import { useRouter, useSearchParams } from "next/navigation"
 import { useState } from "react"
+import { ChevronDown } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { US_STATES, CA_PROVINCES, COUNTRIES, PROPERTY_TYPE_LABELS } from "@/lib/constants"
@@ -65,10 +66,20 @@ export default function ListingFilters() {
   }
 
   const hasFilters = city || zip || country || state || type || propertyType || minPrice || maxPrice || bedrooms || bathrooms
+  const [expanded, setExpanded] = useState(Boolean(hasFilters))
 
   return (
-    <div className="bg-white border rounded-xl p-4 mb-6">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+    <div className="bg-white border rounded-xl mb-6">
+      <button
+        type="button"
+        onClick={() => setExpanded((v) => !v)}
+        className="flex w-full items-center justify-between p-4 text-sm font-medium text-gray-700"
+      >
+        <span>筛选条件{hasFilters ? "（已设置）" : ""}</span>
+        <ChevronDown className={`size-4 text-gray-400 transition-transform ${expanded ? "rotate-180" : ""}`} />
+      </button>
+      {expanded && (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 border-t p-4">
 
         {/* 城市 / Zip Code */}
         <div className="space-y-1">
@@ -179,6 +190,7 @@ export default function ListingFilters() {
           </div>
         </div>
       </div>
+      )}
     </div>
   )
 }
