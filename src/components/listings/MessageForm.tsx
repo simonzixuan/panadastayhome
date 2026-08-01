@@ -53,7 +53,7 @@ export default function MessageForm({ listingId, ownerUserId }: Props) {
   if (status === "loading") return null
   if (status === "owner") return null
   if (status === "guest") return (
-    <div className="bg-orange-50 rounded-xl p-6 text-center mt-6">
+    <div className="bg-[#EAF1EC] rounded-xl p-6 text-center mt-6">
       <p className="text-gray-700 font-medium mb-1">登录后可向房东发送消息</p>
       <div className="flex justify-center gap-3 mt-3">
         <Link href="/auth/login">

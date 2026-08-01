@@ -56,11 +56,15 @@ export default function BottomTabBar() {
   function isActive(href: string) {
     if (href === "/") return pathname === "/"
     if (href.startsWith("/#")) return false
-    return pathname.startsWith(href.split("?")[0])
+    const hrefPath = href.split("?")[0]
+    // 未登录时"消息"和"我的"都指向 /auth/login，路径本身分不清是哪个 tab，干脆都不高亮
+    if (hrefPath === "/auth/login") return false
+    return pathname.startsWith(hrefPath)
   }
 
   return (
     <nav
+      aria-label="主导航"
       className="fixed inset-x-0 bottom-0 z-40 flex border-t border-gray-100 bg-white/95 backdrop-blur md:hidden"
       style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
     >
@@ -70,6 +74,7 @@ export default function BottomTabBar() {
           <Link
             key={key}
             href={href}
+            aria-current={active ? "page" : undefined}
             className={`relative flex flex-1 flex-col items-center gap-1 py-2 text-[11px] font-medium ${
               accent ? "text-[#2F6B52]" : active ? "text-[#1A1A1A]" : "text-gray-400"
             }`}
@@ -77,7 +82,10 @@ export default function BottomTabBar() {
             <Icon className="size-5" strokeWidth={active || accent ? 2.4 : 2} />
             {label}
             {!!badge && (
-              <span className="absolute right-[26%] top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#2F6B52] px-1 text-[9px] font-bold text-white">
+              <span
+                aria-label={`未读消息 ${badge} 条`}
+                className="absolute right-[26%] top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#2F6B52] px-1 text-[9px] font-bold text-white"
+              >
                 {badge}
               </span>
             )}

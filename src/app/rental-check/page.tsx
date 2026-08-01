@@ -223,7 +223,7 @@ export default function RentalCheckPage() {
           <p className="mt-2 mb-5 text-sm leading-6 text-gray-500">
             先提交信息，我们确认范围后发付款链接。截图和合同可以先在微信里补发。
           </p>
-          <p className="mb-4 rounded-xl bg-[#EAF1EC] px-4 py-3 text-sm leading-6 text-[#B94820]">
+          <p className="mb-4 rounded-xl bg-[#EAF1EC] px-4 py-3 text-sm leading-6 text-[#24543f]">
             支持美元 / 加币 / 人民币付款。国内用户可用微信或支付宝，北美用户可用信用卡、e-Transfer 或 Zelle。
           </p>
           <RentalCheckLeadForm />

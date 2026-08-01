@@ -164,7 +164,7 @@ export default async function HomePage() {
               <HomeActivityCard />
               <h2 className="text-xl font-bold mb-2">先告诉我们你想找什么房</h2>
               <p className="text-sm text-gray-500 mb-4">还没确定房源？提交需求，我们帮你匹配方向和可选房源。</p>
-              <div className="mb-5 rounded-xl border bg-[#FFF8F5] p-3 text-sm leading-6">
+              <div className="mb-5 rounded-xl border bg-[#F5F8F6] p-3 text-sm leading-6">
                 <p className="font-semibold text-[#222222]">不知道选哪个？</p>
                 <p className="mt-1 text-gray-500">还没找到房源，继续填下面表单。</p>
                 <p className="text-gray-500">

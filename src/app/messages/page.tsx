@@ -212,7 +212,7 @@ export default function MessagesPage() {
                       <div key={msg.id} className={`flex ${msg.sender_id === currentUserId ? "justify-end" : "justify-start"}`}>
                         <div className={`max-w-[80%] rounded-xl px-3 py-2 text-sm ${msg.sender_id === currentUserId ? "bg-[#2F6B52] text-white" : "bg-gray-100 text-gray-800"}`}>
                           <p className="break-words">{msg.content}</p>
-                          <p className={`text-xs mt-1 ${msg.sender_id === currentUserId ? "text-orange-100" : "text-gray-400"}`}>
+                          <p className={`text-xs mt-1 ${msg.sender_id === currentUserId ? "text-green-100" : "text-gray-400"}`}>
                             {new Date(msg.created_at).toLocaleTimeString("zh-CN", { hour: "2-digit", minute: "2-digit" })}
                           </p>
                         </div>
