@@ -23,5 +23,5 @@ test("drops empty keywords", () => {
 test("builds a Supabase OR filter for nearby cities", () => {
   const filter = buildListingCityFilter(["Los Angeles", "Irvine"])
 
-  assert.equal(filter, "city.ilike.%Los Angeles%,city.ilike.%Irvine%")
+  assert.equal(filter, "city.ilike.Los Angeles,city.ilike.Irvine")
 })

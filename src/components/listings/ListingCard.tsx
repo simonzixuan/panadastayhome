@@ -6,6 +6,7 @@ import { Heart } from "lucide-react"
 import { Listing } from "@/types"
 import { useFavorite } from "@/hooks/useFavorite"
 import { useState } from "react"
+import { trackEvent } from "@/lib/analytics"
 
 interface Props {
   listing: Listing
@@ -25,7 +26,20 @@ export default function ListingCard({ listing, isFavorited = false }: Props) {
       : null
 
   return (
-    <Link href={`/listings/${listing.id}`} className="block">
+    <Link
+      href={`/listings/${listing.id}`}
+      className="block"
+      onClick={() => trackEvent("select_item", {
+        item_list_name: "listings",
+        listing_id: listing.id,
+        city: listing.city ?? "",
+        items: [{
+          item_id: listing.id,
+          item_name: listing.title,
+          price: listing.price ?? 0,
+        }],
+      })}
+    >
       <div
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}

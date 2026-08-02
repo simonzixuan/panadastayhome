@@ -9,6 +9,7 @@ import ImageUpload from "@/components/listings/ImageUpload"
 import type { ImageUploadHandle } from "@/components/listings/ImageUpload"
 import { US_STATES, CA_PROVINCES, COUNTRIES, PROPERTY_TYPE_LABELS } from "@/lib/constants"
 import type { Listing } from "@/types"
+import { validateListingNumbers } from "@/lib/listing-validation"
 
 export default function EditListingPage() {
   const router = useRouter()
@@ -39,6 +40,16 @@ export default function EditListingPage() {
     setError("")
 
     const form = new FormData(e.currentTarget)
+    const price = Number(form.get("price"))
+    const area = form.get("area") ? Number(form.get("area")) : null
+    const bedrooms = Number(form.get("bedrooms"))
+    const bathrooms = Number(form.get("bathrooms"))
+    const validationError = validateListingNumbers({ price, area, bedrooms, bathrooms })
+    if (validationError) {
+      setError(validationError)
+      setSubmitting(false)
+      return
+    }
 
     const images = await imageUploadRef.current?.uploadAll() ?? listing!.images ?? []
 
@@ -47,12 +58,12 @@ export default function EditListingPage() {
       .update({
         title: form.get("title"),
         description: form.get("description"),
-        price: Number(form.get("price")),
+        price,
         type: form.get("type"),
         property_type: form.get("property_type"),
-        area: form.get("area") ? Number(form.get("area")) : null,
-        bedrooms: Number(form.get("bedrooms")),
-        bathrooms: Number(form.get("bathrooms")),
+        area,
+        bedrooms,
+        bathrooms,
         country,
         address: form.get("address") || null,
         city: form.get("city") || null,
@@ -111,15 +122,15 @@ export default function EditListingPage() {
           </div>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field label="价格（USD $）*">
-              <Input name="price" type="number" min={0} defaultValue={listing.price} required />
+              <Input name="price" type="number" min={1} max={1_000_000_000} defaultValue={listing.price} required />
             </Field>
             <Field label="面积（sq ft）*">
-              <Input name="area" type="number" min={1} defaultValue={listing.area ?? ""} />
+              <Input name="area" type="number" min={1} max={1_000_000} defaultValue={listing.area ?? ""} />
             </Field>
           </div>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field label="卧室">
-              <Input name="bedrooms" type="number" min={0} defaultValue={listing.bedrooms} />
+              <Input name="bedrooms" type="number" min={0} max={20} step={1} defaultValue={listing.bedrooms} />
             </Field>
             <Field label="卫生间">
               <select name="bathrooms" defaultValue={String(listing.bathrooms)} className={selectClass}>

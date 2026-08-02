@@ -18,6 +18,7 @@ import Link from "next/link"
 import { getListingEditorialSummary } from "@/lib/listing-editorial"
 import { getListingVerification } from "@/lib/listing-verification"
 import { getAreaLinkForListing } from "@/lib/area-pages"
+import { siteUrl } from "@/lib/site-url"
 
 export async function generateMetadata({
   params,
@@ -28,7 +29,7 @@ export async function generateMetadata({
   const supabase = createServerClient()
   const { data: listing } = await supabase
     .from("listings")
-    .select("title, city, state, price, type, description, images, area, bedrooms, bathrooms")
+    .select("title, city, state, zip_code, price, type, description, images, area, bedrooms, bathrooms")
     .eq("id", id)
     .single()
 
@@ -97,7 +98,6 @@ export default async function ListingDetailPage({
   ].filter(Boolean) as string[]
 
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.panadastayhome.com"
   const listingUrl = `${siteUrl}/listings/${l.id}`
   const jsonLd = {
     "@context": "https://schema.org",

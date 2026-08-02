@@ -209,15 +209,12 @@ export function getAreaLinkForListing(listing: {
     : listing.country === "Canada"
       ? "CA"
       : listing.country?.toUpperCase()
-  const searchable = [listing.title, listing.address, listing.city, listing.district]
-    .filter(Boolean)
-    .join(" ")
-    .toLowerCase()
+  const city = listing.city?.trim().toLowerCase()
 
   const match = Object.entries(areaPages).find(([, page]) =>
     listing.state?.toUpperCase() === page.state &&
     normalizedCountry === page.country &&
-    searchable.includes(page.area.toLowerCase())
+    city === page.area.toLowerCase()
   )
 
   if (!match) return null

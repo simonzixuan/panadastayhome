@@ -4,7 +4,7 @@ export function buildListingCityFilter(cities) {
   return cities
     .map((city) => String(city ?? "").trim())
     .filter(Boolean)
-    .map((city) => `city.ilike.%${city.replaceAll(",", " ")}%`)
+    .map((city) => `city.ilike.${city.replaceAll(",", " ")}`)
     .join(",")
 }
 

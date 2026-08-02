@@ -3,7 +3,6 @@ import { cache } from "react"
 import { createServerClient } from "@/lib/supabase/server"
 import LandingListingPage from "@/components/landing/LandingListingPage"
 import { cityPages } from "@/lib/landing-pages"
-import { buildListingCityFilter } from "@/lib/landing-query"
 import { getAreaLinksForCity } from "@/lib/area-pages"
 import type { Listing } from "@/types"
 import type { Metadata } from "next"
@@ -15,12 +14,13 @@ const getCityListings = cache(async (slug: string) => {
   if (!page) return null
 
   const supabase = createServerClient()
-  const cityFilter = buildListingCityFilter(page.nearbyCities ?? [page.city])
   const { data, error } = await supabase
     .from("listings")
     .select("*")
     .eq("is_available", true)
-    .or(cityFilter)
+    .in("city", [...page.nearbyCities])
+    .in("country", [...page.countryValues])
+    .in("state", [...page.states])
     .order("featured", { ascending: false })
     .order("created_at", { ascending: false })
     .limit(12)

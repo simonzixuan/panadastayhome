@@ -10,6 +10,7 @@ import type { ImageUploadHandle } from "@/components/listings/ImageUpload"
 import { US_STATES, CA_PROVINCES, COUNTRIES, PROPERTY_TYPE_LABELS } from "@/lib/constants"
 import { CheckCircle2, Megaphone, MessageCircle, Sparkles } from "lucide-react"
 import { trackEvent } from "@/lib/analytics"
+import { validateListingNumbers } from "@/lib/listing-validation"
 
 const selectClass = "w-full h-10 rounded-md border border-input bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
 
@@ -53,13 +54,11 @@ export default function PublishPage() {
 
     const price = Number(form.get("price"))
     const area = form.get("area") ? Number(form.get("area")) : null
-    if (price < 0) {
-      setError("价格不能为负数")
-      setSubmitting(false)
-      return
-    }
-    if (area !== null && area < 0) {
-      setError("面积不能为负数")
+    const bedrooms = Number(form.get("bedrooms"))
+    const bathrooms = Number(form.get("bathrooms"))
+    const validationError = validateListingNumbers({ price, area, bedrooms, bathrooms })
+    if (validationError) {
+      setError(validationError)
       setSubmitting(false)
       return
     }
@@ -97,8 +96,8 @@ export default function PublishPage() {
         type: form.get("type"),
         property_type: form.get("property_type"),
         area,
-        bedrooms: Number(form.get("bedrooms")),
-        bathrooms: Number(form.get("bathrooms")),
+        bedrooms,
+        bathrooms,
         country,
         address: form.get("address") || null,
         city: form.get("city") || null,
@@ -243,15 +242,15 @@ export default function PublishPage() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Field label="价格（USD $）*">
-              <Input name="price" type="number" min={0} placeholder="2500" required />
+              <Input name="price" type="number" min={1} max={1_000_000_000} placeholder="2500" required />
             </Field>
             <Field label="面积（sq ft）">
-              <Input name="area" type="number" min={1} placeholder="900（选填）" />
+              <Input name="area" type="number" min={1} max={1_000_000} placeholder="900（选填）" />
             </Field>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Field label="卧室">
-              <Input name="bedrooms" type="number" min={0} defaultValue={1} />
+              <Input name="bedrooms" type="number" min={0} max={20} step={1} defaultValue={1} />
             </Field>
             <Field label="卫生间">
               <select name="bathrooms" defaultValue="1" className={selectClass}>

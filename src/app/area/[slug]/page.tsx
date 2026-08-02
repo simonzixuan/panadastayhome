@@ -3,6 +3,8 @@ import { notFound } from "next/navigation"
 import LandingListingPage from "@/components/landing/LandingListingPage"
 import { areaPages, getRelatedAreaLinks } from "@/lib/area-pages"
 import { getAreaListings, MIN_INDEXABLE_AREA_LISTINGS } from "@/lib/area-listings"
+import { areaGuides } from "@/lib/landing-guides"
+import { getLandingStats } from "@/lib/landing-stats"
 
 export const revalidate = 600
 
@@ -18,19 +20,20 @@ export async function generateMetadata({
   const { slug } = await params
   const page = areaPages[slug as keyof typeof areaPages]
   if (!page) return {}
+  const guide = areaGuides[slug]
 
   const result = await getAreaListings(slug)
   const shouldNoindex =
     result?.querySucceeded && result.listings.length < MIN_INDEXABLE_AREA_LISTINGS
 
   return {
-    title: page.metaTitle,
-    description: `${page.description} 熊猫之家提供中文找房、房源确认和看房对接。`,
+    title: guide?.metaTitle ?? page.metaTitle,
+    description: guide?.metaDescription ?? `${page.description} 熊猫之家提供中文找房、房源确认和看房对接。`,
     keywords: page.searchIntent.split("、"),
     alternates: { canonical: `/area/${slug}` },
     openGraph: {
-      title: page.metaTitle,
-      description: page.description,
+      title: guide?.metaTitle ?? page.metaTitle,
+      description: guide?.metaDescription ?? page.description,
       url: `/area/${slug}`,
       type: "website",
     },
@@ -48,19 +51,23 @@ export default async function AreaPage({
   if (!page) notFound()
 
   const result = await getAreaListings(slug)
+  const guide = areaGuides[slug]
+  const listings = result?.listings ?? []
 
   return (
     <LandingListingPage
       title={page.title}
       description={page.description}
       searchIntent={page.searchIntent}
-      listings={result?.listings ?? []}
+      listings={listings}
       source={`area_${slug}`}
       canonicalPath={`/area/${slug}`}
       areas={[page.area, page.cityLabel]}
       faqs={page.faqs}
       parentLink={{ label: `${page.cityLabel}租房`, href: `/city/${page.citySlug}` }}
-      relatedLinks={getRelatedAreaLinks(slug)}
+      relatedLinks={guide?.relatedLinks ?? getRelatedAreaLinks(slug)}
+      guide={guide}
+      stats={getLandingStats(listings, result?.total ?? listings.length)}
     />
   )
 }

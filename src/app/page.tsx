@@ -8,7 +8,6 @@ import ListingCarousel from "@/components/home/ListingCarousel"
 import { CheckCircle2, ClipboardList, Home, MapPin, MessageCircle, Search, ShieldCheck, Sparkles, UserRoundCheck } from "lucide-react"
 import { createServerClient } from "@/lib/supabase/server"
 import { cityPages } from "@/lib/landing-pages"
-import { buildListingCityFilter } from "@/lib/landing-query"
 import type { Listing } from "@/types"
 
 export const revalidate = 600
@@ -24,12 +23,13 @@ async function getHomeCarousels() {
   const results = await Promise.all(
     homeCarouselCities.map(async ({ slug, label }) => {
       const page = cityPages[slug]
-      const cityFilter = buildListingCityFilter(page.nearbyCities ?? [page.city])
       const { data } = await supabase
         .from("listings")
         .select("*")
         .eq("is_available", true)
-        .or(cityFilter)
+        .in("city", [...page.nearbyCities])
+        .in("country", [...page.countryValues])
+        .in("state", [...page.states])
         .order("featured", { ascending: false })
         .order("created_at", { ascending: false })
         .limit(10)

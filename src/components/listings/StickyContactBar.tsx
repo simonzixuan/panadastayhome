@@ -1,4 +1,7 @@
+"use client"
+
 import type { Listing } from "@/types"
+import { trackEvent } from "@/lib/analytics"
 
 export default function StickyContactBar({ listing }: { listing: Listing }) {
   return (
@@ -13,6 +16,10 @@ export default function StickyContactBar({ listing }: { listing: Listing }) {
         </div>
         <a
           href="#contact-form"
+          onClick={() => trackEvent("contact_click", {
+            method: "mobile_sticky_bar",
+            listing_id: listing.id,
+          })}
           className="shrink-0 rounded-full bg-[#2F6B52] px-6 py-3 text-sm font-semibold text-white hover:bg-[#24543f]"
         >
           咨询 / 预约看房

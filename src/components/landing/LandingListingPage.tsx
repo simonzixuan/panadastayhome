@@ -1,6 +1,9 @@
 import Link from "next/link"
 import InlineLeadForm from "@/components/leads/InlineLeadForm"
 import ListingsGrid from "@/components/listings/ListingsGrid"
+import type { LandingGuide } from "@/lib/landing-guides"
+import type { LandingStats } from "@/lib/landing-stats"
+import { siteUrl } from "@/lib/site-url"
 import type { Listing } from "@/types"
 
 interface Props {
@@ -14,6 +17,8 @@ interface Props {
   faqs?: readonly (readonly [string, string])[]
   parentLink?: { label: string; href: string }
   relatedLinks?: readonly { label: string; href: string }[]
+  guide?: LandingGuide
+  stats?: LandingStats
 }
 
 export default function LandingListingPage({
@@ -27,8 +32,9 @@ export default function LandingListingPage({
   faqs = [],
   parentLink,
   relatedLinks = [],
+  guide,
+  stats,
 }: Props) {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.panadastayhome.com"
   const canonicalUrl = `${siteUrl}${canonicalPath}`
   const jsonLd = {
     "@context": "https://schema.org",
@@ -44,7 +50,7 @@ export default function LandingListingPage({
           "url": siteUrl,
         },
         "areaServed": searchIntent,
-        "description": `${description} ${searchIntent}`,
+        "description": `${guide?.intro ?? description} ${searchIntent}`,
         "url": canonicalUrl,
       },
       {
@@ -110,6 +116,37 @@ export default function LandingListingPage({
           </div>
         </section>
 
+        {stats && (
+          <section className="mb-8 grid grid-cols-2 gap-3 lg:grid-cols-4">
+            <div className="rounded-xl border bg-white p-4">
+              <p className="text-sm text-gray-500">当前可租房源</p>
+              <p className="mt-1 text-2xl font-bold text-gray-900">{stats.total} 套</p>
+            </div>
+            <div className="rounded-xl border bg-white p-4">
+              <p className="text-sm text-gray-500">当前展示租金</p>
+              <p className="mt-1 text-lg font-bold text-gray-900">
+                {stats.minPrice != null && stats.maxPrice != null
+                  ? stats.minPrice === stats.maxPrice
+                    ? `$${stats.minPrice.toLocaleString()}/月`
+                    : `$${stats.minPrice.toLocaleString()}–$${stats.maxPrice.toLocaleString()}/月`
+                  : "待确认"}
+              </p>
+            </div>
+            <div className="rounded-xl border bg-white p-4">
+              <p className="text-sm text-gray-500">最近人工核实</p>
+              <p className="mt-1 text-lg font-bold text-gray-900">
+                {stats.latestVerifiedAt ? formatLandingDate(stats.latestVerifiedAt) : "尚待核实"}
+              </p>
+            </div>
+            <div className="rounded-xl border bg-white p-4">
+              <p className="text-sm text-gray-500">页面数据更新</p>
+              <p className="mt-1 text-lg font-bold text-gray-900">
+                {stats.latestUpdatedAt ? formatLandingDate(stats.latestUpdatedAt) : "暂无记录"}
+              </p>
+            </div>
+          </section>
+        )}
+
         {listings.length > 0 ? (
           <section>
             <h2 className="text-2xl font-bold text-gray-900 mb-5">{title}房源推荐</h2>
@@ -120,6 +157,25 @@ export default function LandingListingPage({
             <p className="text-lg font-semibold text-gray-900">当前暂无完全匹配的公开房源</p>
             <p className="text-gray-500 mt-2 mb-6">可以先留下需求，我们帮你人工筛选。</p>
             <InlineLeadForm source={`${source}_empty`} />
+          </section>
+        )}
+
+        {guide && (
+          <section className="mt-8 rounded-2xl border bg-white p-6 shadow-sm md:p-8">
+            <h2 className="text-2xl font-bold text-gray-900">{title}实用指南</h2>
+            <p className="mt-4 max-w-4xl leading-8 text-gray-600">{guide.intro}</p>
+            <div className="mt-8 grid gap-8 lg:grid-cols-2">
+              {guide.sections.map((section) => (
+                <article key={section.title}>
+                  <h3 className="text-lg font-semibold text-gray-900">{section.title}</h3>
+                  <div className="mt-3 space-y-3">
+                    {section.paragraphs.map((paragraph) => (
+                      <p key={paragraph} className="leading-7 text-gray-600">{paragraph}</p>
+                    ))}
+                  </div>
+                </article>
+              ))}
+            </div>
           </section>
         )}
 
@@ -177,4 +233,13 @@ export default function LandingListingPage({
       </div>
     </div>
   )
+}
+
+function formatLandingDate(value: string) {
+  return new Intl.DateTimeFormat("zh-CN", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    timeZone: "America/Los_Angeles",
+  }).format(new Date(value))
 }
