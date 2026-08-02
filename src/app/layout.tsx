@@ -130,8 +130,8 @@ export default function RootLayout({
         <main className="flex-1">{children}</main>
         <Footer />
         <BottomTabBar />
+        {gaId && <GoogleAnalytics gaId={gaId} />}
       </body>
-      {gaId && <GoogleAnalytics gaId={gaId} />}
     </html>
   );
 }
