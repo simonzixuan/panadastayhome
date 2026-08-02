@@ -51,6 +51,68 @@ export const areaGuides: Record<string, LandingGuide> = {
       { label: "USC 附近租房", href: "/schools/usc" },
     ],
   },
+  arcadia: {
+    metaTitle: "Arcadia 华人租房｜阿凯迪亚公寓、独立屋房源",
+    metaDescription: "查看 Arcadia 阿凯迪亚当前公寓、独立屋、整租和分租房源，按预算与入住时间比较，并获得中文房源确认和看房协助。",
+    intro: "Arcadia 位于圣盖博谷，住宅街区、商业带和公共交通节点之间的生活方式差异明显。找房时应同时比较到工作或学校的实际通勤、停车、房屋维护方式和费用包含范围。本页集中展示当前标记为可租的 Arcadia 房源，并提供中文筛选和状态核实入口。",
+    sections: [
+      {
+        title: "Arcadia 不同位置怎么选",
+        paragraphs: [
+          "靠近 Huntington Drive、Santa Anita Avenue 和 Arcadia A Line Station 的房源，通常更便于连接商业设施和公共交通；更深入住宅街区的独立屋或附属单元，可能更重视空间和停车。房源写着“Arcadia”时，仍应使用完整地址核对行政边界、学校归属和日常步行距离。",
+        ],
+      },
+      {
+        title: "交通与日常生活",
+        paragraphs: [
+          "Arcadia A Line Station 可连接洛杉矶轨道交通，市内也有 Arcadia Transit 固定线路。是否适合无车生活取决于房源到车站、公交站、超市和工作地点的实际距离；签约前应分别测试工作日通勤和晚间回程，不要只依据“近车站”的描述。",
+        ],
+      },
+      {
+        title: "申请与看房核实",
+        paragraphs: [
+          "公寓要确认停车、洗衣、物业费用和宠物规则；独立屋、后屋或分租房要确认独立出入、厨房卫浴、公共区域和水电网分摊。付款前核对出租方、门牌地址、书面租约和收款信息，学区需求则应凭完整地址向对应机构确认。",
+        ],
+      },
+    ],
+    relatedLinks: [
+      { label: "洛杉矶华人租房", href: "/city/los-angeles" },
+      { label: "San Gabriel 华人租房", href: "/area/san-gabriel" },
+      { label: "Rowland Heights 租房", href: "/area/rowland-heights" },
+      { label: "Irvine 华人租房", href: "/area/irvine" },
+    ],
+  },
+  "rowland-heights": {
+    metaTitle: "Rowland Heights 租房｜罗兰岗单间、整租房源",
+    metaDescription: "查看 Rowland Heights 罗兰岗当前单间、套房、合租和整租房源，比较价格、房型与最后核实时间，提供中文找房协助。",
+    intro: "Rowland Heights 的租房选择常见于独立屋整租、单间、套房和附属居住空间。区域范围较分散，房源之间在停车、独立出入、公共空间和通勤方式上可能差异很大。本页用于比较当前房源的基础条件，并帮助租客在联系发布方前整理需要核实的问题。",
+    sections: [
+      {
+        title: "单间、套房和整租怎么区分",
+        paragraphs: [
+          "标题中的“套房”不一定代表完全独立的住宅单元。应确认是否独立出入、是否共享厨房或卫浴、洗衣方式、室友人数、访客规则和水电网计算方式。多人整租还要明确每位申请人的签约责任，以及室友变更和提前退租规则。",
+        ],
+      },
+      {
+        title: "通勤与停车条件",
+        paragraphs: [
+          "罗兰岗日常出行通常需要结合汽车和公交。找房时应根据工作或学校方向测试实际高峰通勤，并确认车位数量、街道停车限制和访客停车。没有车的租客要额外检查步行路线、公交换乘、购物距离及晚间回程方式。",
+        ],
+      },
+      {
+        title: "付款前的房源核实",
+        paragraphs: [
+          "要求看到完整门牌、室内格局和公共区域，远程看房时可安排实时视频。书面租约应写清租金、押金、租期、费用、维修责任和退租条件；遇到拒绝看房、价格明显异常或催促立即转账的情况，应暂停付款并进一步核实。",
+        ],
+      },
+    ],
+    relatedLinks: [
+      { label: "洛杉矶华人租房", href: "/city/los-angeles" },
+      { label: "San Gabriel 华人租房", href: "/area/san-gabriel" },
+      { label: "Arcadia 华人租房", href: "/area/arcadia" },
+      { label: "Irvine 华人租房", href: "/area/irvine" },
+    ],
+  },
   "san-gabriel": {
     metaTitle: "San Gabriel 华人租房｜圣盖博公寓、整租房源",
     metaDescription: "查看 San Gabriel 圣盖博当前公寓、独立屋、整租和合租房源，了解交通、生活圈、申请条件与最后核实时间，提供中文协助。",
@@ -90,6 +152,254 @@ export const areaGuides: Record<string, LandingGuide> = {
       { label: "Arcadia 华人租房", href: "/area/arcadia" },
       { label: "Rowland Heights 华人租房", href: "/area/rowland-heights" },
       { label: "Irvine 华人租房", href: "/area/irvine" },
+    ],
+  },
+  richmond: {
+    metaTitle: "Richmond BC 租房｜列治文公寓、独立屋房源",
+    metaDescription: "查看 Richmond BC 列治文当前公寓、联排屋、独立屋和分租房源，比较价格、房型与最后核实时间，获得中文看房协助。",
+    intro: "Richmond BC 的租房选择覆盖市中心公寓、联排住宅、独立屋和分租单元。沿 Canada Line 与远离轨道交通的住宅区，在通勤方式、停车和生活便利度上差异明显。本页集中比较当前可租房源，并把价格、房型与最后核实状态放在同一页面。",
+    sections: [
+      {
+        title: "列治文不同生活圈怎么比较",
+        paragraphs: [
+          "Richmond City Centre、No. 3 Road 沿线和 Canada Line 车站周边更适合重视公共交通与商业设施的租客；Steveston 及其他住宅区更需要结合开车、公交和日常采购路线判断。公寓、联排屋和独立屋的停车、储物及物业规则也应一并比较。",
+        ],
+      },
+      {
+        title: "Canada Line 与通勤",
+        paragraphs: [
+          "Canada Line 连接列治文、机场和温哥华市区，但房源到车站的接驳距离会显著影响实际通勤。看房前应使用准确地址测试上班高峰、晚间和周末路线，并确认公交换乘、停车位和访客停车条件。",
+        ],
+      },
+      {
+        title: "租约和费用要确认什么",
+        paragraphs: [
+          "共管公寓要确认搬入预约、物业规则、车位和储物间是否包含；独立屋或分租房要确认水电网、供暖、庭院维护和公共区域。付款前核对出租方身份、合同地址、押金和书面租约，房源状态也应在预约前再次确认。",
+        ],
+      },
+    ],
+    relatedLinks: [
+      { label: "温哥华华人租房", href: "/city/vancouver" },
+      { label: "Burnaby 华人租房", href: "/area/burnaby" },
+      { label: "Coquitlam 租房", href: "/area/coquitlam" },
+      { label: "Surrey BC 租房", href: "/area/surrey" },
+    ],
+  },
+  burnaby: {
+    metaTitle: "Burnaby 华人租房｜本拿比公寓、合租房源",
+    metaDescription: "查看 Burnaby 本拿比当前公寓、联排屋、独立屋和合租房源，按预算与入住时间筛选，并获得中文房源确认和看房协助。",
+    intro: "Burnaby 连接温哥华、新西敏和高贵林，不同 SkyTrain 走廊与住宅区的通勤和房型差异较大。Metrotown、Brentwood、Lougheed 等生活圈常见公寓选择，其他区域也有独立屋、联排和分租房源。本页帮助租客按预算、交通和入住条件完成初步比较。",
+    sections: [
+      {
+        title: "Metrotown、Brentwood 与 Lougheed 怎么选",
+        paragraphs: [
+          "Metrotown 靠近 Expo Line，Brentwood 和 Lougheed 一带连接 Millennium Line；选择时除了车站距离，还要比较上班或上学方向、换乘次数、楼宇费用和周边日常服务。远离车站的住宅区可能空间更大，但需要核实公交接驳和停车。",
+        ],
+      },
+      {
+        title: "公寓和独立屋的费用差异",
+        paragraphs: [
+          "公寓申请时要确认车位、储物、搬入费、物业预约和宠物规定；独立屋、地下室或合租房则要确认独立出入、供暖、水电网、洗衣与公共空间。把固定费用加入月租后再比较，通常比只看标价更准确。",
+        ],
+      },
+      {
+        title: "适合学生和上班族的核实重点",
+        paragraphs: [
+          "前往温哥华市区、SFU 或大温其他城市时，应按实际门牌测试高峰通勤。学生和新移民还要提前准备身份证明、录取或雇佣材料、资金证明和担保方案；提交押金前必须确认出租方、房屋和租约信息一致。",
+        ],
+      },
+    ],
+    relatedLinks: [
+      { label: "温哥华华人租房", href: "/city/vancouver" },
+      { label: "Richmond BC 租房", href: "/area/richmond" },
+      { label: "Coquitlam 租房", href: "/area/coquitlam" },
+      { label: "Surrey BC 租房", href: "/area/surrey" },
+    ],
+  },
+  coquitlam: {
+    metaTitle: "Coquitlam 租房｜高贵林公寓、独立屋房源",
+    metaDescription: "查看 Coquitlam 高贵林当前公寓、独立屋和家庭住房，比较租金、房型与最后核实时间，熊猫之家提供中文找房协助。",
+    intro: "Coquitlam 的公寓、联排屋和独立屋分布在多个生活圈，靠近 Millennium Line 的房源与更深入住宅区的房源，在通勤、空间和停车上各有取舍。本页展示当前可租记录，方便家庭、学生和上班族先比较价格、房型及核实状态。",
+    sections: [
+      {
+        title: "Coquitlam Centre 与 Burquitlam 怎么比较",
+        paragraphs: [
+          "Coquitlam Central、Lincoln 和 Lafarge Lake–Douglas 一带适合需要连接 Millennium Line 与商业设施的租客；Burquitlam 靠近 Burnaby 边界，通勤方向不同。选择时应核对房源到车站的实际步行或公交距离，而不是只看区域名称。",
+        ],
+      },
+      {
+        title: "家庭住房和公寓的选择",
+        paragraphs: [
+          "家庭租客通常更关注卧室数量、学校、停车和长期租约；公寓租客则需要确认车位、储物、物业规则与搬入安排。学校归属可能随门牌变化，应使用完整地址向对应机构核实，不以房源标题作为依据。",
+        ],
+      },
+      {
+        title: "看房与申请材料",
+        paragraphs: [
+          "申请前确认可入住日期、租期、押金、费用和宠物规则，并准备身份证明、收入或资金材料。远程看房要核对门牌、室内和公共区域；付款前确认出租方身份和书面租约，页面状态也需向发布方再次核实。",
+        ],
+      },
+    ],
+    relatedLinks: [
+      { label: "温哥华华人租房", href: "/city/vancouver" },
+      { label: "Burnaby 华人租房", href: "/area/burnaby" },
+      { label: "Richmond BC 租房", href: "/area/richmond" },
+      { label: "Surrey BC 租房", href: "/area/surrey" },
+    ],
+  },
+  surrey: {
+    metaTitle: "Surrey BC 租房｜素里公寓、独立屋房源",
+    metaDescription: "查看 Surrey BC 素里当前公寓、联排屋、独立屋和分租房源，比较价格、房型与入住条件，并获得中文看房协助。",
+    intro: "Surrey 地域范围较大，Surrey City Centre、Guildford、Newton、Fleetwood 和 South Surrey 等生活圈之间的通勤方式与房型差异明显。靠近 Expo Line 的公寓和远离轨道交通的家庭住房不能只按城市名比较。本页帮助租客结合预算、交通和入住条件筛选当前房源。",
+    sections: [
+      {
+        title: "Surrey 不同区域怎么选",
+        paragraphs: [
+          "Surrey Central、Gateway 和 King George 一带可连接 Expo Line，适合需要前往大温其他城市的租客；Guildford、Newton、Fleetwood 和 South Surrey 则更需要结合公交、汽车和具体目的地判断。看房前应测试工作日高峰路线，并确认停车条件。",
+        ],
+      },
+      {
+        title: "公寓、联排和地下室套房",
+        paragraphs: [
+          "公寓和联排屋要确认物业规则、车位、储物和搬入安排；独立屋分租或地下室套房要确认独立出入、厨房卫浴、供暖、隔音及水电网分摊。房间数量相同，并不代表使用空间和费用结构相同。",
+        ],
+      },
+      {
+        title: "签约前需要核实什么",
+        paragraphs: [
+          "确认准确地址、出租方身份、可入住日期、租期、押金和每月费用，并要求书面租约。远程租房时不要仅凭照片付款，应通过实时视频或可信代理核实房屋；页面显示的可用状态也需要在预约前重新确认。",
+        ],
+      },
+    ],
+    relatedLinks: [
+      { label: "温哥华华人租房", href: "/city/vancouver" },
+      { label: "Burnaby 华人租房", href: "/area/burnaby" },
+      { label: "Richmond BC 租房", href: "/area/richmond" },
+      { label: "Coquitlam 租房", href: "/area/coquitlam" },
+    ],
+  },
+  "north-york": {
+    metaTitle: "North York 华人租房｜北约克公寓、一室一厅房源",
+    metaDescription: "查看 North York 北约克当前公寓、一室一厅、独立屋和合租房源，比较租金、入住时间与核实状态，提供中文找房协助。",
+    intro: "North York 范围较广，Yonge Street 地铁走廊、高层公寓区和远离地铁的住宅区，在通勤和生活方式上差异明显。找房时应先确定每天需要前往的学校或工作地点，再比较地铁、公交、停车和楼宇费用。本页汇总当前可租房源并提供中文筛选入口。",
+    sections: [
+      {
+        title: "Yonge Street 地铁走廊怎么选",
+        paragraphs: [
+          "Finch、North York Centre 和 Sheppard–Yonge 一带可连接 TTC Line 1，Sheppard–Yonge 还可换乘 Line 4。靠近车站的公寓适合重视通勤的租客，但应核实实际步行距离、楼宇设施费、车位和储物；远离地铁的房源则要检查公交接驳。",
+        ],
+      },
+      {
+        title: "一室一厅、公寓和地下室房源",
+        paragraphs: [
+          "一室一厅可能是共管公寓、出租公寓或独立屋内的套房，申请条件和费用结构不同。应确认是否独立出入、洗衣和厨房是否共享、水电网是否包含，以及暖气和空调控制方式，不要只依据卧室数量判断。",
+        ],
+      },
+      {
+        title: "申请和学区核实",
+        paragraphs: [
+          "房东或物业可能要求信用、收入、工作或资金材料；新移民和留学生可提前准备身份证明、录取或雇佣文件及担保方案。学校需求必须按完整地址向对应教育机构确认，付款前还要核对出租方、房屋和租约。",
+        ],
+      },
+    ],
+    relatedLinks: [
+      { label: "多伦多华人租房", href: "/city/toronto" },
+      { label: "Markham 华人租房", href: "/area/markham" },
+      { label: "Richmond Hill 租房", href: "/area/richmond-hill" },
+      { label: "Mississauga 租房", href: "/area/mississauga" },
+    ],
+  },
+  markham: {
+    metaTitle: "Markham 华人租房｜万锦公寓、独立屋房源",
+    metaDescription: "查看 Markham 万锦当前公寓、联排屋、独立屋和分租房源，按预算与入住时间筛选，并获得中文房源确认和看房协助。",
+    intro: "Markham 的租房选择分布在 Highway 7、Downtown Markham、Unionville、Thornhill 和其他住宅区。不同位置在 YRT/Viva、GO Transit、开车通勤和生活设施方面差异明显。本页把当前房源的价格、房型和核实状态集中展示，方便租客先缩小范围。",
+    sections: [
+      {
+        title: "万锦不同生活圈怎么比较",
+        paragraphs: [
+          "Downtown Markham 和 Highway 7 沿线常见公寓及商业设施，Unionville、Thornhill 和更深入住宅区可能有联排、独立屋或分租选择。选择时应根据工作或学校方向测试实际路线，并核实门牌所在的行政和学校边界。",
+        ],
+      },
+      {
+        title: "YRT、Viva、GO 与开车通勤",
+        paragraphs: [
+          "YRT 和 Viva 连接 Markham、Richmond Hill 及多伦多交通网络，部分租客也会结合 GO Transit。公共交通是否方便取决于房源到站点的距离、换乘和班次；开车租客则要比较高峰时间、车位数量及冬季停车规则。",
+        ],
+      },
+      {
+        title: "家庭和新移民申请重点",
+        paragraphs: [
+          "家庭租客要确认卧室、学校、停车、宠物和长期租约；新移民或留学生可准备资金、工作或录取材料及担保方案。任何情况下都应在付款前核实出租方身份、完整地址、房屋状态和书面租约。",
+        ],
+      },
+    ],
+    relatedLinks: [
+      { label: "多伦多华人租房", href: "/city/toronto" },
+      { label: "North York 华人租房", href: "/area/north-york" },
+      { label: "Richmond Hill 租房", href: "/area/richmond-hill" },
+      { label: "Mississauga 租房", href: "/area/mississauga" },
+    ],
+  },
+  "richmond-hill": {
+    metaTitle: "Richmond Hill 租房｜列治文山公寓、独立屋房源",
+    metaDescription: "查看 Richmond Hill 列治文山当前公寓、联排屋、独立屋和分租房源，比较价格、房型与最后核实时间，提供中文协助。",
+    intro: "Richmond Hill 的公寓、联排屋、独立屋和分租房源分布在 Yonge Street、Highway 7 与多个住宅区。租客需要在公共交通、开车通勤、空间和预算之间权衡。本页展示当前可租记录，并帮助用户比较房型、价格和最后核实状态。",
+    sections: [
+      {
+        title: "Yonge Street 与住宅区怎么选",
+        paragraphs: [
+          "Yonge Street 和 Highway 7 周边更容易连接商业设施及区域公共交通；远离主要走廊的住宅区可能提供更多家庭型房屋，但更依赖公交接驳或汽车。应使用准确地址测试通勤，而不是只按 Richmond Hill 城市名判断。",
+        ],
+      },
+      {
+        title: "Viva、YRT 与 GO 通勤",
+        paragraphs: [
+          "Viva 和 YRT 连接 Richmond Hill、Markham 及多伦多交通网络，部分路线可衔接 GO Transit。看房前应核实最近站点、换乘次数、晚间班次和冬季步行条件；开车租客还要确认固定车位及访客停车。",
+        ],
+      },
+      {
+        title: "房屋费用和学校核实",
+        paragraphs: [
+          "公寓要确认车位、储物、物业规定和额外费用；独立屋、地下室或分租房要确认水电网、供暖、洗衣和公共区域。学校归属应按完整门牌核实，押金和租金则只应在出租方与书面租约确认后支付。",
+        ],
+      },
+    ],
+    relatedLinks: [
+      { label: "多伦多华人租房", href: "/city/toronto" },
+      { label: "North York 华人租房", href: "/area/north-york" },
+      { label: "Markham 华人租房", href: "/area/markham" },
+      { label: "Mississauga 租房", href: "/area/mississauga" },
+    ],
+  },
+  mississauga: {
+    metaTitle: "Mississauga 租房｜密西沙加公寓、整租房源",
+    metaDescription: "查看 Mississauga 密西沙加当前公寓、联排屋、独立屋和整租房源，比较租金、房型与入住条件，并获得中文看房协助。",
+    intro: "Mississauga 范围较大，City Centre、Cooksville、Port Credit、Erin Mills 等生活圈在通勤、房型和日常设施方面差异明显。租客应先确定前往多伦多、机场或本地工作地点的路线，再比较 MiWay、GO Transit、停车和租约条件。本页集中展示当前房源及核实状态。",
+    sections: [
+      {
+        title: "City Centre、Cooksville 与 Port Credit",
+        paragraphs: [
+          "City Centre 和 Square One 周边常见高层公寓，Cooksville 与 Port Credit 可结合 GO Transit 和本地公交考虑，Erin Mills 等住宅区则可能出现联排或独立屋。每个区域内部跨度仍然较大，必须用完整地址测试实际通勤和生活距离。",
+        ],
+      },
+      {
+        title: "MiWay、GO 与开车通勤",
+        paragraphs: [
+          "MiWay 覆盖密西沙加本地出行，部分租客会通过 GO Transit 前往多伦多或其他城市。看房前要确认最近站点、换乘和班次，并为施工或线路调整预留时间；开车租客则应核实车位、访客停车和高速公路高峰通勤。",
+        ],
+      },
+      {
+        title: "公寓和家庭住房的申请重点",
+        paragraphs: [
+          "公寓要确认搬入预约、物业规则、车位、储物和水电费用；联排或独立屋要确认维护、供暖、庭院和公共设施责任。签约前核对出租方、准确地址、租期、押金与费用，并在预约前再次确认房源仍然可租。",
+        ],
+      },
+    ],
+    relatedLinks: [
+      { label: "多伦多华人租房", href: "/city/toronto" },
+      { label: "North York 华人租房", href: "/area/north-york" },
+      { label: "Markham 华人租房", href: "/area/markham" },
+      { label: "Richmond Hill 租房", href: "/area/richmond-hill" },
     ],
   },
 }
