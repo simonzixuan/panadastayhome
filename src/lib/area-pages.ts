@@ -8,7 +8,8 @@ export const areaPages = {
     country: "US",
     citySlug: "los-angeles",
     cityLabel: "洛杉矶",
-    metaTitle: "Irvine 华人租房｜尔湾中文找房与房源确认",
+    metaTitle: "Irvine 华人租房｜尔湾公寓、独立屋最新房源",
+    metaDescription: "查看 Irvine 尔湾当前可租公寓、联排屋、独立屋和合租房源，比较房型、价格与最后核实时间，熊猫之家提供中文找房和看房协助。",
     description: "面向留学生、新移民和华人家庭的 Irvine 租房入口，集中查看尔湾公寓、独栋和合租信息，并用中文确认房源状态。",
     searchIntent: "Irvine 租房、尔湾租房、Irvine 华人租房、尔湾中文找房",
     faqs: [
@@ -23,7 +24,8 @@ export const areaPages = {
     country: "US",
     citySlug: "los-angeles",
     cityLabel: "洛杉矶",
-    metaTitle: "Arcadia 华人租房｜阿凯迪亚中文找房",
+    metaTitle: "Arcadia 华人租房｜阿凯迪亚公寓、独立屋房源",
+    metaDescription: "查看 Arcadia 阿凯迪亚当前公寓、独立屋、整租和分租房源，按预算与入住时间比较，并获得中文房源确认和看房协助。",
     description: "整理 Arcadia 公寓、独栋和分租房源，适合希望在圣盖博谷生活、需要中文沟通的租客和家庭。",
     searchIntent: "Arcadia 租房、阿凯迪亚租房、Arcadia 华人租房、圣盖博谷租房",
     faqs: [
@@ -38,7 +40,8 @@ export const areaPages = {
     country: "US",
     citySlug: "los-angeles",
     cityLabel: "洛杉矶",
-    metaTitle: "Rowland Heights 华人租房｜罗兰岗中文找房",
+    metaTitle: "Rowland Heights 租房｜罗兰岗单间、整租房源",
+    metaDescription: "查看 Rowland Heights 罗兰岗当前单间、套房、合租和整租房源，比较价格、房型与最后核实时间，提供中文找房协助。",
     description: "汇总 Rowland Heights 单间、套房、独栋和合租信息，方便华人租客按预算和入住时间筛选罗兰岗房源。",
     searchIntent: "Rowland Heights 租房、罗兰岗租房、罗兰岗单间、罗兰岗华人租房",
     faqs: [
@@ -53,7 +56,8 @@ export const areaPages = {
     country: "US",
     citySlug: "los-angeles",
     cityLabel: "洛杉矶",
-    metaTitle: "San Gabriel 华人租房｜圣盖博中文找房",
+    metaTitle: "San Gabriel 华人租房｜圣盖博公寓、整租房源",
+    metaDescription: "查看 San Gabriel 圣盖博当前公寓、独立屋、整租和合租房源，了解价格、入住条件与最后核实时间，提供中文找房协助。",
     description: "集中展示 San Gabriel 及中文生活圈常见的公寓、独栋和分租房源，方便按价格、房型和入住时间比较。",
     searchIntent: "San Gabriel 租房、圣盖博租房、圣盖博华人租房、圣盖博谷中文找房",
     faqs: [
@@ -68,7 +72,8 @@ export const areaPages = {
     country: "CA",
     citySlug: "vancouver",
     cityLabel: "温哥华",
-    metaTitle: "Richmond BC 华人租房｜列治文中文找房",
+    metaTitle: "Richmond BC 租房｜列治文公寓、独立屋房源",
+    metaDescription: "查看 Richmond BC 列治文当前公寓、联排屋、独立屋和分租房源，比较价格、房型与最后核实时间，获得中文看房协助。",
     description: "面向温哥华都会区华人租客的 Richmond BC 房源入口，集中查看公寓、独栋、联排和分租信息。",
     searchIntent: "Richmond BC 租房、列治文租房、列治文华人租房、温哥华列治文中文找房",
     faqs: [
@@ -83,7 +88,8 @@ export const areaPages = {
     country: "CA",
     citySlug: "vancouver",
     cityLabel: "温哥华",
-    metaTitle: "Burnaby 华人租房｜本拿比中文找房",
+    metaTitle: "Burnaby 华人租房｜本拿比公寓、合租房源",
+    metaDescription: "查看 Burnaby 本拿比当前公寓、联排屋、独立屋和合租房源，按预算与入住时间筛选，并获得中文房源确认和看房协助。",
     description: "整理 Burnaby 公寓、联排、独栋和合租房源，适合在大温地区学习、工作或长期居住的华人租客。",
     searchIntent: "Burnaby 租房、本拿比租房、Burnaby 华人租房、大温中文找房",
     faqs: [
@@ -98,7 +104,8 @@ export const areaPages = {
     country: "CA",
     citySlug: "vancouver",
     cityLabel: "温哥华",
-    metaTitle: "Coquitlam 华人租房｜高贵林中文找房",
+    metaTitle: "Coquitlam 租房｜高贵林公寓、独立屋房源",
+    metaDescription: "查看 Coquitlam 高贵林当前公寓、独立屋和家庭住房，比较租金、房型与最后核实时间，熊猫之家提供中文找房协助。",
     description: "汇总 Coquitlam 公寓、独栋和家庭住房信息，为需要中文沟通的大温租客提供区域筛选和房源确认入口。",
     searchIntent: "Coquitlam 租房、高贵林租房、Coquitlam 华人租房、大温家庭租房",
     faqs: [
@@ -113,7 +120,8 @@ export const areaPages = {
     country: "CA",
     citySlug: "vancouver",
     cityLabel: "温哥华",
-    metaTitle: "Surrey BC 华人租房｜素里中文找房",
+    metaTitle: "Surrey BC 租房｜素里公寓、独立屋房源",
+    metaDescription: "查看 Surrey BC 素里当前公寓、联排屋、独立屋和分租房源，比较价格、房型与入住条件，并获得中文看房协助。",
     description: "集中查看 Surrey BC 公寓、独栋、联排和分租房源，帮助大温地区租客按预算与房型寻找合适选择。",
     searchIntent: "Surrey BC 租房、素里租房、Surrey 华人租房、大温素里中文找房",
     faqs: [
@@ -128,7 +136,8 @@ export const areaPages = {
     country: "CA",
     citySlug: "toronto",
     cityLabel: "多伦多",
-    metaTitle: "North York 华人租房｜北约克中文找房",
+    metaTitle: "North York 华人租房｜北约克公寓、一室一厅房源",
+    metaDescription: "查看 North York 北约克当前公寓、一室一厅、独立屋和合租房源，比较租金、入住时间与核实状态，提供中文找房协助。",
     description: "整理 North York 公寓、共管公寓、独栋和合租信息，方便多伦多华人租客按预算和入住时间筛选。",
     searchIntent: "North York 租房、北约克租房、North York 华人租房、多伦多中文找房",
     faqs: [
@@ -143,7 +152,8 @@ export const areaPages = {
     country: "CA",
     citySlug: "toronto",
     cityLabel: "多伦多",
-    metaTitle: "Markham 华人租房｜万锦中文找房",
+    metaTitle: "Markham 华人租房｜万锦公寓、独立屋房源",
+    metaDescription: "查看 Markham 万锦当前公寓、联排屋、独立屋和分租房源，按预算与入住时间筛选，并获得中文房源确认和看房协助。",
     description: "汇总 Markham 公寓、独栋、联排和分租房源，适合希望在多伦多北部生活并需要中文沟通的租客。",
     searchIntent: "Markham 租房、万锦租房、Markham 华人租房、多伦多万锦中文找房",
     faqs: [
@@ -158,7 +168,8 @@ export const areaPages = {
     country: "CA",
     citySlug: "toronto",
     cityLabel: "多伦多",
-    metaTitle: "Richmond Hill 华人租房｜列治文山中文找房",
+    metaTitle: "Richmond Hill 租房｜列治文山公寓、独立屋房源",
+    metaDescription: "查看 Richmond Hill 列治文山当前公寓、联排屋、独立屋和分租房源，比较价格、房型与最后核实时间，提供中文协助。",
     description: "面向多伦多都会区租客的 Richmond Hill 房源入口，集中查看独栋、联排、公寓和分租信息。",
     searchIntent: "Richmond Hill 租房、列治文山租房、Richmond Hill 华人租房、多伦多北部租房",
     faqs: [
@@ -173,7 +184,8 @@ export const areaPages = {
     country: "CA",
     citySlug: "toronto",
     cityLabel: "多伦多",
-    metaTitle: "Mississauga 华人租房｜密西沙加中文找房",
+    metaTitle: "Mississauga 租房｜密西沙加公寓、整租房源",
+    metaDescription: "查看 Mississauga 密西沙加当前公寓、联排屋、独立屋和整租房源，比较租金、房型与入住条件，并获得中文看房协助。",
     description: "整理 Mississauga 公寓、独栋、联排和分租信息，帮助大多伦多地区租客比较房型、价格与入住条件。",
     searchIntent: "Mississauga 租房、密西沙加租房、Mississauga 华人租房、大多伦多中文找房",
     faqs: [

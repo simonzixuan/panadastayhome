@@ -28,12 +28,12 @@ export async function generateMetadata({
 
   return {
     title: guide?.metaTitle ?? page.metaTitle,
-    description: guide?.metaDescription ?? `${page.description} 熊猫之家提供中文找房、房源确认和看房对接。`,
+    description: guide?.metaDescription ?? page.metaDescription,
     keywords: page.searchIntent.split("、"),
     alternates: { canonical: `/area/${slug}` },
     openGraph: {
       title: guide?.metaTitle ?? page.metaTitle,
-      description: guide?.metaDescription ?? page.description,
+      description: guide?.metaDescription ?? page.metaDescription,
       url: `/area/${slug}`,
       type: "website",
     },

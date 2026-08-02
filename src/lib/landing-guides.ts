@@ -11,8 +11,8 @@ export interface LandingGuide {
 
 export const areaGuides: Record<string, LandingGuide> = {
   irvine: {
-    metaTitle: "Irvine 华人租房｜尔湾公寓、独立屋及学区房源",
-    metaDescription: "查看 Irvine 尔湾当前可租公寓、联排屋和独立屋，了解常见区域、通勤、学校、申请材料及房源最后核实时间，提供中文找房协助。",
+    metaTitle: "Irvine 华人租房｜尔湾公寓、独立屋最新房源",
+    metaDescription: "查看 Irvine 尔湾当前可租公寓、联排屋和独立屋，比较区域、通勤、学校与最后核实时间，熊猫之家提供中文找房和看房协助。",
     intro: "Irvine 位于橙县，住宅社区、商业中心和办公园区分布较分散。找房时不能只看城市名称，还要同时考虑上班或上学地点、是否需要开车、停车条件以及租约开始时间。本页汇总当前仍标记为可租的 Irvine 房源，并把房型、价格和核实状态放在同一页面，方便留学生、新移民和华人家庭先完成第一轮比较。",
     sections: [
       {
@@ -52,8 +52,8 @@ export const areaGuides: Record<string, LandingGuide> = {
     ],
   },
   "san-gabriel": {
-    metaTitle: "San Gabriel 整租｜圣盖博公寓、独立屋中文找房",
-    metaDescription: "查看 San Gabriel 圣盖博当前整租、合租、公寓和独立屋房源，了解交通、生活圈、申请注意事项及最后核实时间。",
+    metaTitle: "San Gabriel 华人租房｜圣盖博公寓、整租房源",
+    metaDescription: "查看 San Gabriel 圣盖博当前公寓、独立屋、整租和合租房源，了解交通、生活圈、申请条件与最后核实时间，提供中文协助。",
     intro: "San Gabriel 位于圣盖博谷华人生活圈，中文餐饮、超市和生活服务较集中。这里既有公寓和联排住宅，也有独立屋整租或分租。找房时应先区分整套出租、独立出入套房和共享厨房的单间，再比较停车、通勤、费用包含范围及可入住日期，避免只看标题中的“整租”两个字。",
     sections: [
       {
