@@ -1,3 +1,5 @@
+import { cityPages } from "@/lib/landing-pages"
+
 export const areaPages = {
   irvine: {
     title: "Irvine 华人租房",
@@ -194,6 +196,24 @@ export function getRelatedAreaLinks(currentSlug: string) {
   return Object.entries(areaPages)
     .filter(([slug, page]) => slug !== currentSlug && page.citySlug === current.citySlug)
     .map(([slug, page]) => ({ label: `${page.area} 租房`, href: `/area/${slug}` }))
+}
+
+export function getAreaLinksForListing(listing: {
+  city?: string | null
+  state?: string | null
+  country?: string | null
+}) {
+  const country = listing.country?.trim().toUpperCase()
+  const state = listing.state?.trim().toUpperCase()
+  const city = listing.city?.trim().toLowerCase()
+
+  const match = Object.entries(cityPages).find(([, page]) =>
+    page.states.some((value) => value.toUpperCase() === state) &&
+    page.countryValues.some((value) => value.toUpperCase() === country) &&
+    page.nearbyCities.some((value) => value.toLowerCase() === city)
+  )
+
+  return match ? getAreaLinksForCity(match[0]) : []
 }
 
 export function getAreaLinkForListing(listing: {

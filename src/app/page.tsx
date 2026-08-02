@@ -8,6 +8,7 @@ import ListingCarousel from "@/components/home/ListingCarousel"
 import { CheckCircle2, ClipboardList, Home, MapPin, MessageCircle, Search, ShieldCheck, Sparkles, UserRoundCheck } from "lucide-react"
 import { createServerClient } from "@/lib/supabase/server"
 import { cityPages } from "@/lib/landing-pages"
+import { areaPages } from "@/lib/area-pages"
 import type { Listing } from "@/types"
 
 export const revalidate = 600
@@ -102,13 +103,12 @@ const cities = [
   ["纽约租房", "/city/new-york"],
   ["UBC 附近租房", "/schools/ubc"],
   ["租房防骗核实", "/rental-check"],
-  ["Arcadia 租房", "/area/arcadia"],
-  ["San Gabriel 租房", "/area/san-gabriel"],
-  ["Richmond BC 租房", "/area/richmond"],
-  ["Burnaby 租房", "/area/burnaby"],
-  ["North York 租房", "/area/north-york"],
-  ["Markham 租房", "/area/markham"],
 ]
+
+const popularAreas = Object.entries(areaPages).map(([slug, page]) => ({
+  label: `${page.area} 租房`,
+  href: `/area/${slug}`,
+}))
 
 export default async function HomePage() {
   const carousels = await getHomeCarousels()
@@ -229,7 +229,7 @@ export default async function HomePage() {
       </section>
 
       <section className="max-w-6xl mx-auto px-4 pt-14 pb-6">
-        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
           <div>
             <h2 className="text-2xl font-bold">热门找房入口</h2>
             <p className="text-gray-400 mt-2">先从城市、学校和生活圈开始。</p>
@@ -242,6 +242,20 @@ export default async function HomePage() {
                 className="rounded-full border bg-white px-4 py-2 text-sm text-gray-600 hover:border-[#2F6B52] hover:text-[#2F6B52]"
               >
                 {city}
+              </Link>
+            ))}
+          </div>
+        </div>
+        <div className="mt-7 border-t pt-6">
+          <h3 className="text-lg font-semibold text-gray-900">热门租房区域</h3>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {popularAreas.map((area) => (
+              <Link
+                key={area.href}
+                href={area.href}
+                className="rounded-full border bg-white px-4 py-2 text-sm text-gray-600 hover:border-[#2F6B52] hover:text-[#2F6B52]"
+              >
+                {area.label}
               </Link>
             ))}
           </div>

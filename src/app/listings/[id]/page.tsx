@@ -17,7 +17,7 @@ import { Bath, BedDouble, Home, MapPin, Ruler, ShieldCheck } from "lucide-react"
 import Link from "next/link"
 import { getListingEditorialSummary } from "@/lib/listing-editorial"
 import { getListingVerification } from "@/lib/listing-verification"
-import { getAreaLinkForListing } from "@/lib/area-pages"
+import { getAreaLinkForListing, getAreaLinksForListing } from "@/lib/area-pages"
 import { siteUrl } from "@/lib/site-url"
 
 export async function generateMetadata({
@@ -91,6 +91,7 @@ export default async function ListingDetailPage({
   const editorialSummary = getListingEditorialSummary(l)
   const verification = getListingVerification(l)
   const areaLink = getAreaLinkForListing(l)
+  const relatedAreaLinks = getAreaLinksForListing(l)
   const qualityBadges = [
     l.images?.length >= 3 ? "图片较完整" : null,
     l.contact_phone || l.contact_email ? "可联系确认" : null,
@@ -263,6 +264,24 @@ export default async function ListingDetailPage({
                 />
               </div>
             </section>
+
+            {relatedAreaLinks.length > 0 && (
+              <section className="bg-white border rounded-xl p-6 mb-6">
+                <h2 className="text-lg font-semibold text-gray-900">附近热门租房区域</h2>
+                <p className="mt-2 text-sm text-gray-500">继续查看同一城市范围内的区域房源。</p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {relatedAreaLinks.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className="rounded-full border bg-gray-50 px-3 py-1.5 text-sm text-gray-600 hover:border-[#2F6B52] hover:text-[#2F6B52]"
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
+              </section>
+            )}
 
             {l.user_id && <LandlordReviews userId={l.user_id} />}
 
