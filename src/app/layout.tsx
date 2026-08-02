@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import BottomTabBar from "@/components/layout/BottomTabBar";
-import { GoogleAnalytics } from "@next/third-parties/google";
 import { siteUrl } from "@/lib/site-url";
 
 const geistSans = Geist({
@@ -124,13 +124,24 @@ export default function RootLayout({
     <html lang="zh-CN" className={`${geistSans.variable} h-full antialiased`}>
       <head>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+        {gaId && (
+          <>
+            <Script id="google-analytics-init" strategy="beforeInteractive">
+              {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+window.gtag = gtag;
+gtag('js', new Date());
+gtag('config', '${gaId}');`}
+            </Script>
+            <Script src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`} strategy="afterInteractive" />
+          </>
+        )}
       </head>
       <body className="min-h-full flex flex-col bg-gray-50" suppressHydrationWarning>
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />
         <BottomTabBar />
-        {gaId && <GoogleAnalytics gaId={gaId} />}
       </body>
     </html>
   );
