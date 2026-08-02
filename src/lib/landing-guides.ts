@@ -9,6 +9,201 @@ export interface LandingGuide {
   relatedLinks: readonly { label: string; href: string }[]
 }
 
+export const cityGuides: Record<string, LandingGuide> = {
+  "los-angeles": {
+    metaTitle: "洛杉矶华人租房｜LA 公寓、整租与合租房源",
+    metaDescription: "查看洛杉矶及 Irvine、Arcadia、San Gabriel 等华人常住区域的公寓、整租和合租房源，比较通勤、停车、费用与最后核实状态。",
+    intro: "洛杉矶租房覆盖的范围很大，同样写着 Los Angeles 的房源，在通勤方式、生活圈和每月总费用上可能完全不同。熊猫之家将洛杉矶市区与 Irvine、Arcadia、San Gabriel、Rowland Heights 等常见华人居住区域放在同一入口，方便留学生、新移民和家庭先按工作或学校位置缩小范围，再比较房型、停车、入住时间与核实状态。",
+    sections: [
+      {
+        title: "先按通勤方向选择区域",
+        paragraphs: [
+          "在 Downtown LA、Koreatown 或 USC 周边学习工作，可优先比较市中心及轨道交通沿线；前往圣盖博谷通勤，可查看 Arcadia、San Gabriel、Monterey Park 和周边城市；工作地点在橙县时，Irvine 通常比每天横跨洛杉矶更实际。不要只看地图直线距离，应使用准确地址分别测试工作日早晚高峰。",
+          "有学区需求时，城市名和邮编不能代替学校边界核实。确定房源后，应以完整门牌地址向对应学区确认入学资格；页面中的区域名称只用于初步筛选。",
+        ],
+      },
+      {
+        title: "公共交通、开车和停车",
+        paragraphs: [
+          "LA Metro 的轨道和快速公交网络连接市中心、North Hollywood、Santa Monica、East Los Angeles、LAX 周边及其他区域，但并非每套房都适合无车生活。看房前应核对步行到车站的实际路线、换乘次数、晚间回程和最新时刻表。",
+          "开车租客要把固定车位、访客停车、街道清扫和充电条件一起纳入比较。部分公寓的停车费不包含在标价中，合租或独立屋也可能限制车辆数量，因此月租不能代表完整居住成本。",
+        ],
+      },
+      {
+        title: "公寓、独立屋和合租怎么比较",
+        paragraphs: [
+          "公寓通常需要确认申请费、停车、储物、宠物和公共设施费用；独立屋或联排屋还要确认庭院维护、水电燃气和垃圾费由谁承担。单间、套房或后屋则应问清独立出入口、厨房卫浴、洗衣方式和公共区域。",
+          "带家具、短租或学生合租房源要把家具清单、完整租期、续租、转租和室友退出规则写入书面协议。不要只根据标题中的“整租”“独立”或“拎包入住”判断实际条件。",
+        ],
+      },
+      {
+        title: "申请和付款前如何核实",
+        paragraphs: [
+          "常见申请材料包括身份证明、收入或资金证明、信用记录以及录取或雇佣文件。没有美国信用记录的租客可以提前询问担保人或其他替代材料，但具体标准由房东或物业决定。",
+          "支付申请费、订金或押金前，应核对完整地址、出租方身份、房屋现状、书面租约和收款主体。无法现场看房时可要求实时视频展示门牌与室内；页面显示的最后核实时间只反映记录更新时间，预约前仍需再次确认是否可租。",
+        ],
+      },
+    ],
+    relatedLinks: [
+      { label: "USC 附近租房", href: "/schools/usc" },
+      { label: "UCLA 附近租房", href: "/schools/ucla" },
+    ],
+  },
+  vancouver: {
+    metaTitle: "温哥华华人租房｜大温公寓、整租与合租房源",
+    metaDescription: "查看 Vancouver、Richmond、Burnaby、Coquitlam 与 Surrey 当前租房信息，比较 SkyTrain 通勤、房型、费用和最后核实状态。",
+    intro: "温哥华华人租房通常不只比较 Vancouver 市内，还会同时查看 Richmond、Burnaby、Coquitlam 和 Surrey。不同城市在 SkyTrain 线路、到学校或工作的通勤、房型和费用结构上差异明显。本页汇总大温地区当前标记为可租的房源，并提供区域选择、申请材料和付款核验提示。",
+    sections: [
+      {
+        title: "大温常见居住区域怎么选",
+        paragraphs: [
+          "Downtown、West End 和沿 Broadway 一带更适合重视市区通勤的人；Richmond 中文生活服务集中，并可连接机场与市中心；Burnaby 的 Metrotown、Brentwood 和 Lougheed 周边常见公寓；Coquitlam 与 Surrey 则可在空间、预算和通勤之间继续比较。",
+          "需要前往 UBC、SFU 或固定办公地点时，应从每天的终点反推居住区域。城市之间看似相邻，但换乘、过桥和末班车会改变实际体验，最好用完整地址测试工作日路线。",
+        ],
+      },
+      {
+        title: "SkyTrain 与日常通勤",
+        paragraphs: [
+          "TransLink 的 Expo Line 连接 Vancouver 市中心、Burnaby、New Westminster 和 Surrey；Millennium Line 经过 Burnaby、Port Moody 与 Coquitlam；Canada Line 连接市中心、YVR 和 Richmond。靠近车站的房源仍要核对步行路线、换乘和夜间班次。",
+          "不在轨道沿线时，应检查公交接驳和雨天步行条件。开车租客还要确认固定车位、访客停车、充电设施及楼宇搬入安排，不要把“近天车”当作统一标准。",
+        ],
+      },
+      {
+        title: "公寓、地下室和独立屋费用",
+        paragraphs: [
+          "公寓需要确认车位、储物、搬入预约、宠物和物业规定；地下室或独立套房要确认采光、独立出入口、暖气、洗衣和水电网分摊；独立屋则要问清庭院、垃圾和日常维护责任。",
+          "比较预算时应把月租之外的水电、网络、停车、家具和通勤成本一并计算。房源写有一室一厅或独立套房，不代表厨房、洗衣或入口一定完全独立。",
+        ],
+      },
+      {
+        title: "申请材料与防止错误付款",
+        paragraphs: [
+          "房东或物业可能要求身份、工作、收入、资金、信用或推荐材料。留学生和新移民可提前准备录取、在读或雇佣文件，并先询问没有本地信用记录时接受哪些替代方案。",
+          "签约前应查看准确地址和房屋状况，核对出租方、租约与收款信息是否一致。远程租房可以要求实时视频看房；任何要求绕过书面租约、拒绝展示房屋或催促立即转账的情况都应进一步核实。",
+        ],
+      },
+    ],
+    relatedLinks: [{ label: "UBC 附近租房", href: "/schools/ubc" }],
+  },
+  toronto: {
+    metaTitle: "多伦多华人租房｜公寓、一室一厅与整租房源",
+    metaDescription: "查看 Toronto、North York、Markham、Richmond Hill 与 Mississauga 当前租房信息，比较 TTC、区域通勤、房型和申请条件。",
+    intro: "多伦多租房入口同时覆盖 Toronto 市内、North York、Markham、Richmond Hill 和 Mississauga，适合需要比较市中心通勤、华人生活圈与家庭住房的租客。选择时应先确认每天前往的学校或办公地点，再比较 TTC、YRT/Viva、GO Transit、开车时间以及房屋的实际费用。",
+    sections: [
+      {
+        title: "市中心、North York 与周边城市",
+        paragraphs: [
+          "Downtown Toronto 适合需要前往市中心学校和办公区的人；North York 可结合地铁沿线寻找公寓；Markham 与 Richmond Hill 常见公寓、联排和家庭型住房；Mississauga 则要根据 City Centre、GO 车站或工作地点进一步筛选。",
+          "同一城市内部跨度也很大。广告写着 Toronto 或 Markham 时，仍应使用完整地址核对到车站、超市、学校和工作地点的真实距离，不能只依赖区域名。",
+        ],
+      },
+      {
+        title: "TTC、区域公交与 GO 通勤",
+        paragraphs: [
+          "TTC 网络包含地铁、轻轨、街车和公交，市外通勤还可能使用 YRT/Viva、MiWay 或 GO Transit。选房时要检查最近站点、换乘次数、夜间班次及冬季步行路线，并按入住日期查看官方服务调整。",
+          "如果开车，应比较高速公路高峰时间、固定车位和访客停车。公寓车位可能单独收费，家庭住房也可能有冬季停车或除雪责任。",
+        ],
+      },
+      {
+        title: "Condo、公寓和地下室房源",
+        paragraphs: [
+          "Condo 房源要确认物业搬入预约、电梯、钥匙押金、车位、储物和租客保险要求；出租公寓要查看租金包含项目；地下室或独立套房则要确认出入口、厨房、洗衣、暖气和水电分摊。",
+          "一室一厅、单间和整租代表的居住条件不同。看房时应核对卧室是否有门窗、哪些空间共用、室友人数、宠物规则及家具清单，再比较总费用。",
+        ],
+      },
+      {
+        title: "申请、学校和付款核实",
+        paragraphs: [
+          "申请方可能要求身份、工作、收入、信用、资金或推荐材料。国际学生和新移民可以提前准备录取、在读、雇佣或资金文件，并询问担保方案。学区必须按完整门牌地址向对应教育机构确认。",
+          "在支付任何款项前，应核对房屋、出租方、书面租约和收款主体。页面的可租状态及最后核实时间用于筛选，不代表房源会一直保留；预约和签约前必须再次确认。",
+        ],
+      },
+    ],
+    relatedLinks: [
+      { label: "温哥华华人租房", href: "/city/vancouver" },
+      { label: "全部加拿大房源", href: "/listings?country=CA" },
+    ],
+  },
+  seattle: {
+    metaTitle: "西雅图华人租房｜Seattle 公寓与中文找房指南",
+    metaDescription: "查看 Seattle、Bellevue、Redmond、Kirkland、Renton 与 Bothell 当前房源，比较 Link 交通、跨湖通勤、停车和申请条件。",
+    intro: "西雅图华人租房通常需要同时比较 Seattle 市内与 Bellevue、Redmond、Kirkland 等东区城市。工作地点在市中心、University District、South Lake Union 或 Eastside 时，跨湖通勤和办公室到站点的最后一段路会直接影响选择。本页汇总当前房源，并说明交通、房型、费用和签约核验重点。",
+    sections: [
+      {
+        title: "Seattle 与 Eastside 怎么选",
+        paragraphs: [
+          "Seattle 市内可按 Downtown、Capitol Hill、University District、Northgate 等生活圈比较；Bellevue 和 Redmond 更适合固定在 Eastside 工作的人；Kirkland、Renton 与 Bothell 则要结合公交、开车路线和停车条件判断。",
+          "远程或混合办公也应确认每周必须到办公室的天数。跨湖距离不远，但高峰拥堵、换乘和停车可能放大通勤成本，应使用准确地址分别测试公共交通与驾车方案。",
+        ],
+      },
+      {
+        title: "Link 轻轨和跨湖通勤",
+        paragraphs: [
+          "Sound Transit 的 1 Line 服务 Seattle 走廊并连接北部社区、市中心和机场方向；2 Line 服务 Bellevue 与 Redmond 一带。跨湖连接和接驳方式可能随工程与服务调整变化，租客应按计划入住日期查看官方路线图和服务公告。",
+          "依赖公交或轻轨时，应核对步行到站距离、换乘、末班时间及周末服务。开车时还要比较固定车位、月度停车费、访客停车和充电条件。",
+        ],
+      },
+      {
+        title: "公寓、联排和独立屋的实际成本",
+        paragraphs: [
+          "市区公寓应确认停车、储物、宠物、公共设施和搬入费用；Eastside 的公寓或联排要核对通勤接驳和车位；独立屋则要明确水电、垃圾、庭院及维护责任。",
+          "带家具或合租房源还需确认家具清单、公共区域、室友、租期和转租规则。比较房源时应使用包含固定附加费用后的月度总成本。",
+        ],
+      },
+      {
+        title: "申请和远程看房核验",
+        paragraphs: [
+          "申请通常涉及身份、收入、工作、信用或资金材料。刚到美国的租客可以提前询问没有本地信用历史时接受哪些证明或担保安排，避免看中房源后才开始准备。",
+          "远程看房应要求实时展示门牌、房间和公共区域，并核对出租方身份、书面租约与收款账户。任何明显低于同类房源、拒绝看房或要求立即转账的情况都需要暂停付款并继续核实。",
+        ],
+      },
+    ],
+    relatedLinks: [
+      { label: "温哥华华人租房", href: "/city/vancouver" },
+      { label: "洛杉矶华人租房", href: "/city/los-angeles" },
+    ],
+  },
+  "new-york": {
+    metaTitle: "纽约华人租房｜NYC 公寓、合租与中文找房指南",
+    metaDescription: "查看 Manhattan、Queens、Brooklyn、Flushing、Long Island City 与 Jersey City 当前房源，比较地铁通勤、费用和申请条件。",
+    intro: "纽约租房需要把 Manhattan、Queens、Brooklyn、Flushing、Long Island City 与 Jersey City 放在真实通勤路线中比较。离目的地更近不一定换乘更少，标价也可能不包含经纪费、设施费或其他一次性费用。本页集中展示当前房源，并帮助学生、上班族和新移民核对区域、交通、预算与签约风险。",
+    sections: [
+      {
+        title: "按目的地反推居住区域",
+        paragraphs: [
+          "前往 Midtown 或 Downtown Manhattan 的租客，可比较 Manhattan、Long Island City、Queens 与 Brooklyn 的直达路线；偏好华人生活服务时常会查看 Flushing；Jersey City 则需要把过河交通、换乘和晚间回程一并计算。",
+          "纽约每个 borough 内部差异很大，同一社区不同街区到车站的距离也会改变体验。应使用完整地址测试工作日通勤，并查看夜间和周末服务，而不是只根据社区名判断。",
+        ],
+      },
+      {
+        title: "地铁、公交与跨河交通",
+        paragraphs: [
+          "MTA 地铁和公交覆盖纽约市主要区域，但线路可能有快慢车、施工和周末调整。签约前应核对最近入口、实际运营线路、换乘和无障碍需求，并使用官方行程工具查看计划入住时的服务。",
+          "选择 Jersey City 或其他跨河区域时，要单独核对 PATH、轮渡或公交的运营和票价，不能把它们默认视为纽约地铁的一部分。晚归租客还应准备服务中断时的替代路线。",
+        ],
+      },
+      {
+        title: "房型、室友和全部费用",
+        paragraphs: [
+          "纽约常见选择包括电梯公寓、步梯楼、整租、单间和多人合租。看房时要确认合法卧室、采光、洗衣、电梯、暖气、空调、宠物及公共区域，并了解租约是整套共同承担还是单间分别签署。",
+          "除月租和押金外，还应书面确认申请、经纪、设施、搬入及担保相关费用。不要依据“免佣”或“净有效租金”的标题做决定，应要求列出整个租期实际支付金额。",
+        ],
+      },
+      {
+        title: "材料准备与防诈骗核验",
+        paragraphs: [
+          "房东、物业或担保机构可能要求身份、收入、工作、信用、资金和推荐材料。学生及新移民应提前询问担保人、第三方担保或其他替代文件的要求，并确认申请费是否可退。",
+          "付款前要确认准确地址、房屋现状、出租授权、租约和收款主体。无法到场时应安排实时视频或可信代表看房；未经核实不要通过不可追回的方式向陌生个人付款。",
+        ],
+      },
+    ],
+    relatedLinks: [
+      { label: "多伦多华人租房", href: "/city/toronto" },
+      { label: "全部纽约房源", href: "/listings?city=New%20York" },
+    ],
+  },
+}
+
 export const areaGuides: Record<string, LandingGuide> = {
   irvine: {
     metaTitle: "Irvine 华人租房｜尔湾公寓、独立屋最新房源",

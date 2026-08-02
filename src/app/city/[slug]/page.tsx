@@ -4,6 +4,7 @@ import { createServerClient } from "@/lib/supabase/server"
 import LandingListingPage from "@/components/landing/LandingListingPage"
 import { cityPages } from "@/lib/landing-pages"
 import { getAreaLinksForCity } from "@/lib/area-pages"
+import { cityGuides } from "@/lib/landing-guides"
 import type { Listing } from "@/types"
 import type { Metadata } from "next"
 
@@ -39,17 +40,18 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params
   const page = cityPages[slug as keyof typeof cityPages]
   if (!page) return {}
+  const guide = cityGuides[slug]
   const result = await getCityListings(slug)
   const isEmpty = result?.querySucceeded && result.listings.length === 0
 
   return {
-    title: page.metaTitle,
-    description: `${page.description} ${page.searchIntent}，熊猫之家提供中文找房、房源确认和看房对接。`,
+    title: guide?.metaTitle ?? page.metaTitle,
+    description: guide?.metaDescription ?? `${page.description} ${page.searchIntent}，熊猫之家提供中文找房、房源确认和看房对接。`,
     keywords: page.searchIntent.split("、"),
     alternates: { canonical: `/city/${slug}` },
     openGraph: {
-      title: page.metaTitle,
-      description: page.description,
+      title: guide?.metaTitle ?? page.metaTitle,
+      description: guide?.metaDescription ?? page.description,
       url: `/city/${slug}`,
       type: "website",
     },
@@ -63,6 +65,8 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
   if (!page) notFound()
 
   const result = await getCityListings(slug)
+  const guide = cityGuides[slug]
+  const relatedLinks = [...getAreaLinksForCity(slug), ...(guide?.relatedLinks ?? [])]
 
   return (
     <LandingListingPage
@@ -73,8 +77,9 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
       source={`city_${slug}`}
       canonicalPath={`/city/${slug}`}
       areas={page.areas}
-      relatedLinks={getAreaLinksForCity(slug)}
+      relatedLinks={relatedLinks}
       faqs={page.faqs}
+      guide={guide}
     />
   )
 }
