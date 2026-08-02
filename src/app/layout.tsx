@@ -4,7 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import BottomTabBar from "@/components/layout/BottomTabBar";
-import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { siteUrl } from "@/lib/site-url";
 
 const geistSans = Geist({
