@@ -7,6 +7,7 @@ import { Listing } from "@/types"
 import { useFavorite } from "@/hooks/useFavorite"
 import { useState } from "react"
 import { trackEvent } from "@/lib/analytics"
+import { listingSlugPath } from "@/lib/slug"
 
 interface Props {
   listing: Listing
@@ -27,7 +28,7 @@ export default function ListingCard({ listing, isFavorited = false }: Props) {
 
   return (
     <Link
-      href={`/listings/${listing.id}`}
+      href={`/listings/${listingSlugPath(listing)}`}
       className="block"
       onClick={() => trackEvent("select_item", {
         item_list_name: "listings",

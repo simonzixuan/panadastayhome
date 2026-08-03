@@ -4,6 +4,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { Heart } from "lucide-react"
 import { useFavorite } from "@/hooks/useFavorite"
+import { listingSlugPath } from "@/lib/slug"
 import type { Listing } from "@/types"
 
 export default function CarouselListingCard({ listing }: { listing: Listing }) {
@@ -12,7 +13,7 @@ export default function CarouselListingCard({ listing }: { listing: Listing }) {
   const badge = listing.featured ? "人工精选" : listing.verification_status === "verified_available" ? "已核实" : null
 
   return (
-    <Link href={`/listings/${listing.id}`} className="block w-[220px] shrink-0 snap-start sm:w-[240px]">
+    <Link href={`/listings/${listingSlugPath(listing)}`} className="block w-[220px] shrink-0 snap-start sm:w-[240px]">
       <div className="relative aspect-square overflow-hidden rounded-2xl bg-gray-100">
         {image ? (
           <Image

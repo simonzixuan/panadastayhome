@@ -47,7 +47,7 @@ export default function ImageGallery({ images, title }: { images: string[]; titl
                 >
                   <Image
                     src={url}
-                    alt=""
+                    alt={`${title} 图片 ${i + 2}`}
                     fill
                     sizes="25vw"
                     className="object-cover hover:scale-105 transition-transform duration-300"
@@ -96,7 +96,7 @@ export default function ImageGallery({ images, title }: { images: string[]; titl
               className="relative cursor-zoom-in bg-gray-100"
               onClick={() => openLightbox(i + 1)}
             >
-              <Image src={url} alt="" fill sizes="25vw" className="object-cover transition hover:brightness-95" />
+              <Image src={url} alt={`${title} 图片 ${i + 2}`} fill sizes="25vw" className="object-cover transition hover:brightness-95" />
             </div>
           ))}
           <button

@@ -5,17 +5,18 @@ import { areaPages } from "@/lib/area-pages"
 import { getAreaListings, MIN_INDEXABLE_AREA_LISTINGS } from "@/lib/area-listings"
 import { getSchoolListings, MIN_INDEXABLE_SCHOOL_LISTINGS } from "@/lib/school-listings"
 import { siteUrl } from "@/lib/site-url"
+import { listingSlugPath } from "@/lib/slug"
 
 export const revalidate = 600
 
 async function getAllAvailableListings() {
   const supabase = createServerClient()
-  const listings: Array<{ id: string; updated_at: string | null }> = []
+  const listings: Array<{ id: string; title: string | null; updated_at: string | null }> = []
 
   for (let from = 0; ; from += 1000) {
     const { data, error } = await supabase
       .from("listings")
-      .select("id, updated_at")
+      .select("id, title, updated_at")
       .eq("is_available", true)
       .order("id")
       .range(from, from + 999)
@@ -85,7 +86,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const listings = await getAllAvailableListings()
 
     const listingRoutes: MetadataRoute.Sitemap = listings.map((l) => ({
-      url: `${siteUrl}/listings/${l.id}`,
+      url: `${siteUrl}/listings/${listingSlugPath(l)}`,
       lastModified: new Date(l.updated_at ?? new Date()),
       changeFrequency: "weekly",
       priority: 0.7,

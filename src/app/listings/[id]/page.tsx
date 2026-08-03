@@ -19,13 +19,15 @@ import { getListingEditorialSummary } from "@/lib/listing-editorial"
 import { getListingVerification } from "@/lib/listing-verification"
 import { getAreaLinkForListing, getAreaLinksForListing } from "@/lib/area-pages"
 import { siteUrl } from "@/lib/site-url"
+import { extractListingId, listingSlugPath } from "@/lib/slug"
 
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ id: string }>
 }): Promise<Metadata> {
-  const { id } = await params
+  const { id: rawId } = await params
+  const id = extractListingId(rawId)
   const supabase = createServerClient()
   const { data: listing } = await supabase
     .from("listings")
@@ -55,7 +57,7 @@ export async function generateMetadata({
       "北美华人租房", "华人找房", "Panda Stay Home",
       ...(l.zip_code ? [l.zip_code] : []),
     ].filter(Boolean) as string[],
-    alternates: { canonical: `/listings/${id}` },
+    alternates: { canonical: `/listings/${listingSlugPath({ id, title: l.title ?? null })}` },
     openGraph: {
       title,
       description,
@@ -76,7 +78,8 @@ export default async function ListingDetailPage({
 }: {
   params: Promise<{ id: string }>
 }) {
-  const { id } = await params
+  const { id: rawId } = await params
+  const id = extractListingId(rawId)
   const supabase = createServerClient()
 
   const { data: listing } = await supabase
@@ -99,7 +102,7 @@ export default async function ListingDetailPage({
   ].filter(Boolean) as string[]
 
 
-  const listingUrl = `${siteUrl}/listings/${l.id}`
+  const listingUrl = `${siteUrl}/listings/${listingSlugPath(l)}`
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [

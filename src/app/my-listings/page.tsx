@@ -6,6 +6,7 @@ import Link from "next/link"
 import { supabase } from "@/lib/supabase/client"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { listingSlugPath } from "@/lib/slug"
 import type { Listing } from "@/types"
 
 function getPaginationItems(currentPage: number, totalPages: number) {
@@ -139,7 +140,7 @@ export default function MyListingsPage() {
 
               {/* 操作 */}
               <div className="flex flex-col gap-2 shrink-0">
-                <Link href={`/listings/${listing.id}`}>
+                <Link href={`/listings/${listingSlugPath(listing)}`}>
                   <Button variant="outline" size="sm" className="w-full">查看</Button>
                 </Link>
                 <Link href={`/my-listings/${listing.id}/edit`}>

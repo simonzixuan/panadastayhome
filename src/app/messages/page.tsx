@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { supabase } from "@/lib/supabase/client"
+import { listingSlugPath } from "@/lib/slug"
 import { Button } from "@/components/ui/button"
 import { Switch } from "@/components/ui/switch"
 import ReviewDialog from "@/components/listings/ReviewDialog"
@@ -189,7 +190,7 @@ export default function MessagesPage() {
                     )}
                   </div>
                   {conv.listing_title && (
-                    <Link href={`/listings/${conv.listing_id}`} className="text-xs text-blue-500 hover:underline truncate block mt-0.5" onClick={(e) => e.stopPropagation()}>
+                    <Link href={`/listings/${listingSlugPath({ id: conv.listing_id, title: conv.listing_title })}`} className="text-xs text-blue-500 hover:underline truncate block mt-0.5" onClick={(e) => e.stopPropagation()}>
                       房源：{conv.listing_title}
                     </Link>
                   )}
